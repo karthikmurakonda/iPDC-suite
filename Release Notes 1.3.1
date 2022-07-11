@@ -1,0 +1,78 @@
+/* ----------------------------------------------------------------- 
+ * Release Notes*
+ *
+ * iPDC - A Free Phasor Data Concentrator
+ * Covered under the GPL License 3.0.
+ *
+ * Copyright (C) 2012 Nitesh Pandit
+ * Copyright (C) 2012 Kedar V. Khandeparkar
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ *
+ * Authors: 
+ *	     Nitesh Pandit <panditnitesh@gmail.com>				
+ * 	     Kedar V. Khandeparkar <kedar.khandeparkar@gmail.com>			
+ *
+ * --------------------------------------------------------------- */
+
+--------------------------------------------------------------------------
+04.09.2012 : iPDC suite version-1.3.1 Changes and Bug Fixed (from v 1.3.0)
+--------------------------------------------------------------------------
+
+	New User Manual for iPDC-v1.3.1 available on websites.
+	
+	Bug resolved : PMU Simulator TCP connection error and hang connection for client (PDC). 
+
+	Now PMU Simulator (server) can communicate more than one PDCs (clients) over TCP and UDP parallely.
+	
+	PMU Simulator is now sending the exact data frames as mentioned in data rate by user.
+	
+	PMU Simulator data rate has been verified by iPDC database entries and PMU Connection Tester.
+
+	PMU Simulator is now having an option to introduce CheckSum error in a sending data frame.
+	
+	Bug resolved : Digital word resolution for configuration parser in parser.c from iPDC & DBServer modules.
+	
+	New table has added to DBServer modules named RECEIVED_FRAME_TIME. This table stores REceived frame time log in iPDC Database.  
+	
+	Stability increased of iPDC Database Server for handling dynamic changes and continuous storage of data.
+	
+	Now PHASOR_MEASUREMENTS are storing in Polar format AMPLITUDE and ANGLE.
+	
+	Table attributes and Primary Key have been changed for some tables in iPDC Database.
+	
+	Now the measurements are storing in the file also along with MySQL database by DBServer.
+
+	The 'images' folder is added in iPDC and PMUSimulator packages to store project images.
+	
+	iPDC.desktop and PMU.desktop files are added to iPDC and PMUSimulator respectively. These files will create Menu shortcuts.
+
+	File overwite feature for iPDC and PMU Configuration has been added.
+
+     Makefile has been updated for new version installation.
+	
+	GUI modifications for iPDC and PMUSimulator have been done in many aspects. 
+	
+	iPDC, DBServer and PMUSimulator are successfully tested with physical devices individually.
+	
+	Sample Measurement files for 50 and 60 Hz are present in the PMUSimulator folder, and will be copied to /home/$USER/iPDC/DataDir* during installation of Simulator.
+	
+	iPDC_DB_Queries is removed from iPDC.
+	
+	In DBServer folder 'Sample DBConnect.c' (earlier db.c) is a sample file having the C program to connect the MySQL-Database. The same file is also having the iPDC-Database tables and different queries. 
+
+	For more details please refer the UserManual-1.3.1.
+	
+-----------------------------------------------Enf of File----------------------------------------

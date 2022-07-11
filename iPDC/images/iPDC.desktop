@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Encoding=UTF-8
+Name=iPDC
+Comment=A Phasor Data Concentrator
+Exec=/usr/local/bin/iPDC
+Icon=/usr/local/share/iPDC/logo.png
+Terminal=true
+Categories=Education

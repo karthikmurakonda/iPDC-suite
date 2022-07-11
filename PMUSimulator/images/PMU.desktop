@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Encoding=UTF-8
+Name=PMU Simulator
+Comment=Phasor Measurement Unit Simulator
+Exec=/usr/local/bin/PMU
+Icon=/usr/local/share/PMU/logo.png
+Terminal=true
+Categories=Education
