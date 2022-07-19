@@ -125,7 +125,8 @@ int main(int argc, char **argv)
 	gtk_builder_connect_signals(builder, NULL);
 
      // Changes how a toplevel window deals with its size request and user resize attempts. 
-     gtk_window_set_policy (GTK_WINDOW (data->ipdc), FALSE, TRUE, TRUE);
+     gtk_window_set_default_size(GTK_WINDOW(data->ipdc), 800, 600);
+	 gtk_window_set_resizable(GTK_WINDOW(data->ipdc), FALSE);
      gtk_window_set_position(GTK_WINDOW(data->ipdc), GTK_WIN_POS_CENTER);
      gtk_window_set_icon(GTK_WINDOW(data->ipdc), create_pixbuf("/usr/local/share/iPDC/logo.png"));
 

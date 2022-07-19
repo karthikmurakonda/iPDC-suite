@@ -160,7 +160,7 @@ void connection_table (GtkButton *but, gpointer udata);
 
 void ipdc_setup_fileSelector (GtkWidget *widget, gpointer udata);
 
-void view_setup_file (GtkWidget *w, GtkFileSelection *fs);
+void view_setup_file (char * filePath);
 
 void apply_ipdc_setup (GtkWidget *w, gpointer udata);
 

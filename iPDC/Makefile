@@ -45,8 +45,8 @@ FILE6 = iPDC.desktop
 
 CC = gcc
 LIBS = -lpthread
-LDLIBS=`pkg-config --cflags --libs gtk+-2.0`
-CFLAGS=-g -fcommon `pkg-config --cflags --cflags gtk+-2.0`
+LDLIBS=`pkg-config --cflags --libs gtk+-3.0`
+CFLAGS=-g -fcommon `pkg-config --cflags --libs gtk+-3.0`
 
 SOURCES = \
 	ipdc.c \

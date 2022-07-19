@@ -71,7 +71,7 @@
 /*	20. void remove_pdc (GtkButton *but, gpointer udata);			*/
 /*	21. void connection_table (GtkButton *but, gpointer udata);		*/
 /*	22. void ipdc_setup_fileSelector (GtkWidget *widget, gpointer udata);	*/
-/*	23. void view_setup_file (GtkWidget *w, GtkFileSelection *fs);		*/
+/*	23. void view_setup_file (GtkWidget *w, GtkFileChooser *fs);		*/
 /*	24. void apply_ipdc_setup (GtkWidget *w, gpointer udata);		*/
 /*   25. void* display_time();                                                       */
 /*                                                                              */
@@ -186,7 +186,7 @@ void display_pdc_detail (GtkButton *widget, gpointer udata)
 		gtk_table_set_col_spacings (GTK_TABLE (table), 16);
 
 		/* pack the table into the window */
-		gtk_box_pack_start (GTK_BOX (GTK_DIALOG(new_window)->vbox), table, TRUE, TRUE, 0);
+		gtk_box_pack_start (GTK_BOX (GTK_DIALOG(new_window)), table, TRUE, TRUE, 0);
 		gtk_widget_show (table);
 
 		/* Add a "close" button to the bottom of the dialog */
@@ -274,7 +274,7 @@ void display_pdc_detail (GtkButton *widget, gpointer udata)
 
 		/* This makes it so the ok_button is the default. */
 		gtk_widget_set_can_default (ok_button, TRUE);
-		gtk_box_pack_start (GTK_BOX (GTK_DIALOG (new_window)->action_area), ok_button, TRUE, TRUE, 0);
+		gtk_box_pack_start (gtk_dialog_get_action_area, ok_button, TRUE, TRUE, 0);
 
 		/* This grabs this button to be the default button. Simply hitting the "Enter" key will cause this button to activate. */
 		gtk_widget_grab_default (ok_button);
@@ -502,7 +502,7 @@ int validation_pdc_detail (GtkButton *button, gpointer udata)
 			gtk_table_set_col_spacings (GTK_TABLE (table), 5);
 
 			/* Pack the table into the window */
-			gtk_box_pack_start (GTK_BOX (GTK_DIALOG(new_window)->vbox), table, TRUE, TRUE, 0);
+			gtk_box_pack_start (GTK_BOX (GTK_DIALOG(new_window)), table, TRUE, TRUE, 0);
 			gtk_widget_show (table);
 
 			/* Add few buttons to the bottom of the dialog */
@@ -541,8 +541,8 @@ int validation_pdc_detail (GtkButton *button, gpointer udata)
 			/* This makes it so the button is the default. */
 			gtk_widget_set_can_default (yes, TRUE);
 			gtk_widget_set_can_default (no, TRUE);
-			gtk_box_pack_start (GTK_BOX (GTK_DIALOG (new_window)->action_area), yes, TRUE, TRUE, 0);
-			gtk_box_pack_start (GTK_BOX (GTK_DIALOG (new_window)->action_area), no, TRUE, TRUE, 0);
+			gtk_box_pack_start (gtk_dialog_get_action_area, yes, TRUE, TRUE, 0);
+			gtk_box_pack_start (gtk_dialog_get_action_area, no, TRUE, TRUE, 0);
 
 			/* This grabs this button to be the default button. Simply hitting the "Enter" key will cause this button to activate. */
 			gtk_widget_grab_default (yes);
@@ -675,7 +675,7 @@ int add_pmu_validation (GtkButton *but, gpointer udata)
 	text = gtk_entry_get_text(GTK_ENTRY(p_id));
 	text1 = gtk_entry_get_text(GTK_ENTRY(p_ip));
 	text2 = gtk_entry_get_text(GTK_ENTRY(p_port));
-	text3 = gtk_combo_box_get_active_text(GTK_COMBO_BOX(p_protocol));
+	text3 = gtk_combo_box_text_get_active_text(GTK_COMBO_BOX(p_protocol));
 	memset(ip,'\0',20);
 	strcat(ip, text1);
 	strcpy (tmp, text3);
@@ -836,7 +836,7 @@ int cmd_or_remove_pmu_validation (GtkButton *but, gpointer udata)
 		const char *text, *text1;
 
 		text = gtk_entry_get_text(GTK_ENTRY(p_id));
-		text1 = gtk_combo_box_get_active_text(GTK_COMBO_BOX(p_protocol));
+		text1 = gtk_combo_box_text_get_active_text(GTK_COMBO_BOX(p_protocol));
 		memset(tmp, '\0', 4);
 		strcpy (tmp, text1);
 	
@@ -956,7 +956,7 @@ int new_pdc_validation (GtkButton *but, gpointer udata)
 
 	/* Get the text entries for PDC, filled by user */
 	text = gtk_entry_get_text(GTK_ENTRY(p_ip));
-	text1 = gtk_combo_box_get_active_text(GTK_COMBO_BOX(p_protocol));
+	text1 = gtk_combo_box_text_get_active_text(GTK_COMBO_BOX(p_protocol));
 	memset(ip,'\0',20);
 	strcat(ip, text);
 	strcpy (tmp, text1);
@@ -1006,7 +1006,7 @@ int remove_pdc_validation (GtkButton *but, gpointer udata)
 	/* Get the text entries for remove source device by user */
 	text = gtk_entry_get_text(GTK_ENTRY(p_ip));
 	text1 = gtk_entry_get_text(GTK_ENTRY(p_port));
-	text2 = gtk_combo_box_get_active_text(GTK_COMBO_BOX(p_protocol));
+	text2 = gtk_combo_box_text_get_active_text(GTK_COMBO_BOX(p_protocol));
 	memset(ip,'\0',20);
 	strcat(ip, text);
 	strcpy (tmp, text2);
@@ -1132,7 +1132,7 @@ void fill_pdc_details (char *filePath)
 		gtk_table_set_col_spacings (GTK_TABLE (table), 16);
 
 		/* Pack the table into the window */
-		gtk_box_pack_start (GTK_BOX (GTK_DIALOG(pdc_detail_window)->vbox), table, TRUE, TRUE, 0);
+		gtk_box_pack_start (GTK_BOX (GTK_DIALOG(pdc_detail_window)), table, TRUE, TRUE, 0);
 		gtk_widget_show (table);
 
 		/* Add few button to the bottom of the dialog */
@@ -1211,9 +1211,9 @@ void fill_pdc_details (char *filePath)
 		gtk_widget_set_can_default (valdbutton, TRUE);
 		gtk_widget_set_can_default (cancle_button, TRUE);
 		gtk_widget_set_can_default (help_button, TRUE);
-		gtk_box_pack_start (GTK_BOX (GTK_DIALOG (pdc_detail_window)->action_area), valdbutton, TRUE, TRUE, 0);
-		gtk_box_pack_start (GTK_BOX (GTK_DIALOG (pdc_detail_window)->action_area), cancle_button, TRUE, TRUE, 0);
-		gtk_box_pack_start (GTK_BOX (GTK_DIALOG (pdc_detail_window)->action_area), help_button, TRUE, TRUE, 0);
+		gtk_box_pack_start (gtk_dialog_get_action_area, valdbutton, TRUE, TRUE, 0);
+		gtk_box_pack_start (gtk_dialog_get_action_area, cancle_button, TRUE, TRUE, 0);
+		gtk_box_pack_start (gtk_dialog_get_action_area, help_button, TRUE, TRUE, 0);
 
 		/* This grabs this button to be the default button. Simply hitting the "Enter" key will cause this button to activate. */
 		gtk_widget_grab_default (valdbutton);
@@ -1257,7 +1257,7 @@ void add_pmu (GtkButton *but, gpointer udata)
 	gtk_table_set_col_spacings (GTK_TABLE (table), 16);
 
 	/* Pack the table into the window */
-	gtk_box_pack_start (GTK_BOX (GTK_DIALOG(add_pmu_window)->vbox), table, FALSE, FALSE, 0);
+	gtk_box_pack_start (GTK_BOX (GTK_DIALOG(add_pmu_window)), table, FALSE, FALSE, 0);
 	gtk_widget_show (table);
 
 	/* Add few button to the bottom of the dialog */
@@ -1311,9 +1311,9 @@ void add_pmu (GtkButton *but, gpointer udata)
 	gtk_widget_show (p_port);
 
 	/* Create combo boxe for user with some fixed values */
-	p_protocol = gtk_combo_box_new_text();
-	gtk_combo_box_append_text(GTK_COMBO_BOX(p_protocol), "UDP");
-	gtk_combo_box_append_text(GTK_COMBO_BOX(p_protocol), "TCP");
+	p_protocol = gtk_combo_box_text_new ();
+	gtk_combo_box_text_append_text(GTK_COMBO_BOX(p_protocol), "UDP");
+	gtk_combo_box_text_append_text(GTK_COMBO_BOX(p_protocol), "TCP");
 	gtk_combo_box_set_active(GTK_COMBO_BOX(p_protocol), 0);
 	gtk_table_attach_defaults (GTK_TABLE (table), p_protocol, 1, 2, 4, 5);
 	gtk_widget_show (p_protocol);
@@ -1327,9 +1327,9 @@ void add_pmu (GtkButton *but, gpointer udata)
 	gtk_widget_set_can_default (close_button, TRUE);
 	gtk_widget_set_can_default (valdbutton, TRUE);
 	gtk_widget_set_can_default (help_button, TRUE);
-	gtk_box_pack_start (GTK_BOX (GTK_DIALOG (add_pmu_window)->action_area), valdbutton, TRUE, TRUE, 0);
-	gtk_box_pack_start (GTK_BOX (GTK_DIALOG (add_pmu_window)->action_area), help_button, TRUE, TRUE, 0);
-	gtk_box_pack_start (GTK_BOX (GTK_DIALOG (add_pmu_window)->action_area), close_button, TRUE, TRUE, 0);
+	gtk_box_pack_start (gtk_dialog_get_action_area, valdbutton, TRUE, TRUE, 0);
+	gtk_box_pack_start (gtk_dialog_get_action_area, help_button, TRUE, TRUE, 0);
+	gtk_box_pack_start (gtk_dialog_get_action_area, close_button, TRUE, TRUE, 0);
 
 	/* This grabs this button to be the default button. Simply hitting the "Enter" key will cause this button to activate. */
 	gtk_widget_grab_default (valdbutton);
@@ -1397,11 +1397,11 @@ void cmd_or_remove_pmu (GtkButton *but, gpointer udata)
 	gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window), GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
 
 	/* The dialog window is created with a vbox packed into it */								
-	gtk_box_pack_start (GTK_BOX (GTK_DIALOG(new_window)->vbox), scrolled_window, FALSE, TRUE, 0);
+	gtk_box_pack_start (GTK_BOX (GTK_DIALOG(new_window)), scrolled_window, FALSE, TRUE, 0);
 	gtk_widget_show (scrolled_window);
 
     	hbox1 = gtk_hbox_new (FALSE, 16);
-	gtk_box_pack_start (GTK_BOX (GTK_DIALOG(new_window)->vbox), hbox1, FALSE, TRUE, 0);
+	gtk_box_pack_start (GTK_BOX (GTK_DIALOG(new_window)), hbox1, FALSE, TRUE, 0);
 	gtk_widget_show (hbox1);
 
     	window2 = gtk_alignment_new (0,0,0,0);
@@ -1555,9 +1555,9 @@ void cmd_or_remove_pmu (GtkButton *but, gpointer udata)
             }
 
 		/* Create combo boxe for user with some fixed values */
-		p_protocol = gtk_combo_box_new_text();
-		gtk_combo_box_append_text(GTK_COMBO_BOX(p_protocol), "UDP");
-		gtk_combo_box_append_text(GTK_COMBO_BOX(p_protocol), "TCP");
+		p_protocol = gtk_combo_box_text_new();
+		gtk_combo_box_text_append_text(GTK_COMBO_BOX(p_protocol), "UDP");
+		gtk_combo_box_text_append_text(GTK_COMBO_BOX(p_protocol), "TCP");
 		gtk_combo_box_set_active(GTK_COMBO_BOX(p_protocol), 0);
 		gtk_box_pack_end (GTK_BOX (hbox1), p_protocol, FALSE, TRUE, 0);
 		gtk_widget_show (p_protocol);
@@ -1590,8 +1590,8 @@ void cmd_or_remove_pmu (GtkButton *but, gpointer udata)
 		/* This makes it so the button is the default. */
 		gtk_widget_set_can_default (valdbutton, TRUE);
 		gtk_widget_set_can_default (help_button, TRUE);
-		gtk_box_pack_start (GTK_BOX (GTK_DIALOG (new_window)->action_area), valdbutton, TRUE, TRUE, 0);
-		gtk_box_pack_start (GTK_BOX (GTK_DIALOG (new_window)->action_area), help_button, TRUE, TRUE, 0);
+		gtk_box_pack_start (gtk_dialog_get_action_area, valdbutton, TRUE, TRUE, 0);
+		gtk_box_pack_start (gtk_dialog_get_action_area, help_button, TRUE, TRUE, 0);
 
 		/* This grabs this button to be the default button. Simply hitting the "Enter" key will cause this button to activate. */
 		gtk_widget_grab_default (valdbutton);
@@ -1604,7 +1604,7 @@ void cmd_or_remove_pmu (GtkButton *but, gpointer udata)
 	close_button = gtk_button_new_with_label ("Close");
 	g_signal_connect_swapped (close_button, "clicked", G_CALLBACK (gtk_widget_destroy), new_window);
 	gtk_widget_set_can_default (close_button, TRUE);
-	gtk_box_pack_start (GTK_BOX (GTK_DIALOG (new_window)->action_area), close_button, TRUE, TRUE, 0);
+	gtk_box_pack_start (gtk_dialog_get_action_area, close_button, TRUE, TRUE, 0);
 	gtk_widget_grab_default (close_button);
 	gtk_widget_show (close_button);
 	on_flag = 0, off_flag = 0;
@@ -1664,7 +1664,7 @@ void add_new_pdc (GtkButton *but, gpointer udata)
 	gtk_table_set_col_spacings (GTK_TABLE (table), 16);
 
 	/* The dialog window is created with a vbox packed into it */								
-	gtk_box_pack_start (GTK_BOX (GTK_DIALOG(new_window)->vbox), table, FALSE, FALSE, 0);
+	gtk_box_pack_start (GTK_BOX (GTK_DIALOG(new_window)), table, FALSE, FALSE, 0);
 	gtk_widget_show (table);
 
 	/* Add few buttons to the bottom of the dialog */
@@ -1697,9 +1697,9 @@ void add_new_pdc (GtkButton *but, gpointer udata)
 	gtk_widget_show (p_ip);
 
 	/* Create combo boxe for user with some fixed values */
-	p_protocol = gtk_combo_box_new_text();
-	gtk_combo_box_append_text(GTK_COMBO_BOX(p_protocol), "UDP");
-	gtk_combo_box_append_text(GTK_COMBO_BOX(p_protocol), "TCP");
+	p_protocol = gtk_combo_box_text_new();
+	gtk_combo_box_text_append_text(GTK_COMBO_BOX(p_protocol), "UDP");
+	gtk_combo_box_text_append_text(GTK_COMBO_BOX(p_protocol), "TCP");
 	gtk_combo_box_set_active(GTK_COMBO_BOX(p_protocol), 0);
 	gtk_table_attach_defaults (GTK_TABLE (table), p_protocol, 1, 2, 3, 4);
 	gtk_widget_show (p_protocol);
@@ -1713,9 +1713,9 @@ void add_new_pdc (GtkButton *but, gpointer udata)
 	gtk_widget_set_can_default (close_button, TRUE);
 	gtk_widget_set_can_default (valdbutton, TRUE);
 	gtk_widget_set_can_default (help_button, TRUE);
-	gtk_box_pack_start (GTK_BOX (GTK_DIALOG (new_window)->action_area), valdbutton, TRUE, TRUE, 0);
-	gtk_box_pack_start (GTK_BOX (GTK_DIALOG (new_window)->action_area), help_button, TRUE, TRUE, 0);
-	gtk_box_pack_start (GTK_BOX (GTK_DIALOG (new_window)->action_area), close_button, TRUE, TRUE, 0);
+	gtk_box_pack_start (gtk_dialog_get_action_area, valdbutton, TRUE, TRUE, 0);
+	gtk_box_pack_start (gtk_dialog_get_action_area, help_button, TRUE, TRUE, 0);
+	gtk_box_pack_start (gtk_dialog_get_action_area, close_button, TRUE, TRUE, 0);
 
 	/* This grabs this button to be the default button. Simply hitting the "Enter" key will cause this button to activate. */
 	gtk_widget_grab_default (valdbutton);
@@ -1762,11 +1762,11 @@ void remove_pdc (GtkButton *but, gpointer udata)
 	gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window), GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
 
 	/* The dialog window is created with a vbox packed into it. */								
-	gtk_box_pack_start (GTK_BOX (GTK_DIALOG(new_window)->vbox), scrolled_window, TRUE, TRUE, 0);
+	gtk_box_pack_start (GTK_BOX (GTK_DIALOG(new_window)), scrolled_window, TRUE, TRUE, 0);
 	gtk_widget_show (scrolled_window);
 
     	hbox1 = gtk_hbox_new (FALSE, 16);
-	gtk_box_pack_start (GTK_BOX (GTK_DIALOG(new_window)->vbox), hbox1, FALSE, TRUE, 0);
+	gtk_box_pack_start (GTK_BOX (GTK_DIALOG(new_window)), hbox1, FALSE, TRUE, 0);
 	gtk_widget_show (hbox1);
 
     	window2 = gtk_alignment_new (0,0,0,0);
@@ -1875,11 +1875,11 @@ void remove_pdc (GtkButton *but, gpointer udata)
             	}
 
 		/* Create combo box for user with some fixed values */
-		p_protocol = gtk_combo_box_new_text();
-		gtk_combo_box_append_text(GTK_COMBO_BOX(p_protocol), "UDP");
-		gtk_combo_box_append_text(GTK_COMBO_BOX(p_protocol), "TCP");
+		p_protocol = gtk_combo_box_text_new();
+		gtk_combo_box_text_append_text(GTK_COMBO_BOX(p_protocol), "UDP");
+		gtk_combo_box_text_append_text(GTK_COMBO_BOX(p_protocol), "TCP");
 		gtk_combo_box_set_active(GTK_COMBO_BOX(p_protocol), 0);
-        	gtk_box_pack_end (GTK_BOX (hbox1), p_protocol, FALSE, TRUE, 0);
+        gtk_box_pack_end (GTK_BOX (hbox1), p_protocol, FALSE, TRUE, 0);
 		gtk_widget_show (p_protocol);
 		
         	label = gtk_label_new ("Protocol");
@@ -1910,8 +1910,8 @@ void remove_pdc (GtkButton *but, gpointer udata)
 		/* This makes it so the button is the default. */
 		gtk_widget_set_can_default (valdbutton, TRUE);
 		gtk_widget_set_can_default (help_button, TRUE);
-		gtk_box_pack_start (GTK_BOX (GTK_DIALOG (new_window)->action_area), valdbutton, TRUE, TRUE, 0);
-		gtk_box_pack_start (GTK_BOX (GTK_DIALOG (new_window)->action_area), help_button, TRUE, TRUE, 0);
+		gtk_box_pack_start (gtk_dialog_get_action_area, valdbutton, TRUE, TRUE, 0);
+		gtk_box_pack_start (gtk_dialog_get_action_area, help_button, TRUE, TRUE, 0);
 
 		/* This grabs this button to be the default button. Simply hitting the "Enter" key will cause this button to activate. */
 		gtk_widget_grab_default (valdbutton);
@@ -1922,7 +1922,7 @@ void remove_pdc (GtkButton *but, gpointer udata)
 
 	g_signal_connect_swapped (close_button, "clicked", G_CALLBACK (gtk_widget_destroy), new_window);
 	gtk_widget_set_can_default (close_button, TRUE);
-	gtk_box_pack_start (GTK_BOX (GTK_DIALOG (new_window)->action_area), close_button, TRUE, TRUE, 0);
+	gtk_box_pack_start (gtk_dialog_get_action_area, close_button, TRUE, TRUE, 0);
 	gtk_widget_grab_default (close_button);
 	gtk_widget_show (close_button);
 
@@ -1963,7 +1963,7 @@ void connection_table (GtkButton *but, gpointer udata)
 	gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window), GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
 
 	/* The dialog window is created with a vbox packed into it. */								
-	gtk_box_pack_start (GTK_BOX (GTK_DIALOG(new_window)->vbox), scrolled_window, FALSE, TRUE, 0);
+	gtk_box_pack_start (GTK_BOX (GTK_DIALOG(new_window)), scrolled_window, FALSE, TRUE, 0);
 	gtk_widget_show (scrolled_window);
 
 	/* Create a table of 20 by 5 squares */
@@ -2147,7 +2147,7 @@ void connection_table (GtkButton *but, gpointer udata)
 
 	/* This makes it so the button is the default. */
 	gtk_widget_set_can_default (close_button, TRUE);
-	gtk_box_pack_start (GTK_BOX (GTK_DIALOG (new_window)->action_area), close_button, TRUE, TRUE, 0);
+	gtk_box_pack_start (gtk_dialog_get_action_area, close_button, TRUE, TRUE, 0);
 
 	/* This grabs this button to be the default button. Simply hitting the "Enter" key will cause this button to activate. */
 	gtk_widget_grab_default (close_button);
@@ -2168,29 +2168,40 @@ void ipdc_setup_fileSelector (GtkWidget *widget, gpointer udata)
 {
      strcat(ipdcFolderPath,"/");
 
+	gint res;
 	/* Create a new file selection widget */
-	ipdc_setup_window = gtk_file_selection_new ("iPDC Setup file selection");
+	ipdc_setup_window = gtk_file_chooser_dialog_new("Open File",
+							GTK_WINDOW(widget),
+							GTK_FILE_CHOOSER_ACTION_OPEN,
+							"_Cancel", GTK_RESPONSE_CANCEL,
+							"_Open", GTK_RESPONSE_ACCEPT,
+							NULL);
+	
+	res = gtk_dialog_run(GTK_DIALOG(ipdc_setup_window));
 
-	/* Connect the ok_button to view_setup_file function */
-	gtk_signal_connect (GTK_OBJECT (GTK_FILE_SELECTION (ipdc_setup_window)->ok_button), "clicked", (GtkSignalFunc) view_setup_file, ipdc_setup_window );
-
-	/* Connect the cancel_button to destroy the widget */
-	gtk_signal_connect_object (GTK_OBJECT (GTK_FILE_SELECTION (ipdc_setup_window)->cancel_button), "clicked", (GtkSignalFunc) gtk_widget_destroy, GTK_OBJECT (ipdc_setup_window));
+	if(res == GTK_RESPONSE_ACCEPT)
+	{
+		char *filename;
+		filename = gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(ipdc_setup_window));
+		strcpy(ipdcFilePath, filename);
+		view_setup_file(filename);
+		g_free(filename);
+	}
 
 	/* Lets set the filename, as if this were a save dialog, and we are giving a default filename */
-	gtk_file_selection_set_filename (GTK_FILE_SELECTION(ipdc_setup_window), ipdcFolderPath);
+	// gtk_file_selection_set_filename (GTK_FILE_SELECTION(ipdc_setup_window), ipdcFolderPath);
 
-	gtk_widget_show(ipdc_setup_window);
+	// gtk_widget_show(ipdc_setup_window);
 }
 
 
 /* ----------------------------------------------------------------------------	*/
-/* FUNCTION  view_setup_file(GtkWidget *w, GtkFileSelection *fs)                */
+/* FUNCTION  view_setup_file(GtkWidget *w, GtkFileChooser *fs)                */
 /* This function displays the different attributes of selected iPDC Setup File.	*/
 /* It will show the iPDC connectoin details before apply.			*/
 /* ----------------------------------------------------------------------------	*/
 
-void view_setup_file (GtkWidget *w, GtkFileSelection *fs)
+void view_setup_file (char *filename)
 {
 	/* local variables */
 	GtkWidget *label, *hsep;
@@ -2205,9 +2216,7 @@ void view_setup_file (GtkWidget *w, GtkFileSelection *fs)
 	size_t len = 0;
 	ssize_t read;
 	FILE *fp1;
-
-	s = (char *)gtk_file_selection_get_filename (GTK_FILE_SELECTION (fs));
-	strcpy(fptr, s);
+	strcpy(fptr, filename);
 
 	gtk_widget_destroy(ipdc_setup_window);
 
@@ -2283,7 +2292,7 @@ void view_setup_file (GtkWidget *w, GtkFileSelection *fs)
 		gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window), GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
 
 		/* The dialog window is created with a vbox packed into it */
-		gtk_box_pack_start (GTK_BOX (GTK_DIALOG(setup_display_window)->vbox), scrolled_window, TRUE, TRUE, 0);
+		gtk_box_pack_start (GTK_BOX (GTK_DIALOG(setup_display_window)), scrolled_window, TRUE, TRUE, 0);
 		gtk_widget_show (scrolled_window);
 
 		/* Create a table of ? by 2 squares */
@@ -2530,8 +2539,8 @@ void view_setup_file (GtkWidget *w, GtkFileSelection *fs)
 		/* This makes it so the ok_button is the default. */
 		gtk_widget_set_can_default (cancel_button, TRUE);
 		gtk_widget_set_can_default (apply_button, TRUE);
-		gtk_box_pack_start (GTK_BOX (GTK_DIALOG (setup_display_window)->action_area), apply_button, TRUE, TRUE, 0);
-		gtk_box_pack_start (GTK_BOX (GTK_DIALOG (setup_display_window)->action_area), cancel_button, TRUE, TRUE, 0);
+		gtk_box_pack_start (gtk_dialog_get_action_area, apply_button, TRUE, TRUE, 0);
+		gtk_box_pack_start (gtk_dialog_get_action_area, cancel_button, TRUE, TRUE, 0);
 
 		/* This grabs this button to be the default button. Simply hitting the "Enter" key will cause this button to activate. */
 		gtk_widget_grab_default (cancel_button);
