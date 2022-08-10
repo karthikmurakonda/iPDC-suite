@@ -274,7 +274,7 @@ void display_pdc_detail (GtkButton *widget, gpointer udata)
 
 		/* This makes it so the ok_button is the default. */
 		gtk_widget_set_can_default (ok_button, TRUE);
-		gtk_box_pack_start (gtk_dialog_get_action_area, ok_button, TRUE, TRUE, 0);
+		gtk_box_pack_start (gtk_dialog_get_action_area(new_window), ok_button, TRUE, TRUE, 0);
 
 		/* This grabs this button to be the default button. Simply hitting the "Enter" key will cause this button to activate. */
 		gtk_widget_grab_default (ok_button);
@@ -361,7 +361,7 @@ void validation_result (char *msg)
 	val_dialog = gtk_about_dialog_new ();
 
 	/* Define the diffrent properties of val_dialog. */
-	gtk_about_dialog_set_program_name ((GtkAboutDialog *)val_dialog, " ");
+	// gtk_about_dialog_set_program_name ((GtkAboutDialog *)val_dialog, " ");
 	gtk_about_dialog_set_comments ((GtkAboutDialog *)val_dialog, msg);
 
 	/* Ensure that the dialog box is destroyed when the user responds */
@@ -541,8 +541,8 @@ int validation_pdc_detail (GtkButton *button, gpointer udata)
 			/* This makes it so the button is the default. */
 			gtk_widget_set_can_default (yes, TRUE);
 			gtk_widget_set_can_default (no, TRUE);
-			gtk_box_pack_start (gtk_dialog_get_action_area, yes, TRUE, TRUE, 0);
-			gtk_box_pack_start (gtk_dialog_get_action_area, no, TRUE, TRUE, 0);
+			gtk_box_pack_start (gtk_dialog_get_action_area(new_window), yes, TRUE, TRUE, 0);
+			gtk_box_pack_start (gtk_dialog_get_action_area(new_window), no, TRUE, TRUE, 0);
 
 			/* This grabs this button to be the default button. Simply hitting the "Enter" key will cause this button to activate. */
 			gtk_widget_grab_default (yes);
@@ -641,11 +641,12 @@ void final_pdc_setup_call()
 	gtk_widget_set_sensitive(GTK_WIDGET(data->remove_pdc_button), TRUE);
 	gtk_widget_set_sensitive(GTK_WIDGET(data->display_conn_table_button), TRUE);
 
-	gtk_widget_set_visible(GTK_WIDGET(data->menuitem2), TRUE);
-     	gtk_widget_set_visible(GTK_WIDGET(data->menu_conn_table), TRUE);
+	// gtk_menu_attach_to_widget (GTK_MENU (data->menuitem2), GTK_WIDGET (data->ipdc), NULL);
+	// gtk_widget_show (data->ipdc);
+    gtk_widget_set_visible(GTK_WIDGET(data->menu_conn_table), TRUE);
 	gtk_widget_set_visible(GTK_WIDGET(data->pdc_details_menuitem), TRUE);
 
-	/* Disable the menuitem for iPDC details entries */
+	// /* Disable the menuitem for iPDC details entries */
 	gtk_widget_set_visible(GTK_WIDGET(data->enter_pdc_detail_menuitem), FALSE);
 	gtk_widget_set_visible(GTK_WIDGET(data->open_ipdc_setup), FALSE);
 
@@ -1132,7 +1133,7 @@ void fill_pdc_details (char *filePath)
 		gtk_table_set_col_spacings (GTK_TABLE (table), 16);
 
 		/* Pack the table into the window */
-		gtk_box_pack_start (GTK_BOX (GTK_DIALOG(pdc_detail_window)), table, TRUE, TRUE, 0);
+		gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area(pdc_detail_window)), table, TRUE, TRUE, 0);
 		gtk_widget_show (table);
 
 		/* Add few button to the bottom of the dialog */
@@ -1211,9 +1212,9 @@ void fill_pdc_details (char *filePath)
 		gtk_widget_set_can_default (valdbutton, TRUE);
 		gtk_widget_set_can_default (cancle_button, TRUE);
 		gtk_widget_set_can_default (help_button, TRUE);
-		gtk_box_pack_start (gtk_dialog_get_action_area, valdbutton, TRUE, TRUE, 0);
-		gtk_box_pack_start (gtk_dialog_get_action_area, cancle_button, TRUE, TRUE, 0);
-		gtk_box_pack_start (gtk_dialog_get_action_area, help_button, TRUE, TRUE, 0);
+		gtk_box_pack_start (GTK_BOX (gtk_dialog_get_action_area(pdc_detail_window)), valdbutton, TRUE, TRUE, 0);
+		gtk_box_pack_start (GTK_BOX (gtk_dialog_get_action_area(pdc_detail_window)), cancle_button, TRUE, TRUE, 0);
+		gtk_box_pack_start (GTK_BOX (gtk_dialog_get_action_area(pdc_detail_window)), help_button, TRUE, TRUE, 0);
 
 		/* This grabs this button to be the default button. Simply hitting the "Enter" key will cause this button to activate. */
 		gtk_widget_grab_default (valdbutton);
@@ -1257,7 +1258,7 @@ void add_pmu (GtkButton *but, gpointer udata)
 	gtk_table_set_col_spacings (GTK_TABLE (table), 16);
 
 	/* Pack the table into the window */
-	gtk_box_pack_start (GTK_BOX (GTK_DIALOG(add_pmu_window)), table, FALSE, FALSE, 0);
+	gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area(add_pmu_window)), table, FALSE, FALSE, 0);
 	gtk_widget_show (table);
 
 	/* Add few button to the bottom of the dialog */
@@ -1327,9 +1328,9 @@ void add_pmu (GtkButton *but, gpointer udata)
 	gtk_widget_set_can_default (close_button, TRUE);
 	gtk_widget_set_can_default (valdbutton, TRUE);
 	gtk_widget_set_can_default (help_button, TRUE);
-	gtk_box_pack_start (gtk_dialog_get_action_area, valdbutton, TRUE, TRUE, 0);
-	gtk_box_pack_start (gtk_dialog_get_action_area, help_button, TRUE, TRUE, 0);
-	gtk_box_pack_start (gtk_dialog_get_action_area, close_button, TRUE, TRUE, 0);
+	gtk_box_pack_start (gtk_dialog_get_action_area(add_pmu_window), valdbutton, TRUE, TRUE, 0);
+	gtk_box_pack_start (gtk_dialog_get_action_area(add_pmu_window), help_button, TRUE, TRUE, 0);
+	gtk_box_pack_start (gtk_dialog_get_action_area(add_pmu_window), close_button, TRUE, TRUE, 0);
 
 	/* This grabs this button to be the default button. Simply hitting the "Enter" key will cause this button to activate. */
 	gtk_widget_grab_default (valdbutton);
@@ -1397,11 +1398,11 @@ void cmd_or_remove_pmu (GtkButton *but, gpointer udata)
 	gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window), GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
 
 	/* The dialog window is created with a vbox packed into it */								
-	gtk_box_pack_start (GTK_BOX (GTK_DIALOG(new_window)), scrolled_window, FALSE, TRUE, 0);
+	gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area(new_window)), scrolled_window, FALSE, TRUE, 0);
 	gtk_widget_show (scrolled_window);
 
     	hbox1 = gtk_hbox_new (FALSE, 16);
-	gtk_box_pack_start (GTK_BOX (GTK_DIALOG(new_window)), hbox1, FALSE, TRUE, 0);
+	gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area(new_window)), hbox1, FALSE, TRUE, 0);
 	gtk_widget_show (hbox1);
 
     	window2 = gtk_alignment_new (0,0,0,0);
@@ -1590,8 +1591,8 @@ void cmd_or_remove_pmu (GtkButton *but, gpointer udata)
 		/* This makes it so the button is the default. */
 		gtk_widget_set_can_default (valdbutton, TRUE);
 		gtk_widget_set_can_default (help_button, TRUE);
-		gtk_box_pack_start (gtk_dialog_get_action_area, valdbutton, TRUE, TRUE, 0);
-		gtk_box_pack_start (gtk_dialog_get_action_area, help_button, TRUE, TRUE, 0);
+		gtk_box_pack_start (gtk_dialog_get_action_area(new_window), valdbutton, TRUE, TRUE, 0);
+		gtk_box_pack_start (gtk_dialog_get_action_area(new_window), help_button, TRUE, TRUE, 0);
 
 		/* This grabs this button to be the default button. Simply hitting the "Enter" key will cause this button to activate. */
 		gtk_widget_grab_default (valdbutton);
@@ -1604,7 +1605,7 @@ void cmd_or_remove_pmu (GtkButton *but, gpointer udata)
 	close_button = gtk_button_new_with_label ("Close");
 	g_signal_connect_swapped (close_button, "clicked", G_CALLBACK (gtk_widget_destroy), new_window);
 	gtk_widget_set_can_default (close_button, TRUE);
-	gtk_box_pack_start (gtk_dialog_get_action_area, close_button, TRUE, TRUE, 0);
+	gtk_box_pack_start (gtk_dialog_get_action_area(new_window), close_button, TRUE, TRUE, 0);
 	gtk_widget_grab_default (close_button);
 	gtk_widget_show (close_button);
 	on_flag = 0, off_flag = 0;
@@ -1664,7 +1665,7 @@ void add_new_pdc (GtkButton *but, gpointer udata)
 	gtk_table_set_col_spacings (GTK_TABLE (table), 16);
 
 	/* The dialog window is created with a vbox packed into it */								
-	gtk_box_pack_start (GTK_BOX (GTK_DIALOG(new_window)), table, FALSE, FALSE, 0);
+	gtk_box_pack_start (gtk_dialog_get_content_area(new_window), table, FALSE, FALSE, 0);
 	gtk_widget_show (table);
 
 	/* Add few buttons to the bottom of the dialog */
@@ -1713,9 +1714,9 @@ void add_new_pdc (GtkButton *but, gpointer udata)
 	gtk_widget_set_can_default (close_button, TRUE);
 	gtk_widget_set_can_default (valdbutton, TRUE);
 	gtk_widget_set_can_default (help_button, TRUE);
-	gtk_box_pack_start (gtk_dialog_get_action_area, valdbutton, TRUE, TRUE, 0);
-	gtk_box_pack_start (gtk_dialog_get_action_area, help_button, TRUE, TRUE, 0);
-	gtk_box_pack_start (gtk_dialog_get_action_area, close_button, TRUE, TRUE, 0);
+	gtk_box_pack_start (gtk_dialog_get_action_area(new_window), valdbutton, TRUE, TRUE, 0);
+	gtk_box_pack_start (gtk_dialog_get_action_area(new_window), help_button, TRUE, TRUE, 0);
+	gtk_box_pack_start (gtk_dialog_get_action_area(new_window), close_button, TRUE, TRUE, 0);
 
 	/* This grabs this button to be the default button. Simply hitting the "Enter" key will cause this button to activate. */
 	gtk_widget_grab_default (valdbutton);
@@ -1762,7 +1763,7 @@ void remove_pdc (GtkButton *but, gpointer udata)
 	gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window), GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
 
 	/* The dialog window is created with a vbox packed into it. */								
-	gtk_box_pack_start (GTK_BOX (GTK_DIALOG(new_window)), scrolled_window, TRUE, TRUE, 0);
+	gtk_box_pack_start (gtk_dialog_get_content_area(new_window), scrolled_window, TRUE, TRUE, 0);
 	gtk_widget_show (scrolled_window);
 
     	hbox1 = gtk_hbox_new (FALSE, 16);
@@ -1910,8 +1911,8 @@ void remove_pdc (GtkButton *but, gpointer udata)
 		/* This makes it so the button is the default. */
 		gtk_widget_set_can_default (valdbutton, TRUE);
 		gtk_widget_set_can_default (help_button, TRUE);
-		gtk_box_pack_start (gtk_dialog_get_action_area, valdbutton, TRUE, TRUE, 0);
-		gtk_box_pack_start (gtk_dialog_get_action_area, help_button, TRUE, TRUE, 0);
+		gtk_box_pack_start (gtk_dialog_get_action_area(new_window), valdbutton, TRUE, TRUE, 0);
+		gtk_box_pack_start (gtk_dialog_get_action_area(new_window), help_button, TRUE, TRUE, 0);
 
 		/* This grabs this button to be the default button. Simply hitting the "Enter" key will cause this button to activate. */
 		gtk_widget_grab_default (valdbutton);
@@ -1922,7 +1923,7 @@ void remove_pdc (GtkButton *but, gpointer udata)
 
 	g_signal_connect_swapped (close_button, "clicked", G_CALLBACK (gtk_widget_destroy), new_window);
 	gtk_widget_set_can_default (close_button, TRUE);
-	gtk_box_pack_start (gtk_dialog_get_action_area, close_button, TRUE, TRUE, 0);
+	gtk_box_pack_start (gtk_dialog_get_action_area(new_window), close_button, TRUE, TRUE, 0);
 	gtk_widget_grab_default (close_button);
 	gtk_widget_show (close_button);
 
@@ -1963,7 +1964,7 @@ void connection_table (GtkButton *but, gpointer udata)
 	gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window), GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
 
 	/* The dialog window is created with a vbox packed into it. */								
-	gtk_box_pack_start (GTK_BOX (GTK_DIALOG(new_window)), scrolled_window, FALSE, TRUE, 0);
+	gtk_box_pack_start (gtk_dialog_get_content_area(new_window), scrolled_window, FALSE, TRUE, 0);
 	gtk_widget_show (scrolled_window);
 
 	/* Create a table of 20 by 5 squares */
@@ -2147,7 +2148,7 @@ void connection_table (GtkButton *but, gpointer udata)
 
 	/* This makes it so the button is the default. */
 	gtk_widget_set_can_default (close_button, TRUE);
-	gtk_box_pack_start (gtk_dialog_get_action_area, close_button, TRUE, TRUE, 0);
+	gtk_box_pack_start (gtk_dialog_get_action_area(new_window), close_button, TRUE, TRUE, 0);
 
 	/* This grabs this button to be the default button. Simply hitting the "Enter" key will cause this button to activate. */
 	gtk_widget_grab_default (close_button);
