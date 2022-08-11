@@ -46,9 +46,10 @@
 #include "global.h"
 #include "ipdcGui.h"
 #include "attack_detection.h"
+#include "data_vis.h"
 
 /* Common fixed path for storage of few common files */
-#define UI_fILE "/home/pavan/Desktop/iPDC-suite/iPDC/iPDC.ui"
+#define UI_fILE "./iPDC.ui"
 
 
 /* ---------------------------------------------------------------- */
@@ -260,7 +261,7 @@ int main(int argc, char **argv)
 
 	g_signal_connect (data->remove_pmu_button, "clicked", G_CALLBACK(cmd_or_remove_pmu), (gpointer) "1");
 	g_signal_connect (data->menu_remove_source, "activate", G_CALLBACK(cmd_or_remove_pmu), (gpointer) "1");
-    g_signal_connect(data->attack_detection,"activate",G_CALLBACK(attack_detection_window),NULL);
+
 	g_signal_connect (data->cmd_data_off_button, "clicked", G_CALLBACK(cmd_or_remove_pmu), (gpointer) "2");
 	g_signal_connect (data->menu_data_off, "activate", G_CALLBACK(cmd_or_remove_pmu), (gpointer) "2");
 
@@ -286,6 +287,9 @@ int main(int argc, char **argv)
 	g_signal_connect (data->exit_menuitem, "activate", G_CALLBACK(destroy), NULL);
 	g_signal_connect (data->about_menuitem, "activate", G_CALLBACK(about_ipdc), NULL);
 	g_signal_connect (data->ipdc, "destroy", G_CALLBACK(destroy), NULL);
+
+    g_signal_connect(data->attack_detection,"activate",G_CALLBACK(attack_detection_window),NULL);
+	g_signal_connect(data->data_vis, "activate", G_CALLBACK(data_vis_window), NULL);
 
 	/* Destroy builder, since we don't need it anymore */
 	g_object_unref(G_OBJECT(builder));
