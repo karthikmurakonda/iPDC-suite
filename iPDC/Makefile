@@ -43,6 +43,7 @@ FILE4 = ipdcLogo1.png
 FILE5 = logo.png
 FILE6 = iPDC.desktop
 
+
 CC = gcc
 LIBS = -lpthread
 LDLIBS=`pkg-config --cflags --libs gtk+-3.0`
@@ -56,9 +57,10 @@ SOURCES = \
 	parser.c parser.h \
 	dallocate.c dallocate.h \
 	align_sort.c align_sort.h \
-	ipdcGui.c ipdcGui.h 
+	ipdcGui.c ipdcGui.h \
+	attack_detection.c attack_detection.h
 
-OBJECTS =  ipdc.c recreate.o connections.o new_pmu_or_pdc.o parser.o dallocate.o align_sort.o ipdcGui.o 
+OBJECTS =  ipdc.c recreate.o connections.o new_pmu_or_pdc.o parser.o dallocate.o align_sort.o ipdcGui.o attack_detection.o
 
 CLEAN_OBJECTS =  recreate.o connections.o new_pmu_or_pdc.o parser.o dallocate.o align_sort.o ipdcGui.o iPDC.xml
 
