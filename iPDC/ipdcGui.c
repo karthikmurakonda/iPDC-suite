@@ -1096,7 +1096,7 @@ void fill_pdc_details (char *filePath)
 		     	gtk_widget_set_sensitive(GTK_WIDGET(data->remove_pdc_button), TRUE);
 		     	gtk_widget_set_sensitive(GTK_WIDGET(data->display_conn_table_button), TRUE);
 
-		    	gtk_widget_set_visible(GTK_WIDGET(data->menuitem2), TRUE);
+		    	// gtk_widget_set_visible(GTK_WIDGET(data->menuitem2), FALSE);
 	            	gtk_widget_set_visible(GTK_WIDGET(data->menu_conn_table), TRUE);
 		    	gtk_widget_set_visible(GTK_WIDGET(data->pdc_details_menuitem), TRUE);
 

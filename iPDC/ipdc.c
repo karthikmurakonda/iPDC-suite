@@ -47,7 +47,7 @@
 #include "ipdcGui.h"
 
 /* Common fixed path for storage of few common files */
-#define UI_fILE "/usr/local/share/iPDC/iPDC.xml"
+#define UI_fILE "/home/chasingcar/dev/iPDC-v1.3.1/iPDC/iPDC.ui"
 
 
 /* ---------------------------------------------------------------- */
@@ -143,7 +143,7 @@ int main(int argc, char **argv)
 	gtk_widget_set_sensitive(GTK_WIDGET(data->remove_pdc_button), FALSE);
 	gtk_widget_set_sensitive(GTK_WIDGET(data->display_conn_table_button), FALSE);
 
-	gtk_widget_set_visible(GTK_WIDGET(data->menuitem2), FALSE);
+	// gtk_widget_set_visible(GTK_WIDGET(data->menuitem2), TRUE);
 	gtk_widget_set_visible(GTK_WIDGET(data->menu_conn_table), FALSE);
 	gtk_widget_set_visible(GTK_WIDGET(data->pdc_details_menuitem), FALSE);
 
