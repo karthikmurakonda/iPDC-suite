@@ -86,6 +86,12 @@ struct _ChData
 	GtkWidget *time_lable;
 	GtkWidget *text_view;
 	GtkWidget *text_view1;
+	
+	/*Tools menu*/
+	GtkWidget *menuitem3;
+	GtkWidget *attack_detection;
+	GtkWidget *data_vis;
+	
 };
 
 /* ---------------------------------------------------------------- */
