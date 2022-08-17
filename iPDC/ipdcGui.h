@@ -60,6 +60,7 @@ struct _ChData
 	GtkWidget *add_pdc_button;
 	GtkWidget *remove_pdc_button;
 	GtkWidget *display_conn_table_button;
+	GtkWidget *utility_tools;
 	GtkWidget *exit_button;
 	
     	/* Manubar button widgets */

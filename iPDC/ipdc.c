@@ -47,6 +47,7 @@
 #include "ipdcGui.h"
 #include "attack_detection.h"
 #include "data_vis.h"
+#include "utility_tools.h"
 
 /* Common fixed path for storage of few common files */
 #define UI_fILE "./iPDC.ui"
@@ -123,6 +124,7 @@ int main(int argc, char **argv)
 		GW(menuitem3);
 		GW(attack_detection);
 		GW(data_vis);
+		GW(utility_tools);
 	#undef GW
 
 	/* Connect signals */
@@ -147,6 +149,7 @@ int main(int argc, char **argv)
 	gtk_widget_set_sensitive(GTK_WIDGET(data->add_pdc_button), FALSE);
 	gtk_widget_set_sensitive(GTK_WIDGET(data->remove_pdc_button), FALSE);
 	gtk_widget_set_sensitive(GTK_WIDGET(data->display_conn_table_button), FALSE);
+	//gtk_widget_set_sensitive(GTK_WIDGET(data->utility_tools), FALSE);
 
 	// gtk_widget_set_visible(GTK_WIDGET(data->menuitem2), TRUE);
 	gtk_widget_set_visible(GTK_WIDGET(data->menu_conn_table), FALSE);
@@ -258,6 +261,7 @@ int main(int argc, char **argv)
 	/* Signals Definitions*/
 	g_signal_connect (data->add_pmu_button, "clicked", G_CALLBACK(add_pmu), NULL);
 	g_signal_connect (data->menu_add_source, "activate", G_CALLBACK(add_pmu), NULL);
+	g_signal_connect(data->utility_tools, "activate", G_CALLBACK(utility_tools), NULL);
 
 	g_signal_connect (data->remove_pmu_button, "clicked", G_CALLBACK(cmd_or_remove_pmu), (gpointer) "1");
 	g_signal_connect (data->menu_remove_source, "activate", G_CALLBACK(cmd_or_remove_pmu), (gpointer) "1");
@@ -290,6 +294,7 @@ int main(int argc, char **argv)
 
     g_signal_connect(data->attack_detection,"activate",G_CALLBACK(attack_detection_window),NULL);
 	g_signal_connect(data->data_vis, "activate", G_CALLBACK(data_vis_window), NULL);
+	
 
 	/* Destroy builder, since we don't need it anymore */
 	g_object_unref(G_OBJECT(builder));

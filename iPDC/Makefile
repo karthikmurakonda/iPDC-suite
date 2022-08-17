@@ -59,11 +59,12 @@ SOURCES = \
 	align_sort.c align_sort.h \
 	ipdcGui.c ipdcGui.h \
 	attack_detection.c attack_detection.h \
-	data_vis.c data_vis.h
+	data_vis.c data_vis.h \
+	utility_tools.c utility_tools.h
 
-OBJECTS =  ipdc.c recreate.o connections.o new_pmu_or_pdc.o parser.o dallocate.o align_sort.o ipdcGui.o attack_detection.o data_vis.o
+OBJECTS =  ipdc.c recreate.o connections.o new_pmu_or_pdc.o parser.o dallocate.o align_sort.o ipdcGui.o attack_detection.o data_vis.o utility_tools.o
 
-CLEAN_OBJECTS =  recreate.o connections.o new_pmu_or_pdc.o parser.o dallocate.o align_sort.o ipdcGui.o iPDC.xml
+CLEAN_OBJECTS =  recreate.o connections.o new_pmu_or_pdc.o parser.o dallocate.o align_sort.o ipdcGui.o ~iPDC.xml
 
 PROGRAM = iPDC
 
