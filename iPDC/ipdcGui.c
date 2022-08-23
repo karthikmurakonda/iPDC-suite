@@ -37,6 +37,9 @@
 #include <cairo/cairo.h>
 #include <glib/gprintf.h>
 #include <ctype.h>
+
+#include <osm-gps-map.h>
+
 #include "ipdcGui.h"
 #include "global.h"
 #include "connections.h"

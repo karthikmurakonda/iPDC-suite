@@ -416,23 +416,6 @@ sends data frames.</property>
           </packing>
         </child>
         <child>
-          <object class="GtkTextView" id="text_view">
-            <property name="width-request">475</property>
-            <property name="height-request">375</property>
-            <property name="visible">True</property>
-            <property name="sensitive">False</property>
-            <property name="can-focus">False</property>
-            <property name="tooltip-text" translatable="yes">iPDC - A Free Phasor Data Concentrator.
-Supportive IEEE C37.118 Synchrophasor std.</property>
-            <property name="editable">False</property>
-            <property name="justification">fill</property>
-          </object>
-          <packing>
-            <property name="x">320</property>
-            <property name="y">165</property>
-          </packing>
-        </child>
-        <child>
           <object class="GtkTextView" id="text_view1">
             <property name="width-request">800</property>
             <property name="height-request">70</property>
@@ -490,7 +473,9 @@ Supportive IEEE C37.118 Synchrophasor std.</property>
             <property name="visible">True</property>
             <property name="can-focus">False</property>
             <property name="margin-top">8</property>
+            <property name="orientation">vertical</property>
             <property name="row-spacing">9</property>
+            <property name="row-homogeneous">True</property>
             <child>
               <object class="GtkButton" id="add_pmu_button">
                 <property name="label" translatable="yes">Add a Source Device</property>
@@ -509,7 +494,7 @@ and data frames would be received.</property>
               </packing>
             </child>
             <child>
-              <object class="GtkButton" id="utiliy_tools">
+              <object class="GtkButton" id="utility_tools">
                 <property name="label" translatable="yes">Utility tools</property>
                 <property name="width-request">284</property>
                 <property name="height-request">35</property>
@@ -645,6 +630,31 @@ which data frames are being received.</property>
           <packing>
             <property name="x">20</property>
             <property name="y">163</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkAlignment">
+            <property name="width-request">100</property>
+            <property name="height-request">80</property>
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <child>
+              <object class="GtkTextView" id="text_view">
+                <property name="width-request">475</property>
+                <property name="height-request">375</property>
+                <property name="visible">True</property>
+                <property name="sensitive">False</property>
+                <property name="can-focus">False</property>
+                <property name="tooltip-text" translatable="yes">iPDC - A Free Phasor Data Concentrator.
+Supportive IEEE C37.118 Synchrophasor std.</property>
+                <property name="editable">False</property>
+                <property name="justification">fill</property>
+              </object>
+            </child>
+          </object>
+          <packing>
+            <property name="x">320</property>
+            <property name="y">165</property>
           </packing>
         </child>
       </object>

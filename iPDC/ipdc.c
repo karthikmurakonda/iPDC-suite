@@ -261,7 +261,7 @@ int main(int argc, char **argv)
 	/* Signals Definitions*/
 	g_signal_connect (data->add_pmu_button, "clicked", G_CALLBACK(add_pmu), NULL);
 	g_signal_connect (data->menu_add_source, "activate", G_CALLBACK(add_pmu), NULL);
-	g_signal_connect(data->utility_tools, "activate", G_CALLBACK(utility_tools), NULL);
+	g_signal_connect(data->utility_tools, "clicked", G_CALLBACK(utility_tools), NULL);
 
 	g_signal_connect (data->remove_pmu_button, "clicked", G_CALLBACK(cmd_or_remove_pmu), (gpointer) "1");
 	g_signal_connect (data->menu_remove_source, "activate", G_CALLBACK(cmd_or_remove_pmu), (gpointer) "1");

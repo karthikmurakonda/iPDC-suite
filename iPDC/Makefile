@@ -46,8 +46,8 @@ FILE6 = iPDC.desktop
 
 CC = gcc
 LIBS = -lpthread
-LDLIBS=`pkg-config --cflags --libs gtk+-3.0`
-CFLAGS=-g -fcommon `pkg-config --cflags --libs gtk+-3.0`
+LDLIBS=`pkg-config --cflags --libs gtk+-3.0 osmgpsmap-1.0`
+CFLAGS=-g -fcommon `pkg-config --cflags --libs gtk+-3.0 osmgpsmap-1.0`
 
 SOURCES = \
 	ipdc.c \

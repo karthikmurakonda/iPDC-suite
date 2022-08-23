@@ -1,2 +1,2 @@
 #include<gtk/gtk.h>
-void utility_tools();
+void utility_tools(GtkButton *but, gpointer udata);
