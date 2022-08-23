@@ -1,15 +1,29 @@
 #include<gtk/gtk.h>
-#include<stdio.h>
+#include "osm-gps-map.h"
+
+#define UI_fILE "./utility_tools.ui"
 
 void utility_tools(GtkButton *but, gpointer udata)
 {
-    GtkWidget *new_window;
-    new_window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-    gtk_window_set_title(GTK_WINDOW(new_window), "Utility Tools");
-    gtk_window_set_default_size(GTK_WINDOW(new_window), 600, 400);
-    gtk_window_set_position(GTK_WINDOW(new_window), GTK_WIN_POS_CENTER);
-    gtk_container_set_border_width(GTK_CONTAINER(new_window), 10);
-    g_signal_connect (new_window, "destroy", G_CALLBACK(gtk_widget_destroy), new_window);
+    GtkBuilder *builder;
+    GError     *error = NULL;
+    builder = gtk_builder_new();
+    if(!gtk_builder_add_from_file(builder, UI_fILE, &error))
+	{
+		g_warning("%s", error->message);
+		g_free(error);
+	}
+    GtkWidget *window = GTK_WIDGET(gtk_builder_get_object(builder, "util_window"));
+    GtkContainer *map_container = GTK_CONTAINER(gtk_builder_get_object(builder, "map_layout"));
 
-    gtk_widget_show_all(new_window);
+    OsmGpsMap *map = g_object_new (OSM_TYPE_GPS_MAP,
+                                  "map-source", OSM_GPS_MAP_SOURCE_OPENSTREETMAP,
+                                  "tile-cache", "/tmp/",
+                                  NULL);
+    gtk_widget_set_size_request(GTK_WIDGET(map), 800, 600);
+
+    gtk_container_add(map_container, GTK_WIDGET(map));
+
+    gtk_widget_show_all(window);
+    gtk_main();
 }

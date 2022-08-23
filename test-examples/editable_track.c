@@ -16,7 +16,7 @@ main (int   argc,
 
 
 	map = g_object_new (OSM_TYPE_GPS_MAP,
-                      "map-source", OSM_GPS_MAP_SOURCE_OPENSTREETMAP,
+                      "map-source", OSM_GPS_MAP_SOURCE_GOOGLE_STREET,
                       "tile-cache", "/tmp/",
                        NULL);
 	gtk_container_add(GTK_CONTAINER(window), GTK_WIDGET(map));
