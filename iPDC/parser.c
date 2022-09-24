@@ -74,47 +74,10 @@
 
 
 /* pavan changes */
-/* variables declared */
+/* variables declared of attack_detect function */
 float  SUM_OF_FREQUENCY=0;
 float COUNT=0;
-float THRESHOLD=25;
-double time_used;
 time_t START;
-
-void attack_detect(struct data_frame *df)
-{
-	COUNT++;
-    float CURR_FREQ=to_intconvertor(df->dpmu[0]->freq);
-	SUM_OF_FREQUENCY+=CURR_FREQ;
-	float FREQ_AVG=SUM_OF_FREQUENCY/(COUNT*1.0f);
-	float DETECT_PERCENT=(abs(FREQ_AVG-CURR_FREQ)/(FREQ_AVG*1.0f))*100;
-
-	printf("Detect_percent: %f\n",DETECT_PERCENT);
-	printf("frequency average: %f\n",FREQ_AVG);
-
-
-	if(DETECT_PERCENT>THRESHOLD)
-		printf("ATTACK DETECTED\n");
-	else
-		printf("NO PROBLEM\n");
-	
-	if(COUNT==1)
-		time(&START);
-
-	time_t END;
-	time(&END);
-	
-    time_used = difftime(END,START);
-	printf("time used %lf\n",time_used);
-	
-
-    if(time_used > 60)
-    {
-        time(&START);
-        SUM_OF_FREQUENCY=CURR_FREQ;
-        COUNT=1;
-    }
-}
 /* pavan changes */
 
 
@@ -1319,7 +1282,7 @@ int dataparser(unsigned char data[]) {
 	}  
 	
 	/*pavan changes*/
-	attack_detect(df);
+	attack_detect(df,&START,&COUNT,&SUM_OF_FREQUENCY);
 	/*pavan changes*/
 
 	// temp code 
