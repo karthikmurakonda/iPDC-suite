@@ -54,6 +54,7 @@
 #include  <stdlib.h> 
 #include  <pthread.h>
 #include  <stdint.h>
+#include  <time.h>
 #include  "parser.h"
 #include  "global.h" 
 #include  "dallocate.h" 
@@ -61,6 +62,7 @@
 #include  "connections.h"
 #include  "recreate.h"
 #include  "utility_tools.h"
+#include  "Attack_detect.h"
 
 /* ----------------------------------------------------------------------------	*/
 /* FUNCTION  cfgparser():                                	     		*/
@@ -1269,8 +1271,15 @@ int dataparser(unsigned char data[]) {
 		//No match for configuration frame
 		printf("Configuration is not fresent for received data frame!\n");	
 	}  
-	printf("freq = %d\n",to_intconvertor(df->dpmu[0]->freq));
+	
+	/*pavan changes*/
+	//#include "Attack_detect.h"
+	//clock_t START = clock();
+	//attack_detect(df,START);
+	/*pavan changes*/
+
 	// temp code 
+	/* karthik changes*/
 	int freq = to_intconvertor(df->dpmu[0]->freq);
 	if(util_map != NULL){
 		g_red_image = gdk_pixbuf_new_from_file_at_size ("red.png", 24,24,NULL);
@@ -1286,6 +1295,7 @@ int dataparser(unsigned char data[]) {
 		gtk_widget_show_all(GTK_WIDGET(util_map));
 
 	}
+	/* karthik changes */
 
 	if((config_change == 14) ||(config_change == 10)) 
 		return config_change;
