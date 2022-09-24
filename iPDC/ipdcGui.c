@@ -2182,12 +2182,13 @@ void ipdc_setup_fileSelector (GtkWidget *widget, gpointer udata)
 							NULL);
 	
 	res = gtk_dialog_run(GTK_DIALOG(ipdc_setup_window));
+	printf("res = %d", res);
 
 	if(res == GTK_RESPONSE_ACCEPT)
 	{
 		char *filename;
 		filename = gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(ipdc_setup_window));
-		strcpy(ipdcFilePath, filename);
+		g_print("File selected: %s\n", filename);
 		view_setup_file(filename);
 		g_free(filename);
 	}
@@ -2224,7 +2225,7 @@ void view_setup_file (char *filename)
 
 	gtk_widget_destroy(ipdc_setup_window);
 
-	fp1 = fopen(s, "rb");
+	fp1 = fopen(filename, "rb");
 
 	if (fp1 == NULL)
 	{
@@ -2279,7 +2280,7 @@ void view_setup_file (char *filename)
 		fclose (fp1);
 
 		/* Open the iPDC Setup File in read mode */
-		fp1 = fopen(s, "rb");
+		fp1 = fopen(filename, "rb");
 
 		/* If its available, then create a new dialog window for displaying the iPDC details. */
 		setup_display_window = gtk_dialog_new ();
@@ -2296,7 +2297,7 @@ void view_setup_file (char *filename)
 		gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window), GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
 
 		/* The dialog window is created with a vbox packed into it */
-		gtk_box_pack_start (GTK_BOX (GTK_DIALOG(setup_display_window)), scrolled_window, TRUE, TRUE, 0);
+		gtk_box_pack_start (gtk_dialog_get_content_area(setup_display_window), scrolled_window, TRUE, TRUE, 0);
 		gtk_widget_show (scrolled_window);
 
 		/* Create a table of ? by 2 squares */
@@ -2543,8 +2544,8 @@ void view_setup_file (char *filename)
 		/* This makes it so the ok_button is the default. */
 		gtk_widget_set_can_default (cancel_button, TRUE);
 		gtk_widget_set_can_default (apply_button, TRUE);
-		gtk_box_pack_start (gtk_dialog_get_action_area, apply_button, TRUE, TRUE, 0);
-		gtk_box_pack_start (gtk_dialog_get_action_area, cancel_button, TRUE, TRUE, 0);
+		gtk_box_pack_start (gtk_dialog_get_action_area(setup_display_window), apply_button, TRUE, TRUE, 0);
+		gtk_box_pack_start (gtk_dialog_get_action_area(setup_display_window), cancel_button, TRUE, TRUE, 0);
 
 		/* This grabs this button to be the default button. Simply hitting the "Enter" key will cause this button to activate. */
 		gtk_widget_grab_default (cancel_button);

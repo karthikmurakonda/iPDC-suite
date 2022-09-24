@@ -319,10 +319,10 @@ void* connect_pmu_tcp(void *temp) {
 
 						continue;		
 					}
-					if (sendto(DB_sockfd,tcp_BUF, MAXBUFLEN-1, 0,
-							(struct sockaddr *)&DB_Server_addr,sizeof(DB_Server_addr)) == -1) {
-						perror("sendto");
-					}
+					// if (sendto(DB_sockfd,tcp_BUF, MAXBUFLEN-1, 0,
+					// 		(struct sockaddr *)&DB_Server_addr,sizeof(DB_Server_addr)) == -1) {
+					// 	perror("sendto");
+					// }
 
 					tcp_BUF[bytes_read] = '\0';
 					PMU_process_TCP(tcp_BUF,tcp_sockfd);

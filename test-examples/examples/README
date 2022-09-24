@@ -1,0 +1,17 @@
+osm-gps-map example applications
+ * ./mapviewer
+   C based demo app with many options. See '--help' for a list. Note, this
+   must be executed from the examples directory so it can find the mapviewer.ui
+   file.
+ * ./polygon
+   This example demonstrates editable polygons. Vertex points can be dragged. 
+   Clicking mid-points divides the line and creates another vertex.
+ * ./mapviewer.py
+   Python version of the C demo app, with examples showing how to do custom
+   layers.
+ * ./mapviewer.js
+   Javascript example using seed + gobject-introspection. If running uninstalled,
+   you probbably need to tell GObject introspection where to find the
+   bindings. Do the following from the example directory
+    # export LD_LIBRARY_PATH=../src/.libs/
+    # export GI_TYPELIB_PATH=../src/

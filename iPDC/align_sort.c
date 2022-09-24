@@ -296,21 +296,16 @@ void assign_df_to_TSB(struct data_frame *df,int index) {
 
 void dispatch(int index) {
 
-	int size,flag = 0;
+	int size;
 	sort_data_inside_TSB(index);
 	dataframe = NULL;	 
 	pthread_mutex_lock(&mutex_Upper_Layer_Details);
 	struct Upper_Layer_Details *temp_pdc = ULfirst;
+	size = create_dataframe(index);	
 
 	while(temp_pdc != NULL ) {
 
 		if((temp_pdc->UL_upper_pdc_cfgsent == 1) && (temp_pdc->UL_data_transmission_off == 0)) {			
-
-			if(flag == 0) {
-
-				size = create_dataframe(index);	
-				flag = 1;
-			}
 
 			if(temp_pdc->config_change == 1) {
 

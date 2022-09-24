@@ -60,7 +60,7 @@
 #include  "align_sort.h"
 #include  "connections.h"
 #include  "recreate.h"
-
+#include  "utility_tools.h"
 
 /* ----------------------------------------------------------------------------	*/
 /* FUNCTION  cfgparser():                                	     		*/
@@ -1269,6 +1269,23 @@ int dataparser(unsigned char data[]) {
 		//No match for configuration frame
 		printf("Configuration is not fresent for received data frame!\n");	
 	}  
+	printf("freq = %d\n",to_intconvertor(df->dpmu[0]->freq));
+	// temp code 
+	int freq = to_intconvertor(df->dpmu[0]->freq);
+	if(util_map != NULL){
+		g_red_image = gdk_pixbuf_new_from_file_at_size ("red.png", 24,24,NULL);
+    	g_green_image = gdk_pixbuf_new_from_file_at_size ("green.png", 24,24,NULL);
+		if(g_last_image != 0){
+		osm_gps_map_image_remove(util_map, g_last_image);
+		}
+		if (freq > 300){
+			g_last_image = osm_gps_map_image_add(util_map,15.518597, 74.925584, g_green_image);
+		}else{
+			g_last_image = osm_gps_map_image_add(util_map,15.518597, 74.925584, g_green_image);
+		}
+		gtk_widget_show_all(GTK_WIDGET(util_map));
+
+	}
 
 	if((config_change == 14) ||(config_change == 10)) 
 		return config_change;
