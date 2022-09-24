@@ -72,6 +72,52 @@
 /* also in the file `cfg.bin` by calling 					*/
 /* ----------------------------------------------------------------------------	*/
 
+
+/* pavan changes */
+/* variables declared */
+float  SUM_OF_FREQUENCY=0;
+float COUNT=0;
+float THRESHOLD=25;
+double time_used;
+time_t START;
+
+void attack_detect(struct data_frame *df)
+{
+	COUNT++;
+    float CURR_FREQ=to_intconvertor(df->dpmu[0]->freq);
+	SUM_OF_FREQUENCY+=CURR_FREQ;
+	float FREQ_AVG=SUM_OF_FREQUENCY/(COUNT*1.0f);
+	float DETECT_PERCENT=(abs(FREQ_AVG-CURR_FREQ)/(FREQ_AVG*1.0f))*100;
+
+	printf("Detect_percent: %f\n",DETECT_PERCENT);
+	printf("frequency average: %f\n",FREQ_AVG);
+
+
+	if(DETECT_PERCENT>THRESHOLD)
+		printf("ATTACK DETECTED\n");
+	else
+		printf("NO PROBLEM\n");
+	
+	if(COUNT==1)
+		time(&START);
+
+	time_t END;
+	time(&END);
+	
+    time_used = difftime(END,START);
+	printf("time used %lf\n",time_used);
+	
+
+    if(time_used > 60)
+    {
+        time(&START);
+        SUM_OF_FREQUENCY=CURR_FREQ;
+        COUNT=1;
+    }
+}
+/* pavan changes */
+
+
 void cfgparser(unsigned char st[]){ 
 
 	unsigned char *s;
@@ -1273,9 +1319,7 @@ int dataparser(unsigned char data[]) {
 	}  
 	
 	/*pavan changes*/
-	//#include "Attack_detect.h"
-	//clock_t START = clock();
-	//attack_detect(df,START);
+	attack_detect(df);
 	/*pavan changes*/
 
 	// temp code 
