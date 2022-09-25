@@ -73,14 +73,6 @@
 /* ----------------------------------------------------------------------------	*/
 
 
-/* pavan changes */
-/* variables declared of attack_detect function */
-float  SUM_OF_FREQUENCY=0;
-float COUNT=0;
-time_t START;
-/* pavan changes */
-
-
 void cfgparser(unsigned char st[]){ 
 
 	unsigned char *s;
