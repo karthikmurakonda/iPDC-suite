@@ -2,9 +2,10 @@
 #include<time.h>
 #include<stdio.h>
 #include<stdlib.h>
+#include<gtk/gtk.h>
 #include "parser.h"
 
-void attack_detect(struct data_frame *df,time_t* START,float* COUNT,float* SUM_OF_FREQUENCY)
+gboolean attack_detect(struct data_frame *df,time_t* START,float* COUNT,float* SUM_OF_FREQUENCY)
 {
     // printf("freq: %d\n",to_intconvertor(&(df->dpmu[0]->fmt->freq)));
     // printf("analog: %d\n",to_intconvertor(&(df->dpmu[0]->fmt->analog)));
@@ -16,18 +17,20 @@ void attack_detect(struct data_frame *df,time_t* START,float* COUNT,float* SUM_O
 	*SUM_OF_FREQUENCY+=CURR_FREQ;
 	float FREQ_AVG=*SUM_OF_FREQUENCY/(*COUNT*1.0f);
 	float DETECT_PERCENT=(abs(FREQ_AVG-CURR_FREQ)/(FREQ_AVG*1.0f))*100;
-
+    gboolean detect;
     /* detecting based on thershold */
-    float THRESHOLD=70;
+    float THRESHOLD=60;
 	if(DETECT_PERCENT>THRESHOLD)
     {
+        detect=FALSE;
         printf("\033[0;31m");
         printf("ATTACK DETECTED!");
         printf("\033[0m");
-        printf(" Detect_percent: %f\n",DETECT_PERCENT);
+        // intf(" Detect_percent: %f\n",DETECT_PERCENT);
     }
 	else
     {
+        detect=TRUE;
         printf("\033[0;32m");
         printf("NO PROBLEM :)\n");
         printf("\033[0m"); 
@@ -51,6 +54,7 @@ void attack_detect(struct data_frame *df,time_t* START,float* COUNT,float* SUM_O
         *SUM_OF_FREQUENCY=CURR_FREQ;
         *COUNT=1;
     }
+    return detect;
 }
 
 /* pavan changes */

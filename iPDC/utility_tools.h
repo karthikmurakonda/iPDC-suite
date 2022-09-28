@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include<gtk/gtk.h>
 #include "osm-gps-map.h"
 
@@ -7,10 +8,6 @@
 #define CH_GET_WIDGET(builder, name, data) \
 		CH_GET_OBJECT(builder, name, GTK_WIDGET, data)
 
-OsmGpsMap *util_map;
-GtkWidget *window;
-static GdkPixbuf *g_red_image = NULL;
-static GdkPixbuf *g_green_image = NULL;
-static OsmGpsMapImage *g_last_image = NULL;
+
 
 void utility_tools(GtkButton *but, gpointer udata);
