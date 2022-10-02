@@ -49,31 +49,30 @@ LIBS = -lpthread
 LDLIBS=`pkg-config --cflags --libs gtk+-3.0 osmgpsmap-1.0`
 CFLAGS=-g -I./inc -fcommon `pkg-config --cflags --libs gtk+-3.0 osmgpsmap-1.0`
 
-OBJECTS =  ipdc.c recreate.o connections.o new_pmu_or_pdc.o parser.o dallocate.o align_sort.o ipdcGui.o attack_detection.o data_vis.o utility_tools.o Attack_detect.o
-
-CLEAN_OBJECTS =  recreate.o connections.o new_pmu_or_pdc.o parser.o dallocate.o align_sort.o ipdcGui.o ~iPDC.xml
-
 PROGRAM = iPDC
+SOURCE_FILES = $(wildcard src/*.c)
+OBJECT_FILES = $(patsubst src/%.c, bin/%.o, $(SOURCE_FILES))
+CLEAN_OBJECTS = $(wildcard bin/*.o) $(PROGRAM)
 
-COMPILE = $(CC) 
+all: $(PROGRAM)
 
-$(PROGRAM): $(OBJECTS)
-	$(CC) $(OBJECTS) $(LDLIBS) $(LIBS) -o $@
+$(PROGRAM): $(OBJECT_FILES)
+	$(CC) $(CFLAGS) $(OBJECT_FILES) -o $(PROGRAM) $(LDLIBS)
 
-%.o: %.c
-	$(COMPILE) $(CFLAGS) -c $<
+bin/%.o: src/%.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
 
 install: $(PROGRAM)
-	gtk-builder-convert iPDC.glade iPDC.xml
+	gtk-builder-convert assets/iPDC.glade assets/iPDC.xml
 	mkdir -p $(CREATE_DIR)iPDC/$
-	cp -f $(FILE1) $(CREATE_DIR)iPDC/$(FILE1)
-	cp -f images/$(FILE2) $(CREATE_DIR)iPDC/$(FILE2)
-	cp -f images/$(FILE3) $(CREATE_DIR)iPDC/$(FILE3)
-	cp -f images/$(FILE4) $(CREATE_DIR)iPDC/$(FILE4)
-	cp -f images/$(FILE5) $(CREATE_DIR)iPDC/$(FILE5)
-	cp -f images/$(FILE6) $(DESKTOP_DIR)/$(FILE6)
+	cp -f assets/$(FILE1) $(CREATE_DIR)iPDC/$(FILE1)
+	cp -f assets/$(FILE2) $(CREATE_DIR)iPDC/$(FILE2)
+	cp -f assets/$(FILE3) $(CREATE_DIR)iPDC/$(FILE3)
+	cp -f assets/$(FILE4) $(CREATE_DIR)iPDC/$(FILE4)
+	cp -f assets/$(FILE5) $(CREATE_DIR)iPDC/$(FILE5)
+	cp -f assets/$(FILE6) $(DESKTOP_DIR)/$(FILE6)
 	cp $(PROGRAM) $(INSTALL_PREFIX)bin/$(PROGRAM)
-#	rm -f $(CLEAN_OBJECTS) $(PROGRAM)
 
 uninstall:
 	rm -f $(INSTALL_PREFIX)bin/$(PROGRAM)

@@ -5,12 +5,6 @@
 #include "osm-gps-map.h"
 #include "Attack_detect.h"
 
-typedef struct{
-    OsmGpsMap *util_map;
-    GdkPixbuf *g_red_image;
-    GdkPixbuf *g_green_image;
-    OsmGpsMapImage *g_last_image;
-} myParameters; 
 
 gboolean update_images(gpointer* pars){
     myParameters* parameters = (myParameters*) pars;
@@ -42,7 +36,7 @@ gboolean update_images(gpointer* pars){
         if (green){
             parameters->g_last_image = osm_gps_map_image_add(parameters->util_map,15.518597, 74.925584, parameters->g_green_image);
         }else{
-            parameters->g_last_image = osm_gps_map_image_add(parameters->util_map,15.518597, 74.925584, parameters->g_green_image);
+            parameters->g_last_image = osm_gps_map_image_add(parameters->util_map,15.518597, 74.925584, parameters->g_red_image);
         }
 
     }
