@@ -47,21 +47,7 @@ FILE6 = iPDC.desktop
 CC = gcc
 LIBS = -lpthread
 LDLIBS=`pkg-config --cflags --libs gtk+-3.0 osmgpsmap-1.0`
-CFLAGS=-g -fcommon `pkg-config --cflags --libs gtk+-3.0 osmgpsmap-1.0`
-
-SOURCES = \
-	ipdc.c \
-	recreate.c recreate.h \
-	connections.c connections.h \
-	new_pmu_or_pdc.c new_pmu_or_pdc.h \
-	parser.c parser.h \
-	dallocate.c dallocate.h \
-	align_sort.c align_sort.h \
-	ipdcGui.c ipdcGui.h \
-	attack_detection.c attack_detection.h \
-	data_vis.c data_vis.h \
-	utility_tools.c utility_tools.h \
-	Attack_detect.c Attack_detect.h
+CFLAGS=-g -I./inc -fcommon `pkg-config --cflags --libs gtk+-3.0 osmgpsmap-1.0`
 
 OBJECTS =  ipdc.c recreate.o connections.o new_pmu_or_pdc.o parser.o dallocate.o align_sort.o ipdcGui.o attack_detection.o data_vis.o utility_tools.o Attack_detect.o
 

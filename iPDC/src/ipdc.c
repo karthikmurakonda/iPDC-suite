@@ -50,7 +50,7 @@
 #include "utility_tools.h"
 
 /* Common fixed path for storage of few common files */
-#define UI_fILE "./iPDC.ui"
+#define UI_fILE "../assets/iPDC.ui"
 //#define UI_fILE "/usr/local/share/iPDC/iPDC.xml"
 
 

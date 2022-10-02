@@ -4,7 +4,7 @@
 #include "parser.h"
 #include "Attack_detect.h"
 
-#define UI_fILE "./utility_tools.ui"
+#define UI_fILE "../assets/utility_tools.ui"
 
 
 
