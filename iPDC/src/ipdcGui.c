@@ -643,6 +643,7 @@ void final_pdc_setup_call()
 	gtk_widget_set_sensitive(GTK_WIDGET(data->add_pdc_button), TRUE);
 	gtk_widget_set_sensitive(GTK_WIDGET(data->remove_pdc_button), TRUE);
 	gtk_widget_set_sensitive(GTK_WIDGET(data->display_conn_table_button), TRUE);
+	gtk_widget_set_sensitive(GTK_WIDGET(data->utility_tools), TRUE);
 
 	// gtk_menu_attach_to_widget (GTK_MENU (data->menuitem2), GTK_WIDGET (data->ipdc), NULL);
 	// gtk_widget_show (data->ipdc);
@@ -1098,6 +1099,8 @@ void fill_pdc_details (char *filePath)
 		     	gtk_widget_set_sensitive(GTK_WIDGET(data->add_pdc_button), TRUE);
 		     	gtk_widget_set_sensitive(GTK_WIDGET(data->remove_pdc_button), TRUE);
 		     	gtk_widget_set_sensitive(GTK_WIDGET(data->display_conn_table_button), TRUE);
+				gtk_widget_set_sensitive(GTK_WIDGET(data->utility_tools), TRUE);
+
 
 		    	// gtk_widget_set_visible(GTK_WIDGET(data->menuitem2), FALSE);
 	            	gtk_widget_set_visible(GTK_WIDGET(data->menu_conn_table), TRUE);
