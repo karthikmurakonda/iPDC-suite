@@ -17,6 +17,13 @@
 //     osm_gps_map_image_add(map, lat, lon, image);
 // }
 
+// on closing the window kill the g_timeout_add
+void on_window_destroy(GtkWidget *widget, gpointer data)
+{
+    g_source_remove(GPOINTER_TO_UINT(data));
+    gtk_main_quit();
+}
+
 void utility_tools(GtkButton *but, gpointer udata)
 {
     OsmGpsMap *util_map;
@@ -41,7 +48,7 @@ void utility_tools(GtkButton *but, gpointer udata)
     
 
     util_map = g_object_new (OSM_TYPE_GPS_MAP,
-                                  "map-source", OSM_GPS_MAP_SOURCE_GOOGLE_HYBRID,
+                                  "map-source", OSM_GPS_MAP_SOURCE_OPENSTREETMAP,
                                   "tile-cache", "/tmp/",
                                   NULL);
     osm_gps_map_set_center_and_zoom (util_map, 15.4589, 75.0078, 10);
@@ -50,12 +57,12 @@ void utility_tools(GtkButton *but, gpointer udata)
     g_last_image =  osm_gps_map_image_add(util_map,15.518597, 74.925584, g_green_image);
     myParameters parameters = {util_map, g_red_image, g_green_image, g_last_image};
     gpointer data = (gpointer) &parameters;
-    g_timeout_add(20, (GSourceFunc) update_images, data);
+    guint pid = g_timeout_add(20, (GSourceFunc) update_images, data);
 
     gtk_widget_set_size_request(GTK_WIDGET(util_map), 600, 500);
 
     gtk_container_add(map_container, GTK_WIDGET(util_map));
-    g_signal_connect(window, "destroy", G_CALLBACK(gtk_widget_destroy), NULL);
+    g_signal_connect(window, "destroy", G_CALLBACK(on_window_destroy), GUINT_TO_POINTER(pid));
 
     gtk_widget_show_all(window);
     gtk_main();
