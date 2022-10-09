@@ -152,7 +152,7 @@ int main(int argc, char **argv)
 	gtk_widget_set_sensitive(GTK_WIDGET(data->display_conn_table_button), FALSE);
 	gtk_widget_set_sensitive(GTK_WIDGET(data->utility_tools), FALSE);
 
-	// gtk_widget_set_visible(GTK_WIDGET(data->menuitem2), TRUE);
+	gtk_widget_set_visible(GTK_WIDGET(data->menuitem2), FALSE);
 	gtk_widget_set_visible(GTK_WIDGET(data->menu_conn_table), FALSE);
 	gtk_widget_set_visible(GTK_WIDGET(data->pdc_details_menuitem), FALSE);
 
