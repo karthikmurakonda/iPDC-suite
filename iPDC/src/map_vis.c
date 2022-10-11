@@ -4,6 +4,7 @@
 #include "parser.h"
 #include "osm-gps-map.h"
 #include "Attack_detect.h"
+#include "Kmeans.h"
 
 
 gboolean update_images(gpointer* pars){
@@ -13,24 +14,16 @@ gboolean update_images(gpointer* pars){
         return TRUE;
     }
     int freq = to_intconvertor(df->dpmu[0]->freq);
-	gboolean green =attack_detect(df,&START,&COUNT,&SUM_OF_FREQUENCY);
-
-        // if(parameters->g_last_image != 0){
-        //     osm_gps_map_image_remove(parameters->util_map, parameters->g_last_image);
-        // }
-        // if (freq > 300){
-        //     parameters->g_last_image = osm_gps_map_image_add(parameters->util_map,15.518597, 74.925584, parameters->g_green_image);
-        // }else{
-        //     parameters->g_last_image = osm_gps_map_image_add(parameters->util_map,15.518597, 74.925584, parameters->g_red_image);
-        // }
-       if(parameters->g_last_image != 0){
-            osm_gps_map_image_remove(parameters->util_map, parameters->g_last_image);
-        }
-        if (green){
-            parameters->g_last_image = osm_gps_map_image_add(parameters->util_map,15.518597, 74.925584, parameters->g_green_image);
-        }else{
-            parameters->g_last_image = osm_gps_map_image_add(parameters->util_map,15.518597, 74.925584, parameters->g_red_image);
-        }
+	//gboolean green =attack_detect(df,&START,&COUNT,&SUM_OF_FREQUENCY);
+    gboolean green = kmeans(df,&count_A,&count_B,&count_C,&A,&B,&C);
+    if(parameters->g_last_image != 0){
+        osm_gps_map_image_remove(parameters->util_map, parameters->g_last_image);
+    }
+    if (green){
+        parameters->g_last_image = osm_gps_map_image_add(parameters->util_map,15.518597, 74.925584, parameters->g_green_image);
+    }else{
+        parameters->g_last_image = osm_gps_map_image_add(parameters->util_map,15.518597, 74.925584, parameters->g_red_image);
+    }
     gtk_widget_queue_draw(GTK_WIDGET(parameters->util_map));
     return TRUE;
 }
