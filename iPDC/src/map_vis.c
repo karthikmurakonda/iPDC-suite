@@ -5,6 +5,7 @@
 #include "osm-gps-map.h"
 #include "Attack_detect.h"
 #include "connections.h"
+#include "livechart.h"
 // #include "utility_tools.h"
 
 
@@ -63,8 +64,6 @@ gboolean update_images(gpointer* pars){
         df = df->dnext;
     }
     // }
-    
- 
 
  
 
