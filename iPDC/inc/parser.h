@@ -166,4 +166,6 @@ unsigned long int to_long_int_convertor(unsigned char array[]);
 
 uint16_t compute_CRC(unsigned char *message,int length);
 
+float decode_ieee_single(const void *v);
+
 /**************************************** End of File *******************************************************/

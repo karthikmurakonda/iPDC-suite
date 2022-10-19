@@ -63,6 +63,8 @@ struct Lower_Layer_Details {
 	int data_transmission_off;
 	int pmu_remove;
 	int request_cfg_frame;
+	float latitude;
+	float longitude;
 	struct Lower_Layer_Details *next;
 	struct Lower_Layer_Details *prev;
 

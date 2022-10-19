@@ -82,7 +82,7 @@
 /* created for each added lower layer PMU/PDC accoring to the protcol (TCP/UDP).*/
 /* ----------------------------------------------------------------------------	*/
 
-int add_PMU(char pmuid[], char ip[], char port[], char protocol[]) {
+int add_PMU(char pmuid[], char ip[], char port[], char protocol[], char latitude[], char longitude[]) {
 
 	int err;
 	int flag = 0;
@@ -161,6 +161,8 @@ int add_PMU(char pmuid[], char ip[], char port[], char protocol[]) {
 		temp_pmu->data_transmission_off = 0;
 		temp_pmu->pmu_remove = 0;
 		temp_pmu->request_cfg_frame = 0;
+		temp_pmu->latitude = atof(latitude);
+		temp_pmu->longitude = atof(longitude);
 		temp_pmu->next = NULL;
 		temp_pmu->prev = NULL;
 

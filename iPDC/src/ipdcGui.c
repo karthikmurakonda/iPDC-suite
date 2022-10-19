@@ -673,13 +673,16 @@ int add_pmu_validation (GtkButton *but, gpointer udata)
 	/* local variables */
 	int ret;
 	char *errmsg1, ip[20], tmp[4];
-	const char *text, *text1, *text2, *text3;
+	const char *text, *text1, *text2, *text3, *lattitude, *longitude;
 
 	/* Get the text entries filled by user */
 	text = gtk_entry_get_text(GTK_ENTRY(p_id));
 	text1 = gtk_entry_get_text(GTK_ENTRY(p_ip));
 	text2 = gtk_entry_get_text(GTK_ENTRY(p_port));
 	text3 = gtk_combo_box_text_get_active_text(GTK_COMBO_BOX(p_protocol));
+	lattitude = gtk_entry_get_text(GTK_ENTRY(p_lattitude));
+	longitude = gtk_entry_get_text(GTK_ENTRY(p_longitude));
+
 	memset(ip,'\0',20);
 	strcat(ip, text1);
 	strcpy (tmp, text3);
@@ -702,10 +705,22 @@ int add_pmu_validation (GtkButton *but, gpointer udata)
 		validation_result (errmsg1);		/* Show the unsuccess message to user */
 		return 0;
 	}
+	else if(atof(lattitude) > 90 || atof(lattitude) < -90)
+	{
+		errmsg1 = " Not a valid Lattitude of Source Device! Try again ";
+		validation_result (errmsg1);		/* Show the unsuccess message to user */
+		return 0;
+	}
+	else if(atof(longitude) > 180 || atof(longitude) < -180)
+	{
+		errmsg1 = " Not a valid Longitude of Source Device! Try again ";
+		validation_result (errmsg1);		/* Show the unsuccess message to user */
+		return 0;
+	}
 	else		/* Only if all the text_box entries were right */ 
 	{
 		/* call add_PMU() to actual add pmu/pdc and start communication */ 
-		ret = add_PMU((char *)text, (char *)text1, (char *)text2, (char *)text3);
+		ret = add_PMU((char *)text, (char *)text1, (char *)text2, (char *)text3, (char *)lattitude, (char *)longitude);
 		if (ret == 0)
 		{
 			/* Close/destroy the add_pmu_window */
@@ -1256,7 +1271,7 @@ void add_pmu (GtkButton *but, gpointer udata)
     	gtk_window_set_resizable ( GTK_WINDOW (add_pmu_window), FALSE);
 
 	/* Create a table of 5 by 2 squares. */
-	table = gtk_table_new (5, 2, FALSE);
+	table = gtk_table_new (7, 2, FALSE);
 
 	/* Set the spacing to 20 on x and 30 on y */
 	gtk_table_set_row_spacings (GTK_TABLE (table), 16);
@@ -1300,6 +1315,16 @@ void add_pmu (GtkButton *but, gpointer udata)
 	gtk_table_attach_defaults (GTK_TABLE (table), label, 0, 1, 4, 5);
 	gtk_widget_show (label);
 
+	label = gtk_label_new ("x-co-ordinate");
+		gtk_misc_set_alignment (GTK_MISC(label),0,0);
+	gtk_table_attach_defaults (GTK_TABLE (table), label, 0, 1, 5, 6);
+	gtk_widget_show (label);
+
+	label = gtk_label_new ("y-co-ordinate");
+		gtk_misc_set_alignment (GTK_MISC(label),0,0);
+	gtk_table_attach_defaults (GTK_TABLE (table), label, 0, 1, 6, 7);
+	gtk_widget_show (label);
+
 	/* Create text boxes for user to enter appropriate values */
 	p_id = gtk_entry_new();
 	gtk_entry_set_max_length ((GtkEntry *)p_id, 5);
@@ -1315,6 +1340,16 @@ void add_pmu (GtkButton *but, gpointer udata)
 	gtk_entry_set_max_length ((GtkEntry *)p_port, 5);
 	gtk_table_attach_defaults (GTK_TABLE (table), p_port, 1, 2, 3, 4);
 	gtk_widget_show (p_port);
+
+	p_lattitude = gtk_entry_new();
+	gtk_entry_set_max_length ((GtkEntry *)p_lattitude, 10);
+	gtk_table_attach_defaults (GTK_TABLE (table), p_lattitude, 1, 2, 5, 6);
+	gtk_widget_show (p_lattitude);
+
+	p_longitude = gtk_entry_new();
+	gtk_entry_set_max_length ((GtkEntry *)p_longitude, 10);
+	gtk_table_attach_defaults (GTK_TABLE (table), p_longitude, 1, 2, 6, 7);
+	gtk_widget_show (p_longitude);
 
 	/* Create combo boxe for user with some fixed values */
 	p_protocol = gtk_combo_box_text_new ();
