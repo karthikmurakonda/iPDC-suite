@@ -9,5 +9,4 @@ typedef struct{
 } myParameters; 
 
 
-
 gboolean update_images(gpointer* pars);

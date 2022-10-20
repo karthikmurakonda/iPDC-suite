@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include<gtk/gtk.h>
 #include "osm-gps-map.h"
+#include "livechart.h"
 
 /* Convenience macros for obtaining objects from UI file */
 #define CH_GET_OBJECT(builder, name, type, data) \
@@ -24,14 +25,11 @@ struct _UtData
 	GtkWidget *dimmension;
 	OsmGpsMap *util_map;
 	GtkContainer *map_layout;
+	GtkContainer *graph_layout;
 };
 
 UtData *utdata;
-
-/* UI variables */
-int curr_measurement = 0;
-int algorithm =0;
-int dimmensions = 0;
+LiveChartSerie *serie;
 
 
 

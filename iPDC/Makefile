@@ -46,7 +46,7 @@ FILE6 = iPDC.desktop
 
 CC = gcc
 LIBS = -lpthread
-LDLIBS=`pkg-config --cflags --libs gtk+-3.0 osmgpsmap-1.0 gee-0.8`
+LDLIBS=`pkg-config --cflags --libs gtk+-3.0 osmgpsmap-1.0 gee-0.8` lib/liblivechart.so lib/liblivechart_static.a -Wl,--rpath=./lib
 CFLAGS=-g -I./inc -I./lib -fcommon `pkg-config --cflags --libs gtk+-3.0 osmgpsmap-1.0 gee-0.8`
 
 PROGRAM = iPDC
@@ -57,7 +57,7 @@ CLEAN_OBJECTS = $(wildcard bin/*.o) $(PROGRAM)
 all: $(PROGRAM)
 
 $(PROGRAM): $(OBJECT_FILES)
-	$(CC) $(CFLAGS) $(OBJECT_FILES) -o $(PROGRAM) $(LDLIBS)
+	$(CC) $(CFLAGS) $(OBJECT_FILES) -o $(PROGRAM) $(LDLIBS) 
 
 bin/%.o: src/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
