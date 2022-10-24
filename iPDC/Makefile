@@ -57,7 +57,7 @@ CLEAN_OBJECTS = $(wildcard bin/*.o) $(PROGRAM)
 all: $(PROGRAM)
 
 $(PROGRAM): $(OBJECT_FILES)
-	$(CC) $(CFLAGS) $(OBJECT_FILES) -o $(PROGRAM) $(LDLIBS)
+	$(CC) $(CFLAGS) $(OBJECT_FILES) -o $(PROGRAM) $(LDLIBS) -lm
 
 bin/%.o: src/%.c
 	$(CC) $(CFLAGS) -c $< -o $@

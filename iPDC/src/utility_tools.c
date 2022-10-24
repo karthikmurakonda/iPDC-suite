@@ -53,7 +53,7 @@ void utility_tools(GtkButton *but, gpointer udata)
                                   NULL);
     osm_gps_map_set_center_and_zoom (util_map, 15.4589, 75.0078, 10);
 
-    g_last_image =  osm_gps_map_image_add(util_map,15.4589, 75.0078, g_red_image);
+    //g_last_image =  osm_gps_map_image_add(util_map,15.4589, 75.0078, g_red_image);
     g_last_image =  osm_gps_map_image_add(util_map,15.518597, 74.925584, g_green_image);
     myParameters parameters = {util_map, g_red_image, g_green_image, g_last_image};
     gpointer data = (gpointer) &parameters;
