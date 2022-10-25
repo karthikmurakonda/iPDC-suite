@@ -20,9 +20,9 @@ gboolean update_images(gpointer* pars){
         return TRUE;
     }
     int freq = to_intconvertor(df->dpmu[0]->freq);
-	//gboolean green =attack_detect(df,&START,&COUNT,&SUM_OF_FREQUENCY);
+	gboolean green =attack_detect(df);
     //printf("map_vis A: %Lf, B: %Lf,C: %Lf\n",A,B,C);
-    gboolean green = kmeans(df);
+    //gboolean green = kmeans(df);
     //DTWdistance(df,&result);
     if(parameters->g_last_image != 0){
         osm_gps_map_image_remove(parameters->util_map, parameters->g_last_image);
