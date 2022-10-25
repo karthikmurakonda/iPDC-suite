@@ -10,9 +10,6 @@
 #define RED_IMAGE "./assets/red.png"
 #define GREEN_IMAGE "./assets/green.png"
 
-int curr_measurement = 0;
-int algorithm =0;
-int dimmensions = 0;
 
 // void change_image(OsmGpsMap *map, float lat, float lon, OsmGpsMapImage *image)
 // {
@@ -38,7 +35,7 @@ void on_frequency_clicked(GtkButton *but, gpointer udata)
     gtk_widget_set_sensitive(utdata->frequency, FALSE);
     gtk_widget_set_sensitive(utdata->attack_detection, TRUE);
 
-    // printf("Frequency\n");
+    printf("Frequency\n");
 }
 
 // on clicking the button attack_detection
@@ -51,7 +48,7 @@ void on_attack_detection_clicked(GtkButton *but, gpointer udata)
 
     gtk_widget_show(utdata->algorithm);
     gtk_widget_show(utdata->dimmension);
-    // printf("Attack Detection\n");
+    printf("Attack Detection\n");
 }
 
 // on clicking the button voltage
@@ -63,7 +60,7 @@ void on_voltage_clicked(GtkButton *but, gpointer udata)
     gtk_widget_set_sensitive(utdata->voltage, FALSE);
     gtk_widget_set_sensitive(utdata->frequency, TRUE);
     gtk_widget_set_sensitive(utdata->attack_detection, TRUE);
-    // printf("Voltage\n");
+    printf("Voltage\n");
 }
 
 void utility_tools(GtkButton *but, gpointer udata)
@@ -114,6 +111,9 @@ void utility_tools(GtkButton *but, gpointer udata)
     g_last_image = osm_gps_map_image_add(utdata->util_map, 15.4589, 75.0078, g_red_image);
     g_last_image = osm_gps_map_image_add(utdata->util_map, 15.518597, 74.925584, g_green_image);
 
+    curr_measurement = 0;
+    algorithm = 0;
+    dimmension = 0;
     myParameters parameters = {utdata->util_map, g_red_image, g_green_image, g_last_image};
     gpointer data = (gpointer)&parameters;
     guint pid = g_timeout_add(20, (GSourceFunc)update_images, data);
