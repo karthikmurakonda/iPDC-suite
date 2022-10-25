@@ -23,13 +23,11 @@ gboolean update_images(gpointer* pars){
     }
     if (curr_measurement==0)
     {
-        int n = df->num_pmu;
-        if (n==0)  return TRUE;
         int i = 0;
-        int freq;
-        while (i < n){
-            freq = to_intconvertor(df->dpmu[i]->freq)-200;
-            live_chart_serie_add(serie, freq);
+        float freq;
+        while (df!=NULL){
+            freq = to_intconvertor(df->dpmu[i]->freq)*0.001+50;
+            live_chart_serie_add(serie, freq*1e-1);
             loops++;
             printf("loops: %d\n", loops);
             id = to_intconvertor(TSB[0].idlist[i].idcode);
@@ -60,14 +58,14 @@ gboolean update_images(gpointer* pars){
                 }else{
                     parameters->g_last_image = osm_gps_map_image_add(parameters->util_map,lat, lon, parameters->g_red_image);
                 }
-               if(parameters->g_last_image != 0){
-                    // osm_gps_map_image_remove(parameters->util_map, parameters->g_last_image);
-                }
-                if (green){
-                    parameters->g_last_image = osm_gps_map_image_add(parameters->util_map,15.518597, 74.925584, parameters->g_green_image);
-                }else{
-                    parameters->g_last_image = osm_gps_map_image_add(parameters->util_map,15.518597, 74.925584, parameters->g_red_image);
-                }
+            //    if(parameters->g_last_image != 0){
+            //         // osm_gps_map_image_remove(parameters->util_map, parameters->g_last_image);
+            //     }
+            //     if (green){
+            //         parameters->g_last_image = osm_gps_map_image_add(parameters->util_map,15.518597, 74.925584, parameters->g_green_image);
+            //     }else{
+            //         parameters->g_last_image = osm_gps_map_image_add(parameters->util_map,15.518597, 74.925584, parameters->g_red_image);
+            //     }
             }
             df = df->dnext;
             i++;
