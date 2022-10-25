@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <gtk/gtk.h>
 #include "align_sort.h"
 #include "map_vis.h"
 #include "parser.h"
@@ -8,7 +9,9 @@
 #include "Kmeans.h"
 #include "Dynamic_time_warping.h"
 
-gboolean value = true;
+/*used for DTW*/
+int result=1;
+/*used for DTW*/
 
 gboolean update_images(gpointer* pars){
     myParameters* parameters = (myParameters*) pars;
@@ -19,9 +22,8 @@ gboolean update_images(gpointer* pars){
     int freq = to_intconvertor(df->dpmu[0]->freq);
 	//gboolean green =attack_detect(df,&START,&COUNT,&SUM_OF_FREQUENCY);
     //printf("map_vis A: %Lf, B: %Lf,C: %Lf\n",A,B,C);
-    //gboolean green = kmeans(df,&count_A,&count_B,&count_C,&A,&B,&C);
-    DTWdistance(df,&value);
-    gboolean green=value;
+    gboolean green = kmeans(df);
+    //DTWdistance(df,&result);
     if(parameters->g_last_image != 0){
         osm_gps_map_image_remove(parameters->util_map, parameters->g_last_image);
     }

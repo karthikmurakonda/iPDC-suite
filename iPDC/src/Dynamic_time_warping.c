@@ -1,4 +1,3 @@
-
 #include "parser.h"
 #include <stdio.h>
 #include <math.h>
@@ -11,11 +10,11 @@ int count_track1=0;
 int count_track2=0;
 int flag=0;
 
-void DTWdistance(struct data_frame *df,gboolean *result)
+void DTWdistance(struct data_frame *df,int *result)
 {
     float CURR_FREQ = 50 + to_intconvertor(df->dpmu[0]->freq)*1e-3;
-    //printf("count1: %d\ncount2: %d\n",count_track1,count_track2);
-    //printf("curr_freq: %f\n",CURR_FREQ);
+    // printf("count1: %d\ncount2: %d\n",count_track1,count_track2);
+    // printf("curr_freq: %f\n",CURR_FREQ);
     if(count_track1==0)
     {
         if(flag==0)
@@ -66,18 +65,26 @@ void DTWdistance(struct data_frame *df,gboolean *result)
             for(int j=1;j<501;j++)
             {
                 float cost=fabs(freq1[i-1]-freq2[j-1]);
-                //printf("cost: %f",cost);
+                // printf("cost: %f",cost);
                 DTW[i][j]=cost+fmin(DTW[i][j-1],fmin(DTW[i-1][j],DTW[i-1][j-1]));
-                //printf(" DTW[%d][%d]: %f\n",i,j,DTW[i][j]);
+                // printf(" DTW[%d][%d]: %f\n",i,j,DTW[i][j]);
             }
         }
 
         printf("DTWdistance: %f\n",DTW[500][500]);
-        if(DTW[500][500]>=35) *result=false;
-        else *result=true;
-        free(freq1);
-        free(freq2);
+        if(DTW[500][500]>=35)
+        {
+            free(freq2);
+            *result=0;
+        }             
+        else
+        {
+            long double *temp=freq1;
+            freq1=freq2;
+            free(temp);
+            *result=1;
+        }
         free(DTW);
-        count_track1=0;
+        count_track1=1;
     }
 }
