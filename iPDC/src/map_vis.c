@@ -1,4 +1,6 @@
 #include <stdlib.h>
+#include <pthread.h>
+#include "global.h"
 #include "align_sort.h"
 #include "map_vis.h"
 #include "parser.h"
@@ -15,6 +17,8 @@ int loops = 0;
 gboolean update_images(gpointer* pars){
     int match=0,id;
     myParameters* parameters = (myParameters*) pars;
+
+    pthread_mutex_lock(&mutex_on_TSB);
     struct data_frame *df = TSB[0].first_data_frame;
     struct Lower_Layer_Details *LLptr;
 
@@ -23,14 +27,15 @@ gboolean update_images(gpointer* pars){
     }
     if (curr_measurement==0)
     {
-        int i = 0;
+        int i = 0, k = 0;
         float freq;
         while (df!=NULL){
             freq = to_intconvertor(df->dpmu[i]->freq)*0.001+50;
             live_chart_serie_add(serie, freq*1e-1);
             loops++;
             printf("loops: %d\n", loops);
-            id = to_intconvertor(TSB[0].idlist[i].idcode);
+            
+            id = to_intconvertor(df->idcode);
             printf("id = %d\n",id);
 
             LLptr = LLfirst;
@@ -50,9 +55,9 @@ gboolean update_images(gpointer* pars){
                 float freq = to_intconvertor(df->dpmu[i]->freq)*0.001+50;
                 printf("lat = %f, lon = %f, freq = %f\n",lat,lon,freq);
                 gboolean green =attack_detect(df,&START,&COUNT,&SUM_OF_FREQUENCY);
-                if(parameters->g_last_image != 0){
-                    osm_gps_map_image_remove(parameters->util_map, parameters->g_last_image);
-                }
+                // if(parameters->g_last_image != 0){
+                //     // osm_gps_map_image_remove(parameters->util_map, parameters->g_last_image);
+                // }
                 if (freq > 50.300){
                     parameters->g_last_image = osm_gps_map_image_add(parameters->util_map,lat, lon, parameters->g_green_image);
                 }else{
@@ -68,9 +73,11 @@ gboolean update_images(gpointer* pars){
             //     }
             }
             df = df->dnext;
-            i++;
+            // i++;
+            k++;
         }
     }
+    pthread_mutex_unlock(&mutex_on_TSB);
 
     gtk_widget_queue_draw(GTK_WIDGET(parameters->util_map));
     return TRUE;

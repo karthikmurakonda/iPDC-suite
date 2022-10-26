@@ -56,7 +56,7 @@
 int i;
 int front = -1;
 int rear = -1;
-pthread_mutex_t mutex_on_TSB = PTHREAD_MUTEX_INITIALIZER;
+
 
 
 /* ----------------------------------------------------------------------------	*/

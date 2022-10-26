@@ -43,6 +43,7 @@ pthread_mutex_t mutex_file;  /* To lock PMU Setup File */
 pthread_mutex_t mutex_Lower_Layer_Details;  /* To lock objects of connection table that hold lower layer PMU/PDC ip and protocol */
 pthread_mutex_t mutex_Upper_Layer_Details;  /* To lock objects of connection table that hold upper layer PDC ip and protocol */
 pthread_mutex_t mutex_status_change;
+pthread_mutex_t mutex_on_TSB;
 
 unsigned char *cfgframe,*dataframe;
 
