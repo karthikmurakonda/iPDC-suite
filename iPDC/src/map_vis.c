@@ -15,11 +15,12 @@
 int loops = 0;
 
 gboolean update_images(gpointer* pars){
-    int match=0,id;
+    int match=0,id, cfg_match=0;
     myParameters* parameters = (myParameters*) pars;
+    struct cfg_frame* temp_cfg;
 
     pthread_mutex_lock(&mutex_on_TSB);
-    struct data_frame *df = TSB[0].first_data_frame;
+    struct data_frame *df = TSB[MAXTSB-1].first_data_frame;
     struct Lower_Layer_Details *LLptr;
 
     if (df == NULL){
@@ -29,48 +30,63 @@ gboolean update_images(gpointer* pars){
     {
         int i = 0, k = 0;
         float freq;
+        unsigned char fmt;
         while (df!=NULL){
-            freq = to_intconvertor(df->dpmu[i]->freq)*0.001+50;
-            live_chart_serie_add(serie, freq*1e-1);
+            float lat;
+            float lon;
             loops++;
             printf("loops: %d\n", loops);
             
             id = to_intconvertor(df->idcode);
             printf("id = %d\n",id);
+            pthread_mutex_lock(&mutex_cfg);
+            temp_cfg = cfgfirst;
+            // Check for the IDCODE in Configuration Frame
+            while(temp_cfg != NULL){
+                if(id == to_intconvertor(temp_cfg->idcode)){
+                    cfg_match = 1;
+                    printf("Matched - id : %d\n",id);
+                    fmt = temp_cfg->pmu[0]->fmt->freq;
+                    break;	
+                } else {
+                    temp_cfg = temp_cfg->cfgnext;
+                }
+            }
+	        pthread_mutex_unlock(&mutex_cfg);
+            if(fmt == '1'){
+                freq = decode_ieee_single(df->dpmu[i]->freq);
+                printf("freq = %f\n",freq);
+            }else{
+                freq = to_intconvertor(df->dpmu[i]->freq)*1e-6+50;
+            }
+            live_chart_serie_add(serie, freq);
 
+            pthread_mutex_lock(&mutex_Lower_Layer_Details);
             LLptr = LLfirst;
             match = 0;
             while(LLptr != NULL){
                 printf("pmuid = %d\n",LLptr->pmuid);
                 if(LLptr->pmuid == id){
                     match = 1;
+                    float lat = LLptr->latitude;
+                    float lon = LLptr->longitude;
                     break;
                 }
                 LLptr = LLptr->next;
             }
+            pthread_mutex_unlock(&mutex_Lower_Layer_Details);
 
-            if(match == 1){
-                float lat = 79.347312;
-                float lon = -69.439209;
-                float freq = to_intconvertor(df->dpmu[i]->freq)*0.001+50;
+            if(match == 1 && cfg_match == 1){
                 printf("lat = %f, lon = %f, freq = %f\n",lat,lon,freq);
                 gboolean green =attack_detect(df,&START,&COUNT,&SUM_OF_FREQUENCY);
-                // if(parameters->g_last_image != 0){
-                //     // osm_gps_map_image_remove(parameters->util_map, parameters->g_last_image);
-                // }
+                if(parameters->g_last_image != 0){
+                    osm_gps_map_image_remove(parameters->util_map, parameters->g_last_image);
+                }
                 if (freq > 50.300){
                     parameters->g_last_image = osm_gps_map_image_add(parameters->util_map,lat, lon, parameters->g_green_image);
                 }else{
                     parameters->g_last_image = osm_gps_map_image_add(parameters->util_map,lat, lon, parameters->g_red_image);
                 }
-            //    if(parameters->g_last_image != 0){
-            //         // osm_gps_map_image_remove(parameters->util_map, parameters->g_last_image);
-            //     }
-            //     if (green){
-            //         parameters->g_last_image = osm_gps_map_image_add(parameters->util_map,15.518597, 74.925584, parameters->g_green_image);
-            //     }else{
-            //         parameters->g_last_image = osm_gps_map_image_add(parameters->util_map,15.518597, 74.925584, parameters->g_red_image);
-            //     }
             }
             df = df->dnext;
             // i++;
