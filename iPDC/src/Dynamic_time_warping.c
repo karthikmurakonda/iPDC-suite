@@ -296,3 +296,8 @@ int DTWvolDistance(struct data_frame *df)
         return temp->result;
     }
 }
+
+int DTWfreqvolDistance(struct data_frame *df)
+{
+    return DTWfreqDistance(df) && DTWfreqvolDistance(df);
+}

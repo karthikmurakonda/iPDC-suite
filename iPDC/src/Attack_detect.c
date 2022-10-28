@@ -5,6 +5,7 @@
 #include <gtk/gtk.h>
 #include <math.h>
 #include "parser.h"
+#include "Attack_detect.h"
 
 struct freqlist
 {
@@ -162,5 +163,12 @@ gboolean attack_detect_vol(struct data_frame *df)
         }
     }
 }
+
+gboolean attack_detect_freq_vol(struct data_frame *df)
+{
+    return attack_detect_freq(df) && attack_detect_vol(df);
+}
+
+
 
 /* pavan changes */
