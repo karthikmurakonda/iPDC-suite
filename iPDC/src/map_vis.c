@@ -44,17 +44,17 @@ gboolean update_images(gpointer* pars){
             float lat;
             float lon;
             loops++;
-            printf("loops: %d\n", loops);
+            // printf("loops: %d\n", loops);
             
             id = to_intconvertor(df->idcode);
-            printf("id = %d\n",id);
+            // printf("id = %d\n",id);
             pthread_mutex_lock(&mutex_cfg);
             temp_cfg = cfgfirst;
             // Check for the IDCODE in Configuration Frame
             while(temp_cfg != NULL){
                 if(id == to_intconvertor(temp_cfg->idcode)){
                     cfg_match = 1;
-                    printf("Matched - id : %d\n",id);
+                    // printf("Matched - id : %d\n",id);
                     freq_fmt = temp_cfg->pmu[0]->fmt->freq;
                     anal_fmt = temp_cfg->pmu[0]->fmt->analog;
                     phas_fmt = temp_cfg->pmu[0]->fmt->phasor;
@@ -69,7 +69,7 @@ gboolean update_images(gpointer* pars){
             // get data from df.
             if(freq_fmt == '1'){
                 freq = decode_ieee_single(df->dpmu[i]->freq);
-                printf("freq = %f\n",freq);
+                // printf("freq = %f\n",freq);
             }else{
                 freq = to_intconvertor(df->dpmu[i]->freq)*1e-6+50;
             }
@@ -80,7 +80,7 @@ gboolean update_images(gpointer* pars){
             strncpy(last2bytes, df->dpmu[i]->phasors[0]+2, 2);
             vol_magnitude = to_intconvertor(first2bytes);
             float imaginary = to_intconvertor(last2bytes);
-            printf("vol = %f imag = %f\n",vol_magnitude, imaginary);
+            // printf("vol = %f imag = %f\n",vol_magnitude, imaginary);
 
             live_chart_serie_add(serie, freq);
 
@@ -89,7 +89,7 @@ gboolean update_images(gpointer* pars){
             LLptr = LLfirst;
             match = 0;
             while(LLptr != NULL){
-                printf("pmuid = %d\n",LLptr->pmuid);
+                // printf("pmuid = %d\n",LLptr->pmuid);
                 if(LLptr->pmuid == id){
                     match = 1;
                     float lat = LLptr->latitude;
@@ -100,17 +100,17 @@ gboolean update_images(gpointer* pars){
             }
             pthread_mutex_unlock(&mutex_Lower_Layer_Details);
 
-            if(match == 1 && cfg_match == 1){
-                printf("lat = %f, lon = %f, freq = %f\n",lat,lon,freq);
+            // if(match == 1 && cfg_match == 1){
+                // printf("lat = %f, lon = %f, freq = %f\n",lat,lon,freq);
                 if(parameters->g_last_image != 0){
                     osm_gps_map_image_remove(parameters->util_map, parameters->g_last_image);
                 }
-                if (freq > 50.300){
+                if (DTWvolDistance(df)){
                     parameters->g_last_image = osm_gps_map_image_add(parameters->util_map,lat, lon, parameters->g_green_image);
                 }else{
                     parameters->g_last_image = osm_gps_map_image_add(parameters->util_map,lat, lon, parameters->g_red_image);
                 }
-            }
+            // }
             df = df->dnext;
             // i++;
             k++;
