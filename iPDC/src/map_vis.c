@@ -9,25 +9,21 @@
 #include "Kmeans.h"
 #include "Dynamic_time_warping.h"
 
-/*used for DTW*/
-int result=1;
-/*used for DTW*/
-
 gboolean update_images(gpointer* pars){
     myParameters* parameters = (myParameters*) pars;
     struct data_frame *df = TSB[0].first_data_frame;
     if (df == NULL){
         return TRUE;
     }
-    int freq = to_intconvertor(df->dpmu[0]->freq);
-	gboolean green =attack_detect(df);
+    //int freq = to_intconvertor(df->dpmu[0]->freq);
+	//gboolean green =attack_detect(df);
     //printf("map_vis A: %Lf, B: %Lf,C: %Lf\n",A,B,C);
     //gboolean green = kmeans(df);
-    //DTWdistance(df,&result);
+   
     if(parameters->g_last_image != 0){
         osm_gps_map_image_remove(parameters->util_map, parameters->g_last_image);
     }
-    if (green){
+    if (DTWfreqDistance(df)){
         parameters->g_last_image = osm_gps_map_image_add(parameters->util_map,15.518597, 74.925584, parameters->g_green_image);
     }else{
         parameters->g_last_image = osm_gps_map_image_add(parameters->util_map,15.518597, 74.925584, parameters->g_red_image);

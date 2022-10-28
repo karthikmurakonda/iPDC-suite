@@ -1,3 +1,5 @@
 
 /*pavan changes*/
-void DTWdistance(struct data_frame *df,gboolean *result);
+void DTWfreqDistance(struct data_frame *df);
+
+void DTWvolDistance(struct data_frame *df);
