@@ -46,8 +46,8 @@ FILE6 = iPDC.desktop
 
 CC = gcc
 LIBS = -lpthread
-LDLIBS=`pkg-config --cflags --libs gtk+-3.0 osmgpsmap-1.0`
-CFLAGS=-g -I./inc -fcommon `pkg-config --cflags --libs gtk+-3.0 osmgpsmap-1.0`
+LDLIBS=`pkg-config --cflags --libs gtk+-3.0 osmgpsmap-1.0 gee-0.8` lib/liblivechart.so lib/liblivechart_static.a -Wl,--rpath=./lib
+CFLAGS=-g -I./inc -I./lib -fcommon `pkg-config --cflags --libs gtk+-3.0 osmgpsmap-1.0 gee-0.8`
 
 PROGRAM = iPDC
 SOURCE_FILES = $(wildcard src/*.c)

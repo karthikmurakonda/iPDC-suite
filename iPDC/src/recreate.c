@@ -71,6 +71,7 @@ void recreate_cfg_objects(){
 	pthread_mutex_init(&mutex_status_change, NULL);
 	pthread_mutex_init(&mutex_Lower_Layer_Details, NULL);
 	pthread_mutex_init(&mutex_Upper_Layer_Details, NULL);
+	pthread_mutex_init(&mutex_on_TSB, NULL);
 
 	CMDSYNC[0] = 0xaa;
 	CMDSYNC[1] = 0x41;

@@ -114,6 +114,7 @@ GtkWidget *add_pmu_window, *chkBtn;
 GtkWidget *new_window, *setup_display_window;
 GtkWidget *p_id, *p_udp, *p_tcp, *p_ip;
 GtkWidget *p_port, *p_protocol;
+GtkWidget *p_lattitude, *p_longitude;
 pthread_t show_sys_time;
 
 
