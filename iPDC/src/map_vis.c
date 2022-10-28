@@ -28,6 +28,7 @@ gboolean update_images(gpointer* pars){
     struct Lower_Layer_Details *LLptr;
 
     if (df == NULL){
+        pthread_mutex_unlock(&mutex_on_TSB);
         return TRUE;
     }
     //int freq = to_intconvertor(df->dpmu[0]->freq);
