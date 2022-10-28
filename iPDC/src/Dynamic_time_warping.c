@@ -1,6 +1,7 @@
 #include "parser.h"
 #include <stdio.h>
 #include <math.h>
+#include <string.h>
 #include <gtk/gtk.h>
 #include <stdlib.h>
 
@@ -180,13 +181,25 @@ void DTWvolDistance(struct data_frame *df)
             if (to_intconvertor(df->idcode) == temp->idcode)
             {
                 float CURR_vol;
-                if (df->dpmu[0]->fmt->vol == '0')
+                if (df->dpmu[0]->fmt->phasor == '0')
                 {
-                    CURR_vol = 50 + to_intconvertor(df->dpmu[0]->vol) * 1e-3;
+                    unsigned char* s1;
+                    unsigned char* s2;
+                    strncpy(s1,df->dpmu[0]->phasors[0],2);
+                    strncpy(s2,df->dpmu[0]->phasors[0]+2,2);
+                    long double v1 = to_intconvertor(s1);
+                    long double v2 = to_intconvertor(s2);
+                    CURR_vol = sqrt((v1*v1)+(v2*v2));
                 }
                 else
                 {
-                    CURR_vol = decode_ieee_single(df->dpmu[0]->vol);
+                    unsigned char* s1;
+                    unsigned char* s2;
+                    strncpy(s1,df->dpmu[0]->phasors[0],4);
+                    strncpy(s2,df->dpmu[0]->phasors[0]+2,4);
+                    long double v1 = decode_ieee_single(s1);
+                    long double v2 =decode_ieee_single(s2);
+                    CURR_vol = sqrt((v1*v1)+(v2*v2));
                 }
 
                 // printf("count1: %d\ncount2: %d\n",count_track1,count_track2);
