@@ -35,14 +35,6 @@ gboolean update_images(gpointer* pars){
     //printf("map_vis A: %Lf, B: %Lf,C: %Lf\n",A,B,C);
     //gboolean green = kmeans(df);
    
-    if(parameters->g_last_image != 0){
-        osm_gps_map_image_remove(parameters->util_map, parameters->g_last_image);
-    }
-    if (DTWfreqDistance(df)){
-        parameters->g_last_image = osm_gps_map_image_add(parameters->util_map,15.518597, 74.925584, parameters->g_green_image);
-    }else{
-        parameters->g_last_image = osm_gps_map_image_add(parameters->util_map,15.518597, 74.925584, parameters->g_red_image);
-    }
     if (curr_measurement==0)
     {
         int i = 0, k = 0;
@@ -110,7 +102,6 @@ gboolean update_images(gpointer* pars){
 
             if(match == 1 && cfg_match == 1){
                 printf("lat = %f, lon = %f, freq = %f\n",lat,lon,freq);
-                gboolean green =attack_detect(df,&START,&COUNT,&SUM_OF_FREQUENCY);
                 if(parameters->g_last_image != 0){
                     osm_gps_map_image_remove(parameters->util_map, parameters->g_last_image);
                 }
