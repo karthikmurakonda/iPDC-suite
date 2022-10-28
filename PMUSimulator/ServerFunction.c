@@ -646,13 +646,14 @@ void generate_data_frame()
 		else	      	/* Insert Floating point Frequency & DFrequency values in data frame */
 		{
 			/* For rendom values of FREQ & DFREQ */
-			freq_f = (rand() % 5 + 1)*100;
-			li2c(freq_f, df_temp_1);
+			freqF = (rand() % 5 + 1)*100;
+			f2c(freqF, df_temp_1);
 			B_copy(data_frm, df_temp_1, indx, 4);
 			indx = indx + 4;
 
-			dfreq_f = (rand() % 5 + 1)*0.00639;
-			i2c(dfreq_f, df_temp_1);
+			float dfreqF = 0;
+			dfreqF = (rand() % 5 + 1)*0.00639;
+			i2c(dfreqF, df_temp_1);
 			B_copy(data_frm, df_temp_1, indx, 4);
 			indx = indx + 4;
 		}

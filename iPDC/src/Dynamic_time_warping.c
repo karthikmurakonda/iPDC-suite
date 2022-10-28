@@ -5,7 +5,7 @@
 #include <gtk/gtk.h>
 #include <stdlib.h>
 
-typedef struct
+struct DTWfreqlist
 {
     int idcode;
     long double *freq1;
@@ -14,10 +14,10 @@ typedef struct
     int count_track2;
     int flag;
     int result;
-    DTWfreqlist *next;
-} DTWfreqlist;
+    struct DTWfreqlist *next;
+};
 
-typedef struct
+struct DTWvollist
 {
     int idcode;
     long double *vol1;
@@ -26,18 +26,18 @@ typedef struct
     int count_track2;
     int flag;
     int result;
-    DTWvollist *next;
-} DTWvollist;
+    struct DTWvollist *next;
+};
 
 
-DTWfreqlist *head = NULL;
-DTWvollist *headvol = NULL;
+struct DTWfreqlist *head = NULL;
+struct DTWvollist *headvol = NULL;
 
-void DTWfreqDistance(struct data_frame *df)
+int DTWfreqDistance(struct data_frame *df)
 {
     if (head == NULL)
     {
-        head = (DTWfreqlist *)malloc(sizeof(DTWfreqlist));
+        head = (struct DTWfreqlist *)malloc(sizeof(struct DTWfreqlist));
         head->count_track1 = 0;
         head->count_track2 = 0;
         head->flag = 0;
@@ -48,8 +48,8 @@ void DTWfreqDistance(struct data_frame *df)
     }
     else
     {
-        DTWfreqlist *temp = head;
-        DTWfreqlist *previous;
+        struct DTWfreqlist *temp = head;
+        struct DTWfreqlist *previous;
         while (temp != NULL)
         {
             if (to_intconvertor(df->idcode) == temp->idcode)
@@ -68,7 +68,7 @@ void DTWfreqDistance(struct data_frame *df)
                 // printf("curr_freq: %f\n",CURR_FREQ);
                 if (temp->count_track1 == 0)
                 {
-                    if (tmp->flag == 0)
+                    if (temp->flag == 0)
                     {
                         temp->flag = 1;
                         temp->freq1 = (long double *)malloc(500 * sizeof(long double));
@@ -145,7 +145,7 @@ void DTWfreqDistance(struct data_frame *df)
         }
         if (temp == NULL)
         {
-            DTWfreqlist *bring = (DTWfreqlist *)malloc(sizeof(DTWfreqlist));
+            struct DTWfreqlist *bring = (struct DTWfreqlist *)malloc(sizeof(struct DTWfreqlist));
             bring->count_track1 = 0;
             bring->count_track2 = 0;
             bring->flag = 0;
@@ -159,11 +159,11 @@ void DTWfreqDistance(struct data_frame *df)
     }
 }
 
-void DTWvolDistance(struct data_frame *df)
+int DTWvolDistance(struct data_frame *df)
 {
     if (headvol == NULL)
     {
-        headvol = (DTWvollist *)malloc(sizeof(DTWvollist));
+        headvol = (struct DTWvollist *)malloc(sizeof(struct DTWvollist));
         headvol->count_track1 = 0;
         headvol->count_track2 = 0;
         headvol->flag = 0;
@@ -174,8 +174,8 @@ void DTWvolDistance(struct data_frame *df)
     }
     else
     {
-        DTWvollist *temp = headvol;
-        DTWvollist *previous;
+        struct DTWvollist *temp = headvol;
+        struct DTWvollist *previous;
         while (temp != NULL)
         {
             if (to_intconvertor(df->idcode) == temp->idcode)
@@ -183,8 +183,8 @@ void DTWvolDistance(struct data_frame *df)
                 float CURR_vol;
                 if (df->dpmu[0]->fmt->phasor == '0')
                 {
-                    unsigned char* s1;
-                    unsigned char* s2;
+                    unsigned char s1[2];
+                    unsigned char s2[2];
                     strncpy(s1,df->dpmu[0]->phasors[0],2);
                     strncpy(s2,df->dpmu[0]->phasors[0]+2,2);
                     long double v1 = to_intconvertor(s1);
@@ -193,8 +193,8 @@ void DTWvolDistance(struct data_frame *df)
                 }
                 else
                 {
-                    unsigned char* s1;
-                    unsigned char* s2;
+                    unsigned char s1[4];
+                    unsigned char s2[4];
                     strncpy(s1,df->dpmu[0]->phasors[0],4);
                     strncpy(s2,df->dpmu[0]->phasors[0]+2,4);
                     long double v1 = decode_ieee_single(s1);
@@ -206,7 +206,7 @@ void DTWvolDistance(struct data_frame *df)
                 // printf("curr_vol: %f\n",CURR_vol);
                 if (temp->count_track1 == 0)
                 {
-                    if (tmp->flag == 0)
+                    if (temp->flag == 0)
                     {
                         temp->flag = 1;
                         temp->vol1 = (long double *)malloc(500 * sizeof(long double));
@@ -283,7 +283,7 @@ void DTWvolDistance(struct data_frame *df)
         }
         if (temp == NULL)
         {
-            DTWvollist *bring = (DTWvollist *)malloc(sizeof(DTWvollist));
+            struct DTWvollist *bring = (struct DTWvollist *)malloc(sizeof(struct DTWvollist));
             bring->count_track1 = 0;
             bring->count_track2 = 0;
             bring->flag = 0;

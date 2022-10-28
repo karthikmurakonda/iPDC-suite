@@ -31,7 +31,7 @@
 /*                       Function prototypes                          */
 /* ------------------------------------------------------------------ */
 
-int add_PMU(char pmuid[], char ip[], char port[], char protocol[]);
+int add_PMU(char pmuid[], char ip[], char port[], char protocol[], char latitude[], char longitude[]);
 
 void add_PMU_Node(struct Lower_Layer_Details *temp_pmu);
 

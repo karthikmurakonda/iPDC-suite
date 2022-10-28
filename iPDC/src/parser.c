@@ -55,12 +55,67 @@
 #include  <pthread.h>
 #include  <stdint.h>
 #include  <time.h>
+#include <float.h>
+#include <assert.h>
+#include <math.h>
 #include  "parser.h"
 #include  "global.h" 
 #include  "dallocate.h" 
 #include  "align_sort.h"
 #include  "connections.h"
 #include  "recreate.h"
+
+
+float decode_ieee_single(const void *v) {
+
+	const unsigned char *data = v;
+	int s, e;
+	unsigned long src;
+	long f;
+	float value;
+
+	src = ((unsigned long)data[0] << 24) |
+			((unsigned long)data[1] << 16) |
+			((unsigned long)data[2] << 8) |
+			((unsigned long)data[3]);
+
+	s = (src & 0x80000000UL) >> 31;
+	e = (src & 0x7F800000UL) >> 23;
+	f = (src & 0x007FFFFFUL);
+
+	if (e == 255 && f != 0) {
+		/* NaN (Not a Number) */
+		value = DBL_MAX;
+
+	} else if (e == 255 && f == 0 && s == 1) {
+		/* Negative infinity */
+		value = -DBL_MAX;
+	} else if (e == 255 && f == 0 && s == 0) {
+		/* Positive infinity */
+		value = DBL_MAX;
+	} else if (e > 0 && e < 255) {
+		/* Normal number */
+		f += 0x00800000UL;
+		if (s) f = -f;
+		value = ldexp(f, e - 150);
+	} else if (e == 0 && f != 0) {
+		/* Denormal number */
+		if (s) f = -f;
+		value = ldexp(f, -149);
+	} else if (e == 0 && f == 0 && s == 1) {
+		/* Negative zero */
+		value = 0;
+	} else if (e == 0 && f == 0 && s == 0) {
+		/* Positive zero */
+		value = 0;
+	} else {
+		/* Never happens */
+		printf("s = %d, e = %d, f = %lu\n", s, e, f);
+		assert(!"Woops, unhandled case in decode_ieee_single()");
+	}
+
+	return value;
+}
 
 /* ----------------------------------------------------------------------------	*/
 /* FUNCTION  cfgparser():                                	     		*/
