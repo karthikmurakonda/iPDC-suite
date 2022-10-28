@@ -156,6 +156,11 @@ void utility_tools(GtkButton *but, gpointer udata)
 
     g_signal_connect(utdata->util_window, "destroy", G_CALLBACK(on_window_destroy), GUINT_TO_POINTER(pid));
 
+    // //g_last_image =  osm_gps_map_image_add(util_map,15.4589, 75.0078, g_red_image);
+    // g_last_image =  osm_gps_map_image_add(utdata->util_map,15.518597, 74.925584, g_green_image);
+    // myParameters parameters = {utdata->util_map, g_red_image, g_green_image, g_last_image};
+    // gpointer data = (gpointer) &parameters;
+    // guint pid = g_timeout_add(20, (GSourceFunc) update_images, data);
     // gtk_widget_set_vexpand(GTK_WIDGET(utdata->util_map), TRUE);
     // gtk_widget_set_hexpand(GTK_WIDGET(utdata->util_map), TRUE);
     gtk_widget_show_all(utdata->util_window);

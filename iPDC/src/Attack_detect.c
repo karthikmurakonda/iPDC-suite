@@ -1,60 +1,39 @@
 /* pavan changes */
-#include<time.h>
-#include<stdio.h>
-#include<stdlib.h>
-#include<gtk/gtk.h>
+#include <time.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <gtk/gtk.h>
+#include <math.h>
 #include "parser.h"
 
-gboolean attack_detect(struct data_frame *df,time_t* START,float* COUNT,float* SUM_OF_FREQUENCY)
-{
-    // printf("freq: %d\n",to_intconvertor(&(df->dpmu[0]->fmt->freq)));
-    // printf("analog: %d\n",to_intconvertor(&(df->dpmu[0]->fmt->analog)));
-    // printf("phasor %d\n",to_intconvertor(&(df->dpmu[0]->fmt->phasor)));
-    // printf("polar: %d\n",to_intconvertor(&(df->dpmu[0]->fmt->polar)));
+long double AVERAGE_OF_FREQUENCY = 50;
+unsigned long long int COUNT = 500;
 
-	*COUNT = *COUNT+1;
-    float CURR_FREQ=to_intconvertor(df->dpmu[0]->freq);
-	*SUM_OF_FREQUENCY+=CURR_FREQ;
-	float FREQ_AVG=*SUM_OF_FREQUENCY/(*COUNT*1.0f);
-	float DETECT_PERCENT=(abs(FREQ_AVG-CURR_FREQ)/(FREQ_AVG*1.0f))*100;
-    gboolean detect;
-    /* detecting based on thershold */
-    float THRESHOLD=60;
-	if(DETECT_PERCENT>THRESHOLD)
+gboolean attack_detect(struct data_frame *df)
+{
+    float CURR_FREQ = 50 + to_intconvertor(df->dpmu[0]->freq) * 1e-3;
+    printf("Current freq: %f\n", CURR_FREQ);
+    float DETECT_PERCENT = (fabs(AVERAGE_OF_FREQUENCY - CURR_FREQ) / (AVERAGE_OF_FREQUENCY * 1.0f)) * 100;
+
+    /* detecting based on thershold frequency can vary only around 0.2 hz*/
+    if (DETECT_PERCENT > 0.9)
     {
-        detect=FALSE;
         printf("\033[0;31m");
         printf("ATTACK DETECTED!");
         printf("\033[0m");
-        // intf(" Detect_percent: %f\n",DETECT_PERCENT);
+        return FALSE;
     }
-	else
+    else
     {
-        detect=TRUE;
         printf("\033[0;32m");
         printf("NO PROBLEM :)\n");
-        printf("\033[0m"); 
+        printf("\033[0m");
+
+        /* updating mean of frequency */
+        AVERAGE_OF_FREQUENCY = ((AVERAGE_OF_FREQUENCY * COUNT) + CURR_FREQ) / ++COUNT;
+        printf("avg freq: %Lf\n", AVERAGE_OF_FREQUENCY);
+        return TRUE;
     }
-		
-	/* calcculating time */
-	if(*COUNT==1)
-    {
-        time(START);
-        printf("entered\n");
-    }
-	time_t END;
-	time(&END);
-    double time_used = difftime(END,*START);
-	printf("time used %lf\n",time_used);
-	
-    /* resetting after i minute */
-    if(time_used > 60)
-    {
-        time(START);
-        *SUM_OF_FREQUENCY=CURR_FREQ;
-        *COUNT=1;
-    }
-    return detect;
 }
 
 /* pavan changes */
