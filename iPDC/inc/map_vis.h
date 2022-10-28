@@ -8,5 +8,15 @@ typedef struct{
     int current_selection;
 } myParameters; 
 
+struct vis_data{
+    int id;
+    float lat;
+    float lon;
+    GdkPixbuf *last_image;
+    GTimeVal last_update_time;
+    struct vis_data *next;
+};
+
+struct vis_data *head;
 
 gboolean update_images(gpointer* pars);

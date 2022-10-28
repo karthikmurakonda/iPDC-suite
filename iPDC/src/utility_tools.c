@@ -105,12 +105,15 @@ void utility_tools(GtkButton *but, gpointer udata)
                                     "map-source", OSM_GPS_MAP_SOURCE_OSMC_TRAILS,
                                     "tile-cache", "/tmp/",
                                     NULL);
+
+    // TODO: centering the map
     osm_gps_map_set_center_and_zoom(utdata->util_map, 15.4589, 75.0078, 10);
 
     // TODO: add the points to window.
     g_last_image = osm_gps_map_image_add(utdata->util_map, 15.4589, 75.0078, g_red_image);
     g_last_image = osm_gps_map_image_add(utdata->util_map, 15.518597, 74.925584, g_green_image);
 
+    
     curr_measurement = 0;
     algorithm = 0;
     dimmension = 0;

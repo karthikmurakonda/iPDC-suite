@@ -29,8 +29,8 @@ gboolean update_images(gpointer* pars){
     if (curr_measurement==0)
     {
         int i = 0, k = 0;
-        float freq;
-        unsigned char fmt;
+        float freq,vol_magnitude,angle, dfreq;
+        unsigned char freq_fmt, anal_fmt, phas_fmt, polar_fmt;
         while (df!=NULL){
             float lat;
             float lon;
@@ -46,21 +46,36 @@ gboolean update_images(gpointer* pars){
                 if(id == to_intconvertor(temp_cfg->idcode)){
                     cfg_match = 1;
                     printf("Matched - id : %d\n",id);
-                    fmt = temp_cfg->pmu[0]->fmt->freq;
+                    freq_fmt = temp_cfg->pmu[0]->fmt->freq;
+                    anal_fmt = temp_cfg->pmu[0]->fmt->analog;
+                    phas_fmt = temp_cfg->pmu[0]->fmt->phasor;
+                    polar_fmt = temp_cfg->pmu[0]->fmt->polar;
                     break;	
                 } else {
                     temp_cfg = temp_cfg->cfgnext;
                 }
             }
 	        pthread_mutex_unlock(&mutex_cfg);
-            if(fmt == '1'){
+
+            // get data from df.
+            if(freq_fmt == '1'){
                 freq = decode_ieee_single(df->dpmu[i]->freq);
                 printf("freq = %f\n",freq);
             }else{
                 freq = to_intconvertor(df->dpmu[i]->freq)*1e-6+50;
             }
+            
+            unsigned char first2bytes[2];
+            strncpy(first2bytes, df->dpmu[i]->phasors[0], 2);
+            unsigned char last2bytes[2];
+            strncpy(last2bytes, df->dpmu[i]->phasors[0]+2, 2);
+            vol_magnitude = to_intconvertor(first2bytes);
+            float imaginary = to_intconvertor(last2bytes);
+            printf("vol = %f imag = %f\n",vol_magnitude, imaginary);
+
             live_chart_serie_add(serie, freq);
 
+            // check lower layer details to get longitude and lattitude.
             pthread_mutex_lock(&mutex_Lower_Layer_Details);
             LLptr = LLfirst;
             match = 0;
