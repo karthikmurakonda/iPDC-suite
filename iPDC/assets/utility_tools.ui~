@@ -326,7 +326,6 @@
                 <property name="can-focus">False</property>
                 <child>
                   <object class="GtkBox" id="mlad">
-                    <property name="visible">True</property>
                     <property name="can-focus">False</property>
                     <property name="orientation">vertical</property>
                     <child>
@@ -592,6 +591,7 @@
                 </child>
                 <child>
                   <object class="GtkBox" id="mlfreq">
+                    <property name="visible">True</property>
                     <property name="can-focus">False</property>
                     <property name="orientation">vertical</property>
                     <child>
@@ -629,7 +629,7 @@
                           <object class="GtkLabel" id="legend_label2">
                             <property name="visible">True</property>
                             <property name="can-focus">False</property>
-                            <property name="label" translatable="yes">Attack/Event</property>
+                            <property name="label" translatable="yes">Deviation &gt; 0.5 mHz</property>
                           </object>
                           <packing>
                             <property name="left-attach">1</property>
@@ -664,7 +664,7 @@
                           <object class="GtkLabel">
                             <property name="visible">True</property>
                             <property name="can-focus">False</property>
-                            <property name="label" translatable="yes">Normal</property>
+                            <property name="label" translatable="yes">deviation &lt; 0.5mHz</property>
                           </object>
                           <packing>
                             <property name="left-attach">1</property>
@@ -761,7 +761,6 @@
                           <object class="GtkLabel" id="legend_label3">
                             <property name="visible">True</property>
                             <property name="can-focus">False</property>
-                            <property name="label" translatable="yes">Attack/Event</property>
                           </object>
                           <packing>
                             <property name="left-attach">1</property>

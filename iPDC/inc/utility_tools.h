@@ -42,7 +42,6 @@ struct _UtData
 };
 
 UtData *utdata;
-LiveChartSerie *serie;
 
 // global variables
 int curr_measurement;

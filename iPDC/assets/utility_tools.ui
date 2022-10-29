@@ -495,7 +495,8 @@
                           <object class="GtkLabel" id="legend_label1">
                             <property name="visible">True</property>
                             <property name="can-focus">False</property>
-                            <property name="label" translatable="yes">&gt;6900V</property>
+                            <property name="label" translatable="yes">&gt;65600V or 
+&lt; 65300</property>
                           </object>
                           <packing>
                             <property name="left-attach">1</property>
@@ -530,8 +531,8 @@
                           <object class="GtkLabel">
                             <property name="visible">True</property>
                             <property name="can-focus">False</property>
-                            <property name="label" translatable="yes">&lt;6800V
-&lt;6300V</property>
+                            <property name="label" translatable="yes">&lt;65600V
+&gt;65300V</property>
                           </object>
                           <packing>
                             <property name="left-attach">1</property>
@@ -761,6 +762,7 @@
                           <object class="GtkLabel" id="legend_label3">
                             <property name="visible">True</property>
                             <property name="can-focus">False</property>
+                            <property name="label" translatable="yes">&gt; 0.5</property>
                           </object>
                           <packing>
                             <property name="left-attach">1</property>
@@ -795,7 +797,7 @@
                           <object class="GtkLabel">
                             <property name="visible">True</property>
                             <property name="can-focus">False</property>
-                            <property name="label" translatable="yes">Normal</property>
+                            <property name="label" translatable="yes">&lt; 0.5</property>
                           </object>
                           <packing>
                             <property name="left-attach">1</property>

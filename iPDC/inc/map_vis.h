@@ -17,7 +17,9 @@ struct vis_data{
     GdkColor color;
     OsmGpsMapImage *last_image; // TODO:
     GTimeVal last_update_time;
-    LiveChartSerie *serie;
+    LiveChartSerie *serie_vol;
+    LiveChartSerie *serie_freq;
+    LiveChartSerie *serie_dfreq;
     struct vis_data *next;
 };
 
