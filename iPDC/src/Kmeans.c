@@ -26,6 +26,7 @@ gboolean kmeans(struct data_frame *df)
 {
     if (headk == NULL)
     {
+        headk = (struct kmeans1 *)malloc(sizeof(struct kmeans1));
         headk->A = 50;
         headk->B = 49;
         headk->C = 51;
@@ -79,10 +80,10 @@ gboolean kmeans(struct data_frame *df)
                 }
                 break;
             }
-            previous=temp;
+            previous = temp;
             temp = temp->next;
         }
-        if(temp==NULL)
+        if (temp == NULL)
         {
             struct kmeans1 *bring = (struct kmeans1 *)malloc(sizeof(struct kmeans1));
             bring->A = 50;
@@ -93,7 +94,7 @@ gboolean kmeans(struct data_frame *df)
             bring->count_C = 1000;
             bring->next = NULL;
             bring->idcode = to_intconvertor(df->idcode);
-            previous->next=bring;
+            previous->next = bring;
             return TRUE;
         }
     }
