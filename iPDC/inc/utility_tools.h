@@ -20,12 +20,25 @@ struct _UtData
 	/* ui buttons */
 	GtkWidget *voltage;
 	GtkWidget *frequency;
+	GtkWidget *dfreq;
 	GtkWidget *attack_detection;
 	GtkWidget *algorithm;
 	GtkWidget *dimmension;
 	OsmGpsMap *util_map;
 	GtkContainer *map_layout;
-	GtkContainer *graph_layout;
+	GtkContainer *graph_layoutvol;
+	GtkContainer *graph_layoutfreq;
+	GtkContainer *graph_layoutdfreq;
+	GtkLabel *algo_label;
+	GtkLabel *dimm_label;
+	GtkBox * ml_vol;
+	GtkBox * ml_freq;
+	GtkBox * ml_dfreq;
+	GtkBox * ml_ad;
+	GtkWidget *swvol;
+	GtkWidget *swfreq;
+	GtkWidget *swdfreq;
+	GtkWidget *swad;
 };
 
 UtData *utdata;
