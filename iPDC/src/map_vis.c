@@ -145,7 +145,11 @@ gboolean update_images(gpointer* pars){
                         vis_ptr->last_image = osm_gps_map_image_add(parameters->util_map,lat, lon, parameters->g_green_image);
                     }
                 }else if (algorithm==1 && dimmension == 0){
-
+                    if(!kmeans(df)){
+                        vis_ptr->last_image = osm_gps_map_image_add(parameters->util_map,lat, lon, parameters->g_red_image);
+                    }else{
+                        vis_ptr->last_image = osm_gps_map_image_add(parameters->util_map,lat, lon, parameters->g_green_image);
+                    }
                 }else if (algorithm==1 && dimmension == 1){
 
                 }else if (algorithm==1 && dimmension == 2){

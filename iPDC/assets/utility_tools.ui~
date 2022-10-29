@@ -297,18 +297,6 @@
               </packing>
             </child>
             <child>
-              <object class="GtkLayout" id="map_layout">
-                <property name="width-request">600</property>
-                <property name="height-request">500</property>
-                <property name="visible">True</property>
-                <property name="can-focus">False</property>
-              </object>
-              <packing>
-                <property name="left-attach">1</property>
-                <property name="top-attach">0</property>
-              </packing>
-            </child>
-            <child>
               <object class="GtkLayout" id="graph_layoutvol">
                 <property name="height-request">150</property>
                 <property name="visible">True</property>
@@ -324,6 +312,7 @@
               <object class="GtkGrid">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
+                <property name="margin-top">16</property>
                 <child>
                   <object class="GtkBox" id="mlad">
                     <property name="can-focus">False</property>
@@ -495,7 +484,8 @@
                           <object class="GtkLabel" id="legend_label1">
                             <property name="visible">True</property>
                             <property name="can-focus">False</property>
-                            <property name="label" translatable="yes">&gt;6900V</property>
+                            <property name="label" translatable="yes">&gt;65600V or 
+&lt; 65300</property>
                           </object>
                           <packing>
                             <property name="left-attach">1</property>
@@ -530,8 +520,8 @@
                           <object class="GtkLabel">
                             <property name="visible">True</property>
                             <property name="can-focus">False</property>
-                            <property name="label" translatable="yes">&lt;6800V
-&lt;6300V</property>
+                            <property name="label" translatable="yes">&lt;65600V
+&gt;65300V</property>
                           </object>
                           <packing>
                             <property name="left-attach">1</property>
@@ -761,6 +751,7 @@
                           <object class="GtkLabel" id="legend_label3">
                             <property name="visible">True</property>
                             <property name="can-focus">False</property>
+                            <property name="label" translatable="yes">&gt; 0.5</property>
                           </object>
                           <packing>
                             <property name="left-attach">1</property>
@@ -795,7 +786,7 @@
                           <object class="GtkLabel">
                             <property name="visible">True</property>
                             <property name="can-focus">False</property>
-                            <property name="label" translatable="yes">Normal</property>
+                            <property name="label" translatable="yes">&lt; 0.5</property>
                           </object>
                           <packing>
                             <property name="left-attach">1</property>
@@ -1107,6 +1098,59 @@
               <packing>
                 <property name="left-attach">2</property>
                 <property name="top-attach">3</property>
+              </packing>
+            </child>
+            <child>
+              <!-- n-columns=1 n-rows=3 -->
+              <object class="GtkGrid">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <child>
+                  <object class="GtkLayout" id="map_layout">
+                    <property name="width-request">600</property>
+                    <property name="height-request">500</property>
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">1</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="maplabel">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="xpad">3</property>
+                    <property name="ypad">3</property>
+                    <property name="label" translatable="yes">Voltage Magnitude</property>
+                    <attributes>
+                      <attribute name="scale" value="2"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="graphlabel">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="label" translatable="yes">Voltage Magnitude</property>
+                    <attributes>
+                      <attribute name="scale" value="2"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">2</property>
+                  </packing>
+                </child>
+              </object>
+              <packing>
+                <property name="left-attach">1</property>
+                <property name="top-attach">0</property>
               </packing>
             </child>
             <child>

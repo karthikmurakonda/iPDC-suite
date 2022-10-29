@@ -39,6 +39,8 @@ struct _UtData
 	GtkWidget *swfreq;
 	GtkWidget *swdfreq;
 	GtkWidget *swad;
+	GtkWidget *maplabel;
+	GtkWidget *graphlabel;
 };
 
 UtData *utdata;

@@ -138,6 +138,10 @@ void on_voltage_clicked(GtkButton *but, gpointer udata)
     gtk_widget_show(utdata->ml_vol);
     gtk_widget_show(utdata->graph_layoutvol);
     gtk_widget_show(utdata->swvol);
+    gtk_widget_show(utdata->graphlabel);
+
+    gtk_label_set_label(utdata->maplabel, "Voltage Magnitude");
+    gtk_label_set_label(utdata->graphlabel, "Voltage Magnitude");
 
     gtk_widget_hide(utdata->ml_freq);
     gtk_widget_hide(utdata->ml_dfreq);
@@ -166,6 +170,10 @@ void on_frequency_clicked(GtkButton *but, gpointer udata)
     gtk_widget_show(utdata->ml_freq);
     gtk_widget_show(utdata->graph_layoutfreq);
     gtk_widget_show(utdata->swfreq);
+    gtk_widget_show(utdata->graphlabel);
+
+    gtk_label_set_label(utdata->maplabel, "Frequency");
+    gtk_label_set_label(utdata->graphlabel, "Frequency");
 
     gtk_widget_hide(utdata->ml_vol);
     gtk_widget_hide(utdata->ml_dfreq);
@@ -196,6 +204,10 @@ void on_dfreq_clicked(GtkButton *but, gpointer udata)
     gtk_widget_show(utdata->ml_dfreq);
     gtk_widget_show(utdata->graph_layoutdfreq);
     gtk_widget_show(utdata->swdfreq);
+    gtk_widget_show(utdata->graphlabel);
+
+    gtk_label_set_label(utdata->maplabel, "Frequency Rate");
+    gtk_label_set_label(utdata->graphlabel, "Frequency Rate");
 
     gtk_widget_hide(utdata->ml_vol);
     gtk_widget_hide(utdata->ml_freq);
@@ -233,6 +245,8 @@ void on_attack_detection_clicked(GtkButton *but, gpointer udata)
     gtk_widget_show(utdata->dimm_label);
     gtk_widget_show(utdata->ml_ad);
 
+    gtk_label_set_label(utdata->maplabel, "Attack Detection");
+
     gtk_widget_hide(utdata->ml_vol);
     gtk_widget_hide(utdata->ml_freq);
     gtk_widget_hide(utdata->ml_dfreq);
@@ -242,6 +256,7 @@ void on_attack_detection_clicked(GtkButton *but, gpointer udata)
     gtk_widget_hide(utdata->graph_layoutdfreq);
     gtk_widget_hide(utdata->graph_layoutfreq);
     gtk_widget_hide(utdata->graph_layoutvol);
+    gtk_widget_hide(utdata->graphlabel);
 
     printf("Attack Detection\n");
 }
@@ -305,6 +320,8 @@ void utility_tools(GtkButton *but, gpointer udata)
     utdata->swvol = GTK_WIDGET(gtk_builder_get_object(builder, "swvol"));
     utdata->swfreq = GTK_WIDGET(gtk_builder_get_object(builder, "swfreq"));
     utdata->swdfreq = GTK_WIDGET(gtk_builder_get_object(builder, "swdfreq"));
+    utdata->maplabel = GTK_WIDGET(gtk_builder_get_object(builder, "maplabel"));
+    utdata->graphlabel = GTK_WIDGET(gtk_builder_get_object(builder, "graphlabel"));
 
     gtk_widget_set_sensitive(utdata->voltage, FALSE);
     gtk_widget_set_visible(utdata->algorithm, FALSE);
