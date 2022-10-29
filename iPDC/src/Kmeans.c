@@ -11,14 +11,14 @@
 struct kmeans1
 {
     int idcode;
-    unsigned long long int count_A = 1000;
-    unsigned long long int count_B = 1000;
-    unsigned long long int count_C = 1000;
-    long double A = 50;
-    long double B = 49;
-    long double C = 51;
+    unsigned long long int count_A;
+    unsigned long long int count_B;
+    unsigned long long int count_C;
+    long double A;
+    long double B;
+    long double C;
     struct kmeans1 *next;
-}
+};
 
 struct kmeans1 *headk = NULL;
 
@@ -38,8 +38,8 @@ gboolean kmeans(struct data_frame *df)
     }
     else
     {
-        struct kmeans1 *temp == headk;
-        struct kmeans1 *previous == NULL;
+        struct kmeans1 *temp = headk;
+        struct kmeans1 *previous = NULL;
         while (temp != NULL)
         {
             if (temp->idcode == to_intconvertor(df->idcode))
