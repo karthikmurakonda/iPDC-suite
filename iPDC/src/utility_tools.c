@@ -7,10 +7,14 @@
 #include "livechart.h"
 #include "connections.h"
 
+// TODO: change this when in production
 #define UI_fILE "./assets/utility_tools.ui"
 #define RED_IMAGE "./assets/red.png"
 #define GREEN_IMAGE "./assets/green.png"
-
+#define YELLOW_IMAGE "./assets/yellow.png"
+#define BLUE_IMAGE "./assets/blue.png"
+#define GREY_IMAGE "./assets/grey.png"
+#define PINK_IMAGE "./assets/pink.png"
 
 // void change_image(OsmGpsMap *map, float lat, float lon, OsmGpsMapImage *image)
 // {
@@ -132,9 +136,20 @@ void on_voltage_clicked(GtkButton *but, gpointer udata)
     curr_measurement = 0;
 
     gtk_widget_show(utdata->ml_vol);
+    gtk_widget_show(utdata->graph_layoutvol);
+    gtk_widget_show(utdata->swvol);
+    gtk_widget_show(utdata->graphlabel);
+
+    gtk_label_set_label(utdata->maplabel, "Voltage Magnitude");
+    gtk_label_set_label(utdata->graphlabel, "Voltage Magnitude");
+
     gtk_widget_hide(utdata->ml_freq);
     gtk_widget_hide(utdata->ml_dfreq);
     gtk_widget_hide(utdata->ml_ad);
+    gtk_widget_hide(utdata->graph_layoutfreq);
+    gtk_widget_hide(utdata->graph_layoutdfreq);
+    gtk_widget_hide(utdata->swfreq);
+    gtk_widget_hide(utdata->swdfreq);
 
     gtk_widget_hide(utdata->algorithm);
     gtk_widget_hide(utdata->dimmension);
@@ -153,9 +168,21 @@ void on_frequency_clicked(GtkButton *but, gpointer udata)
     curr_measurement = 1;
 
     gtk_widget_show(utdata->ml_freq);
+    gtk_widget_show(utdata->graph_layoutfreq);
+    gtk_widget_show(utdata->swfreq);
+    gtk_widget_show(utdata->graphlabel);
+
+    gtk_label_set_label(utdata->maplabel, "Frequency");
+    gtk_label_set_label(utdata->graphlabel, "Frequency");
+
     gtk_widget_hide(utdata->ml_vol);
     gtk_widget_hide(utdata->ml_dfreq);
     gtk_widget_hide(utdata->ml_ad);
+    gtk_widget_hide(utdata->swdfreq);
+    gtk_widget_hide(utdata->swvol);
+    gtk_widget_hide(utdata->graph_layoutdfreq);
+    gtk_widget_hide(utdata->graph_layoutvol);
+
 
     gtk_widget_hide(utdata->algorithm);
     gtk_widget_hide(utdata->dimmension);
@@ -175,9 +202,20 @@ void on_dfreq_clicked(GtkButton *but, gpointer udata)
     curr_measurement = 2;
 
     gtk_widget_show(utdata->ml_dfreq);
+    gtk_widget_show(utdata->graph_layoutdfreq);
+    gtk_widget_show(utdata->swdfreq);
+    gtk_widget_show(utdata->graphlabel);
+
+    gtk_label_set_label(utdata->maplabel, "Frequency Rate");
+    gtk_label_set_label(utdata->graphlabel, "Frequency Rate");
+
     gtk_widget_hide(utdata->ml_vol);
     gtk_widget_hide(utdata->ml_freq);
     gtk_widget_hide(utdata->ml_ad);
+    gtk_widget_hide(utdata->graph_layoutfreq);
+    gtk_widget_hide(utdata->graph_layoutvol);
+    gtk_widget_hide(utdata->swvol);
+    gtk_widget_hide(utdata->swfreq);
 
 
     gtk_widget_hide(utdata->algorithm);
@@ -207,9 +245,18 @@ void on_attack_detection_clicked(GtkButton *but, gpointer udata)
     gtk_widget_show(utdata->dimm_label);
     gtk_widget_show(utdata->ml_ad);
 
+    gtk_label_set_label(utdata->maplabel, "Attack Detection");
+
     gtk_widget_hide(utdata->ml_vol);
     gtk_widget_hide(utdata->ml_freq);
     gtk_widget_hide(utdata->ml_dfreq);
+    gtk_widget_hide(utdata->swvol);
+    gtk_widget_hide(utdata->swfreq);
+    gtk_widget_hide(utdata->swdfreq);
+    gtk_widget_hide(utdata->graph_layoutdfreq);
+    gtk_widget_hide(utdata->graph_layoutfreq);
+    gtk_widget_hide(utdata->graph_layoutvol);
+    gtk_widget_hide(utdata->graphlabel);
 
     printf("Attack Detection\n");
 }
@@ -234,6 +281,11 @@ void utility_tools(GtkButton *but, gpointer udata)
 {
     GdkPixbuf *g_red_image;
     GdkPixbuf *g_green_image;
+    GdkPixbuf *g_yellow_image;
+    GdkPixbuf *g_blue_image;
+    GdkPixbuf *g_pink_image;
+    GdkPixbuf *g_grey_image;
+
     OsmGpsMapImage *g_last_image;
     // -------------------
     GtkBuilder *builder;
@@ -268,7 +320,8 @@ void utility_tools(GtkButton *but, gpointer udata)
     utdata->swvol = GTK_WIDGET(gtk_builder_get_object(builder, "swvol"));
     utdata->swfreq = GTK_WIDGET(gtk_builder_get_object(builder, "swfreq"));
     utdata->swdfreq = GTK_WIDGET(gtk_builder_get_object(builder, "swdfreq"));
-    utdata->swad = GTK_WIDGET(gtk_builder_get_object(builder, "swad"));
+    utdata->maplabel = GTK_WIDGET(gtk_builder_get_object(builder, "maplabel"));
+    utdata->graphlabel = GTK_WIDGET(gtk_builder_get_object(builder, "graphlabel"));
 
     gtk_widget_set_sensitive(utdata->voltage, FALSE);
     gtk_widget_set_visible(utdata->algorithm, FALSE);
@@ -287,6 +340,7 @@ void utility_tools(GtkButton *but, gpointer udata)
 
     g_red_image = gdk_pixbuf_new_from_file_at_size(RED_IMAGE, 24, 24, NULL);
     g_green_image = gdk_pixbuf_new_from_file_at_size(GREEN_IMAGE, 24, 24, NULL);
+    g_grey_image = gdk_pixbuf_new_from_file_at_size(GREY_IMAGE, 24, 24, NULL);
 
     utdata->util_map = g_object_new(OSM_TYPE_GPS_MAP,
                                     "map-source", OSM_GPS_MAP_SOURCE_OSMC_TRAILS,
@@ -297,14 +351,14 @@ void utility_tools(GtkButton *but, gpointer udata)
     osm_gps_map_set_center_and_zoom(utdata->util_map, 15.4589, 75.0078, 10);
 
     // TODO: add the points to window.
-    g_last_image = osm_gps_map_image_add(utdata->util_map, 15.4589, 75.0078, g_red_image);
-    g_last_image = osm_gps_map_image_add(utdata->util_map, 15.518597, 74.925584, g_green_image);
+    // g_last_image = osm_gps_map_image_add(utdata->util_map, 15.4589, 75.0078, g_red_image);
+    // g_last_image = osm_gps_map_image_add(utdata->util_map, 15.518597, 74.925584, g_green_image);
 
     
     curr_measurement = 0;
     algorithm = 0;
     dimmension = 0;
-    myParameters parameters = {utdata->util_map, g_red_image, g_green_image, g_last_image};
+    myParameters parameters = {utdata->util_map, g_red_image, g_green_image, g_grey_image, g_last_image};
     gpointer data = (gpointer)&parameters;
 
     gtk_widget_set_size_request(GTK_WIDGET(utdata->util_map), 600, 500);
@@ -312,52 +366,93 @@ void utility_tools(GtkButton *but, gpointer udata)
     gtk_container_add(utdata->map_layout, GTK_WIDGET(utdata->util_map));
 
     // add live chart
-    serie = live_chart_serie_new("IIT", (LiveChartSerieRenderer*)live_chart_line_new(live_chart_values_new(10000)));
-    // live_chart set color to the serie
-    GdkRGBA color = getIndexColor(0);
-    live_chart_path_set_color(live_chart_serie_get_line(serie), &color);
+    // serie = live_chart_serie_new("IIT", (LiveChartSerieRenderer*)live_chart_line_new(live_chart_values_new(10000)));
+    // // live_chart set color to the serie
+    // GdkRGBA color = getIndexColor(0);
+    // live_chart_path_set_color(live_chart_serie_get_line(serie), &color);
 
     // iterate over llptr and load the map_vis_head structure
 
     // vis_data_head = (struct map_vis_head *)malloc(sizeof(struct vis_data));
+    
+    LiveChartConfig *config_vol = live_chart_config_new();
+    live_chart_yaxis_set_unit(config_vol->y_axis, "V");
+    live_chart_xaxis_set_tick_interval(config_vol->x_axis, 20);
+    live_chart_xaxis_set_tick_length(config_vol->x_axis, 100);
+    live_chart_yaxis_update_bounds(config_vol->y_axis, 1);
+    live_chart_path_set_visible(config_vol->x_axis->lines, FALSE);
+
+    LiveChartChart *chart_vol = live_chart_chart_new(config_vol);
+    
+    LiveChartConfig *config_freq = live_chart_config_new();
+    live_chart_yaxis_set_unit(config_freq->y_axis, "mHz");
+    live_chart_xaxis_set_tick_interval(config_freq->x_axis, 20);
+    live_chart_xaxis_set_tick_length(config_freq->x_axis, 100);
+    live_chart_yaxis_update_bounds(config_freq->y_axis, 1);
+    live_chart_path_set_visible(config_freq->x_axis->lines, FALSE);
+
+    LiveChartChart *chart_freq = live_chart_chart_new(config_freq);
+
+
+    LiveChartConfig *config_dfreq = live_chart_config_new();
+    live_chart_yaxis_set_unit(config_dfreq->y_axis, "mHz");
+    live_chart_xaxis_set_tick_interval(config_dfreq->x_axis, 20);
+    live_chart_xaxis_set_tick_length(config_dfreq->x_axis, 100);
+    live_chart_yaxis_update_bounds(config_dfreq->y_axis, 1);
+    live_chart_path_set_visible(config_dfreq->x_axis->lines, FALSE);
+
+    LiveChartChart *chart_dfreq = live_chart_chart_new(config_dfreq);
+
+
+
+
+    // live_chart_chart_add_serie(chart, serie);
 
     struct Lower_Layer_Details *llptr = LLfirst;
-    struct vis_data * visptr = vis_data_head;
+    vis_data_head = (struct vis_data *)malloc(sizeof(struct vis_data));
+    struct vis_data * temp_visptr = vis_data_head;
     int index = 0;
     while (llptr != NULL)
     {
-        visptr = (struct vis_data *)malloc(sizeof(struct vis_data));
-        visptr->id = llptr->pmuid;
-        visptr->lat = llptr->latitude;
-        visptr->lon = llptr->longitude;
-        visptr->last_image = osm_gps_map_image_add(utdata->util_map, llptr->latitude, llptr->longitude, g_red_image); // TODO: change the image
-        visptr->serie = live_chart_serie_new(llptr->ip, (LiveChartSerieRenderer*)live_chart_line_new(live_chart_values_new(10000)));
-        // live_chart set color to the serie
+        printf("\ncat\n");
+        temp_visptr->id = llptr->pmuid;
+        temp_visptr->lat = llptr->latitude;
+        temp_visptr->lon = llptr->longitude;
+        temp_visptr->last_image = osm_gps_map_image_add(utdata->util_map, llptr->latitude, llptr->longitude, g_grey_image); // TODO: change the image
+
+        temp_visptr->serie_freq = live_chart_serie_new(llptr->ip, (LiveChartSerieRenderer*)live_chart_line_new(live_chart_values_new(10000)));
         GdkRGBA color = getIndexColor(index);
-        live_chart_path_set_color(live_chart_serie_get_line(visptr->serie), &color);
-        visptr->next = NULL;
-        visptr = visptr->next;
+        live_chart_path_set_color(live_chart_serie_get_line(temp_visptr->serie_freq), &color);
+        live_chart_chart_add_serie(chart_freq, temp_visptr->serie_freq);
+
+        temp_visptr->serie_vol = live_chart_serie_new(llptr->ip, (LiveChartSerieRenderer*)live_chart_line_new(live_chart_values_new(10000)));
+        live_chart_path_set_color(live_chart_serie_get_line(temp_visptr->serie_vol), &color);
+        live_chart_chart_add_serie(chart_vol, temp_visptr->serie_vol);
+
+        temp_visptr->serie_dfreq = live_chart_serie_new(llptr->ip, (LiveChartSerieRenderer*)live_chart_line_new(live_chart_values_new(10000)));
+        live_chart_path_set_color(live_chart_serie_get_line(temp_visptr->serie_dfreq), &color);
+        live_chart_chart_add_serie(chart_dfreq, temp_visptr->serie_dfreq);
+
+        temp_visptr->next = (struct vis_data *)malloc(sizeof(struct vis_data));
+        temp_visptr = temp_visptr->next;
         index++;
         llptr = llptr->next;
     }
+    temp_visptr->next = NULL;
 
     guint pid = g_timeout_add(20, (GSourceFunc)update_images, data);
 
-    LiveChartConfig *config = live_chart_config_new();
-    live_chart_yaxis_set_unit(config->y_axis, "mHz");
-    live_chart_xaxis_set_tick_interval(config->x_axis, 20);
-    live_chart_xaxis_set_tick_length(config->x_axis, 100);
-    live_chart_yaxis_update_bounds(config->y_axis, 1);
-    live_chart_path_set_visible(config->x_axis->lines, FALSE);
-
-    LiveChartChart *chart = live_chart_chart_new(config);
-    live_chart_chart_add_serie(chart, serie);
 
     // gtk_widget_set_hexpand(GTK_WIDGET(chart), TRUE);
     // gtk_widget_set_vexpand(GTK_WIDGET(chart), TRUE);
-    gtk_widget_set_size_request(GTK_WIDGET(chart), 600, 150);
+    gtk_widget_set_size_request(GTK_WIDGET(chart_freq), 600, 150);
+    gtk_widget_set_size_request(GTK_WIDGET(chart_vol), 600, 150);
+    gtk_widget_set_size_request(GTK_WIDGET(chart_dfreq), 600, 150);
 
-    gtk_container_add(utdata->graph_layoutvol, GTK_WIDGET(chart));
+    gtk_container_add(utdata->graph_layoutvol, GTK_WIDGET(chart_vol));
+    gtk_container_add(utdata->graph_layoutfreq, GTK_WIDGET(chart_freq));
+    gtk_container_add(utdata->graph_layoutdfreq, GTK_WIDGET(chart_dfreq));
+
     
 
 
@@ -383,7 +478,8 @@ void utility_tools(GtkButton *but, gpointer udata)
     gtk_widget_hide(utdata->ml_ad);
     gtk_widget_hide(utdata->swfreq);
     gtk_widget_hide(utdata->swdfreq);
-    gtk_widget_hide(utdata->swad);
+    gtk_widget_hide(utdata->graph_layoutdfreq);
+    gtk_widget_hide(utdata->graph_layoutfreq);
 
     gtk_main();
 }

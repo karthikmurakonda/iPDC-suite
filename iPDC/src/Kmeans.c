@@ -11,14 +11,14 @@
 struct kmeans1
 {
     int idcode;
-    unsigned long long int count_A = 1000;
-    unsigned long long int count_B = 1000;
-    unsigned long long int count_C = 1000;
-    long double A = 50;
-    long double B = 49;
-    long double C = 51;
+    unsigned long long int count_A;
+    unsigned long long int count_B;
+    unsigned long long int count_C;
+    long double A;
+    long double B;
+    long double C;
     struct kmeans1 *next;
-}
+};
 
 struct kmeans1 *headk = NULL;
 
@@ -26,6 +26,7 @@ gboolean kmeans(struct data_frame *df)
 {
     if (headk == NULL)
     {
+        headk = (struct kmeans1 *)malloc(sizeof(struct kmeans1));
         headk->A = 50;
         headk->B = 49;
         headk->C = 51;
@@ -38,8 +39,8 @@ gboolean kmeans(struct data_frame *df)
     }
     else
     {
-        struct kmeans1 *temp == headk;
-        struct kmeans1 *previous == NULL;
+        struct kmeans1 *temp = headk;
+        struct kmeans1 *previous = NULL;
         while (temp != NULL)
         {
             if (temp->idcode == to_intconvertor(df->idcode))
@@ -79,10 +80,10 @@ gboolean kmeans(struct data_frame *df)
                 }
                 break;
             }
-            previous=temp;
+            previous = temp;
             temp = temp->next;
         }
-        if(temp==NULL)
+        if (temp == NULL)
         {
             struct kmeans1 *bring = (struct kmeans1 *)malloc(sizeof(struct kmeans1));
             bring->A = 50;
@@ -93,7 +94,7 @@ gboolean kmeans(struct data_frame *df)
             bring->count_C = 1000;
             bring->next = NULL;
             bring->idcode = to_intconvertor(df->idcode);
-            previous->next=bring;
+            previous->next = bring;
             return TRUE;
         }
     }

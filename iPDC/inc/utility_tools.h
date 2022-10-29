@@ -39,10 +39,11 @@ struct _UtData
 	GtkWidget *swfreq;
 	GtkWidget *swdfreq;
 	GtkWidget *swad;
+	GtkWidget *maplabel;
+	GtkWidget *graphlabel;
 };
 
 UtData *utdata;
-LiveChartSerie *serie;
 
 // global variables
 int curr_measurement;

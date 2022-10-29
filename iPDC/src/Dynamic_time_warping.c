@@ -29,7 +29,6 @@ struct DTWvollist
     struct DTWvollist *next;
 };
 
-
 struct DTWfreqlist *dtwhead = NULL;
 struct DTWvollist *dtwheadvol = NULL;
 
@@ -43,7 +42,7 @@ int DTWfreqDistance(struct data_frame *df)
         dtwhead->flag = 0;
         dtwhead->idcode = to_intconvertor(df->idcode);
         dtwhead->next = NULL;
-        dtwhead->result=1;
+        dtwhead->result = 1;
         return 1;
     }
     else
@@ -151,7 +150,7 @@ int DTWfreqDistance(struct data_frame *df)
             bring->flag = 0;
             bring->idcode = to_intconvertor(df->idcode);
             bring->next = NULL;
-            bring->result=1;
+            bring->result = 1;
             previous->next = bring;
             return 1;
         }
@@ -169,7 +168,7 @@ int DTWvolDistance(struct data_frame *df)
         dtwheadvol->flag = 0;
         dtwheadvol->idcode = to_intconvertor(df->idcode);
         dtwheadvol->next = NULL;
-        dtwheadvol->result=1;
+        dtwheadvol->result = 1;
         return 1;
     }
     else
@@ -183,23 +182,41 @@ int DTWvolDistance(struct data_frame *df)
                 float CURR_vol;
                 if (df->dpmu[0]->fmt->phasor == '0')
                 {
-                    unsigned char s1[2];
-                    unsigned char s2[2];
-                    strncpy(s1,df->dpmu[0]->phasors[0],2);
-                    strncpy(s2,df->dpmu[0]->phasors[0]+2,2);
-                    long double v1 = to_intconvertor(s1);
-                    long double v2 = to_intconvertor(s2);
-                    CURR_vol = sqrt((v1*v1)+(v2*v2));
+                    if (df->dpmu[0]->fmt->polar == '0')
+                    {
+                        unsigned char s1[2];
+                        unsigned char s2[2];
+                        strncpy(s1, df->dpmu[0]->phasors[0], 2);
+                        strncpy(s2, df->dpmu[0]->phasors[0] + 2, 2);
+                        long double v1 = to_intconvertor(s1);
+                        long double v2 = to_intconvertor(s2);
+                        CURR_vol = sqrt((v1 * v1) + (v2 * v2));
+                    }
+                    else
+                    {
+                        unsigned char s1[2];
+                        strncpy(s1, df->dpmu[0]->phasors[0], 2);
+                        CURR_vol = to_intconvertor(s1);
+                    }
                 }
                 else
                 {
-                    unsigned char s1[4];
-                    unsigned char s2[4];
-                    strncpy(s1,df->dpmu[0]->phasors[0],4);
-                    strncpy(s2,df->dpmu[0]->phasors[0]+2,4);
-                    long double v1 = decode_ieee_single(s1);
-                    long double v2 =decode_ieee_single(s2);
-                    CURR_vol = sqrt((v1*v1)+(v2*v2));
+                    if (df->dpmu[0]->fmt->polar == '0')
+                    {
+                        unsigned char s1[4];
+                        unsigned char s2[4];
+                        strncpy(s1, df->dpmu[0]->phasors[0], 4);
+                        strncpy(s2, df->dpmu[0]->phasors[0] + 2, 4);
+                        long double v1 = decode_ieee_single(s1);
+                        long double v2 = decode_ieee_single(s2);
+                        CURR_vol = sqrt((v1 * v1) + (v2 * v2));
+                    }
+                    else
+                    {
+                        unsigned char s1[4];
+                        strncpy(s1, df->dpmu[0]->phasors[0], 4);
+                        CURR_vol = decode_ieee_single(s1);
+                    }
                 }
 
                 // printf("count1: %d\ncount2: %d\n",count_track1,count_track2);
@@ -289,7 +306,7 @@ int DTWvolDistance(struct data_frame *df)
             bring->flag = 0;
             bring->idcode = to_intconvertor(df->idcode);
             bring->next = NULL;
-            bring->result=1;
+            bring->result = 1;
             previous->next = bring;
             return 1;
         }
