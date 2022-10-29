@@ -5,6 +5,7 @@
 #include "map_vis.h"
 #include "utility_tools.h"
 #include "livechart.h"
+#include "connections.h"
 
 #define UI_fILE "./assets/utility_tools.ui"
 #define RED_IMAGE "./assets/red.png"
@@ -19,6 +20,106 @@
 // }
 
 // on closing the window kill the g_timeout_add
+
+GdkRGBA getIndexColor(int index){
+    GdkRGBA color;
+    // get the color from the index mathematically
+    switch(index){
+        case 0:
+            color.red = 1.0;
+            color.green = 0.0;
+            color.blue = 0.0;
+            color.alpha = 1.0;
+            break;
+        case 1:
+            color.red = 0.0;
+            color.green = 1.0;
+            color.blue = 0.0;
+            color.alpha = 1.0;
+            break;
+        case 2:
+            color.red = 0.0;
+            color.green = 0.0;
+            color.blue = 1.0;
+            color.alpha = 1.0;
+            break;
+        case 3:
+            color.red = 1.0;
+            color.green = 1.0;
+            color.blue = 0.0;
+            color.alpha = 1.0;
+            break;
+        case 4:
+            color.red = 1.0;
+            color.green = 0.0;
+            color.blue = 1.0;
+            color.alpha = 1.0;
+            break;
+        case 5:
+            color.red = 0.0;
+            color.green = 1.0;
+            color.blue = 1.0;
+            color.alpha = 1.0;
+            break;
+        case 6:
+            color.red = 1.0;
+            color.green = 0.5;
+            color.blue = 0.0;
+            color.alpha = 1.0;
+            break;
+        case 7:
+            color.red = 0.0;
+            color.green = 0.5;
+            color.blue = 1.0;
+            color.alpha = 1.0;
+            break;
+        case 8:
+            color.red = 0.5;
+            color.green = 1.0;
+            color.blue = 0.0;
+            color.alpha = 1.0;
+            break;
+        case 9:
+            color.red = 0.5;
+            color.green = 0.0;
+            color.blue = 1.0;
+            color.alpha = 1.0;
+            break;
+        case 10:
+            color.red = 1.0;
+            color.green = 0.0;
+            color.blue = 0.5;
+            color.alpha = 1.0;
+            break;
+        case 11:
+            color.red = 0.0;
+            color.green = 1.0;
+            color.blue = 0.5;
+            color.alpha = 1.0;
+            break;
+        case 12:
+            color.red = 0.5;
+            color.green = 0.0;
+            color.blue = 1.0;
+            color.alpha = 1.0;
+            break;
+        case 13:
+            color.red = 1.0;
+            color.green = 0.5;
+            color.blue = 0.0;
+            color.alpha = 1.0;
+            break;
+        default:
+            color.red = 0.0+0.1*index;
+            color.green = 0.0+0.9*index;
+            color.blue = 0.0+0.5*index;
+            color.alpha = 1.0;
+            break;
+    }
+    return color;
+}
+
+
 void on_window_destroy(GtkWidget *widget, gpointer data)
 {
     g_source_remove(GPOINTER_TO_UINT(data));
@@ -119,22 +220,43 @@ void utility_tools(GtkButton *but, gpointer udata)
     dimmension = 0;
     myParameters parameters = {utdata->util_map, g_red_image, g_green_image, g_last_image};
     gpointer data = (gpointer)&parameters;
-    guint pid = g_timeout_add(20, (GSourceFunc)update_images, data);
 
     gtk_widget_set_size_request(GTK_WIDGET(utdata->util_map), 600, 500);
 
     gtk_container_add(utdata->map_layout, GTK_WIDGET(utdata->util_map));
 
     // add live chart
-    serie = live_chart_serie_new("Hello", (LiveChartSerieRenderer*)live_chart_line_new (live_chart_values_new(10000)));
+    serie = live_chart_serie_new("IIT", (LiveChartSerieRenderer*)live_chart_line_new(live_chart_values_new(10000)));
     // live_chart set color to the serie
-    GdkRGBA color;
-    color.red = 1.0;
-    color.green = 0.0;
-    color.blue = 1.0;
-    color.alpha = 1.0;
-
+    GdkRGBA color = getIndexColor(0);
     live_chart_path_set_color(live_chart_serie_get_line(serie), &color);
+
+    // iterate over llptr and load the map_vis_head structure
+
+    // vis_data_head = (struct map_vis_head *)malloc(sizeof(struct vis_data));
+
+    struct Lower_Layer_Details *llptr = LLfirst;
+    struct vis_data * visptr = vis_data_head;
+    int index = 0;
+    while (llptr != NULL)
+    {
+        visptr = (struct vis_data *)malloc(sizeof(struct vis_data));
+        visptr->id = llptr->pmuid;
+        visptr->lat = llptr->latitude;
+        visptr->lon = llptr->longitude;
+        visptr->last_image = osm_gps_map_image_add(utdata->util_map, llptr->latitude, llptr->longitude, g_red_image); // TODO: change the image
+        visptr->serie = live_chart_serie_new(llptr->ip, (LiveChartSerieRenderer*)live_chart_line_new(live_chart_values_new(10000)));
+        // live_chart set color to the serie
+        GdkRGBA color = getIndexColor(index);
+        live_chart_path_set_color(live_chart_serie_get_line(visptr->serie), &color);
+        visptr->next = NULL;
+        visptr = visptr->next;
+        index++;
+        llptr = llptr->next;
+    }
+
+    guint pid = g_timeout_add(20, (GSourceFunc)update_images, data);
+
     LiveChartConfig *config = live_chart_config_new();
     live_chart_yaxis_set_unit(config->y_axis, "mHz");
     live_chart_xaxis_set_tick_interval(config->x_axis, 20);
@@ -150,6 +272,7 @@ void utility_tools(GtkButton *but, gpointer udata)
     gtk_widget_set_size_request(GTK_WIDGET(chart), 600, 150);
 
     gtk_container_add(utdata->graph_layout, GTK_WIDGET(chart));
+    
 
 
     

@@ -20,11 +20,12 @@ struct vollist
     int idcode;
     long double AVERAGE_OF_VOLTAGE;
     unsigned long long int COUNT;
+    struct vollist* next;
 };
 
 
 struct freqlist *head = NULL;
-struct vollist *headvol = NULL
+struct vollist *headvol = NULL;
 
 gboolean attack_detect_freq(struct data_frame *df)
 {
@@ -111,16 +112,16 @@ gboolean attack_detect_vol(struct data_frame *df)
         long double v2 = decode_ieee_single(s2);
         CURR_vol = sqrt((v1 * v1) + (v2 * v2));
     }
-    if (head == NULL)
+    if (headvol == NULL)
     {
-        head = (struct vollist *)malloc(sizeof(struct vollist));
-        head->AVERAGE_OF_VOLTAGE = CURR_vol;
-        head->COUNT = 500;
+        headvol = (struct vollist *)malloc(sizeof(struct vollist));
+        headvol->AVERAGE_OF_VOLTAGE = CURR_vol;
+        headvol->COUNT = 500;
         return TRUE;
     }
     else
     {
-        struct vollist *temp = head;
+        struct vollist *temp = headvol;
         struct vollist *previous = NULL;
         while (temp != NULL)
         {

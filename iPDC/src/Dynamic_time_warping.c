@@ -30,25 +30,25 @@ struct DTWvollist
 };
 
 
-struct DTWfreqlist *head = NULL;
-struct DTWvollist *headvol = NULL;
+struct DTWfreqlist *dtwhead = NULL;
+struct DTWvollist *dtwheadvol = NULL;
 
 int DTWfreqDistance(struct data_frame *df)
 {
-    if (head == NULL)
+    if (dtwhead == NULL)
     {
-        head = (struct DTWfreqlist *)malloc(sizeof(struct DTWfreqlist));
-        head->count_track1 = 0;
-        head->count_track2 = 0;
-        head->flag = 0;
-        head->idcode = to_intconvertor(df->idcode);
-        head->next = NULL;
-        head->result=1;
+        dtwhead = (struct DTWfreqlist *)malloc(sizeof(struct DTWfreqlist));
+        dtwhead->count_track1 = 0;
+        dtwhead->count_track2 = 0;
+        dtwhead->flag = 0;
+        dtwhead->idcode = to_intconvertor(df->idcode);
+        dtwhead->next = NULL;
+        dtwhead->result=1;
         return 1;
     }
     else
     {
-        struct DTWfreqlist *temp = head;
+        struct DTWfreqlist *temp = dtwhead;
         struct DTWfreqlist *previous;
         while (temp != NULL)
         {
@@ -161,20 +161,20 @@ int DTWfreqDistance(struct data_frame *df)
 
 int DTWvolDistance(struct data_frame *df)
 {
-    if (headvol == NULL)
+    if (dtwheadvol == NULL)
     {
-        headvol = (struct DTWvollist *)malloc(sizeof(struct DTWvollist));
-        headvol->count_track1 = 0;
-        headvol->count_track2 = 0;
-        headvol->flag = 0;
-        headvol->idcode = to_intconvertor(df->idcode);
-        headvol->next = NULL;
-        headvol->result=1;
+        dtwheadvol = (struct DTWvollist *)malloc(sizeof(struct DTWvollist));
+        dtwheadvol->count_track1 = 0;
+        dtwheadvol->count_track2 = 0;
+        dtwheadvol->flag = 0;
+        dtwheadvol->idcode = to_intconvertor(df->idcode);
+        dtwheadvol->next = NULL;
+        dtwheadvol->result=1;
         return 1;
     }
     else
     {
-        struct DTWvollist *temp = headvol;
+        struct DTWvollist *temp = dtwheadvol;
         struct DTWvollist *previous;
         while (temp != NULL)
         {
