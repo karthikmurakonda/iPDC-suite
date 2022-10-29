@@ -34,6 +34,7 @@ gboolean attack_detect_freq(struct data_frame *df)
         head = (struct freqlist *)malloc(sizeof(struct freqlist));
         head->AVERAGE_OF_FREQUENCY = 50;
         head->COUNT = 500;
+        head->idcode=to_intconvertor(df->idcode);
         return TRUE;
     }
     else
@@ -83,6 +84,7 @@ gboolean attack_detect_freq(struct data_frame *df)
             bring = (struct freqlist *)malloc(sizeof(struct freqlist));
             bring->AVERAGE_OF_FREQUENCY = 50;
             bring->COUNT = 500;
+            bring->idcode = to_intconvertor(df->idcode);
             previous->next=bring;
             return TRUE;
         }
@@ -117,6 +119,7 @@ gboolean attack_detect_vol(struct data_frame *df)
         headvol = (struct vollist *)malloc(sizeof(struct vollist));
         headvol->AVERAGE_OF_VOLTAGE = CURR_vol;
         headvol->COUNT = 500;
+        headvol->idcode=to_intconvertor(df->idcode);
         return TRUE;
     }
     else
@@ -160,6 +163,7 @@ gboolean attack_detect_vol(struct data_frame *df)
             bring->AVERAGE_OF_VOLTAGE = CURR_vol;
             bring->COUNT = 500;
             previous->next = bring;
+            bring->idcode = to_intconvertor(df->idcode);
             return TRUE;
         }
     }
