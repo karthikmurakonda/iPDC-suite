@@ -12,7 +12,7 @@ struct freqlist
     int idcode;
     long double AVERAGE_OF_FREQUENCY;
     unsigned long long int COUNT;
-    struct freqlist* next;
+    struct freqlist *next;
 };
 
 struct vollist
@@ -20,9 +20,8 @@ struct vollist
     int idcode;
     long double AVERAGE_OF_VOLTAGE;
     unsigned long long int COUNT;
-    struct vollist* next;
+    struct vollist *next;
 };
-
 
 struct freqlist *head = NULL;
 struct vollist *headvol = NULL;
@@ -34,7 +33,7 @@ gboolean attack_detect_freq(struct data_frame *df)
         head = (struct freqlist *)malloc(sizeof(struct freqlist));
         head->AVERAGE_OF_FREQUENCY = 50;
         head->COUNT = 500;
-        head->idcode=to_intconvertor(df->idcode);
+        head->idcode = to_intconvertor(df->idcode);
         return TRUE;
     }
     else
@@ -46,10 +45,12 @@ gboolean attack_detect_freq(struct data_frame *df)
             if (to_intconvertor(df->idcode) == temp->idcode)
             {
                 float CURR_FREQ;
-                if (df->dpmu[0]->fmt->freq == '0'){
+                if (df->dpmu[0]->fmt->freq == '0')
+                {
                     CURR_FREQ = 50 + to_intconvertor(df->dpmu[0]->freq) * 1e-3;
                 }
-                else{
+                else
+                {
                     CURR_FREQ = decode_ieee_single(df->dpmu[0]->freq);
                 }
                 printf("Current freq: %f\n", CURR_FREQ);
@@ -75,17 +76,17 @@ gboolean attack_detect_freq(struct data_frame *df)
                     return TRUE;
                 }
             }
-            previous=temp;
-            temp=temp->next;
+            previous = temp;
+            temp = temp->next;
         }
-        if(temp==NULL)
+        if (temp == NULL)
         {
-            struct freqlist* bring = (struct freqlist *)malloc(sizeof(struct freqlist));
+            struct freqlist *bring = (struct freqlist *)malloc(sizeof(struct freqlist));
             bring = (struct freqlist *)malloc(sizeof(struct freqlist));
             bring->AVERAGE_OF_FREQUENCY = 50;
             bring->COUNT = 500;
             bring->idcode = to_intconvertor(df->idcode);
-            previous->next=bring;
+            previous->next = bring;
             return TRUE;
         }
     }
@@ -96,30 +97,48 @@ gboolean attack_detect_vol(struct data_frame *df)
     float CURR_vol;
     if (df->dpmu[0]->fmt->phasor == '0')
     {
-        unsigned char s1[2];
-        unsigned char s2[2];
-        strncpy(s1, df->dpmu[0]->phasors[0], 2);
-        strncpy(s2, df->dpmu[0]->phasors[0] + 2, 2);
-        long double v1 = to_intconvertor(s1);
-        long double v2 = to_intconvertor(s2);
-        CURR_vol = sqrt((v1 * v1) + (v2 * v2));
+        if (df->dpmu[0]->fmt->polar == '0')
+        {
+            unsigned char s1[2];
+            unsigned char s2[2];
+            strncpy(s1, df->dpmu[0]->phasors[0], 2);
+            strncpy(s2, df->dpmu[0]->phasors[0] + 2, 2);
+            long double v1 = to_intconvertor(s1);
+            long double v2 = to_intconvertor(s2);
+            CURR_vol = sqrt((v1 * v1) + (v2 * v2));
+        }
+        else
+        {
+            unsigned char s1[2];
+            strncpy(s1, df->dpmu[0]->phasors[0], 2);
+            CURR_vol = to_intconvertor(s1);
+        }
     }
     else
     {
-        unsigned char s1[2];
-        unsigned char s2[2];
-        strncpy(s1, df->dpmu[0]->phasors[0], 4);
-        strncpy(s2, df->dpmu[0]->phasors[0] + 2, 4);
-        long double v1 = decode_ieee_single(s1);
-        long double v2 = decode_ieee_single(s2);
-        CURR_vol = sqrt((v1 * v1) + (v2 * v2));
+        if (df->dpmu[0]->fmt->polar == '0')
+        {
+            unsigned char s1[4];
+            unsigned char s2[4];
+            strncpy(s1, df->dpmu[0]->phasors[0], 4);
+            strncpy(s2, df->dpmu[0]->phasors[0] + 2, 4);
+            long double v1 = decode_ieee_single(s1);
+            long double v2 = decode_ieee_single(s2);
+            CURR_vol = sqrt((v1 * v1) + (v2 * v2));
+        }
+        else
+        {
+            unsigned char s1[4];
+            strncpy(s1, df->dpmu[0]->phasors[0], 4);
+            CURR_vol = decode_ieee_single(s1);
+        }
     }
     if (headvol == NULL)
     {
         headvol = (struct vollist *)malloc(sizeof(struct vollist));
         headvol->AVERAGE_OF_VOLTAGE = CURR_vol;
         headvol->COUNT = 500;
-        headvol->idcode=to_intconvertor(df->idcode);
+        headvol->idcode = to_intconvertor(df->idcode);
         return TRUE;
     }
     else
@@ -173,7 +192,5 @@ gboolean attack_detect_freq_vol(struct data_frame *df)
 {
     return attack_detect_freq(df) && attack_detect_vol(df);
 }
-
-
 
 /* pavan changes */
