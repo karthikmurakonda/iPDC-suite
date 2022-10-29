@@ -1,5 +1,7 @@
 #include<gtk/gtk.h>
 #include<osm-gps-map.h>
+#include "livechart.h"
+
 typedef struct{
     OsmGpsMap *util_map;
     GdkPixbuf *g_red_image;
@@ -12,11 +14,13 @@ struct vis_data{
     int id;
     float lat;
     float lon;
-    GdkPixbuf *last_image;
+    GdkColor color;
+    OsmGpsMapImage *last_image; // TODO:
     GTimeVal last_update_time;
+    LiveChartSerie *serie;
     struct vis_data *next;
 };
 
-struct vis_data *head;
+struct vis_data *vis_data_head;
 
 gboolean update_images(gpointer* pars);
