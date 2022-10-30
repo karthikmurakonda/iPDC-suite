@@ -34,6 +34,7 @@ gboolean attack_detect_freq(struct data_frame *df)
         head->AVERAGE_OF_FREQUENCY = 50;
         head->COUNT = 500;
         head->idcode = to_intconvertor(df->idcode);
+        head->next = NULL;
         return TRUE;
     }
     else
@@ -139,6 +140,7 @@ gboolean attack_detect_vol(struct data_frame *df)
         headvol->AVERAGE_OF_VOLTAGE = CURR_vol;
         headvol->COUNT = 500;
         headvol->idcode = to_intconvertor(df->idcode);
+        headvol->next = NULL;
         return TRUE;
     }
     else
