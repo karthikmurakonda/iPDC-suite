@@ -87,6 +87,7 @@ gboolean attack_detect_freq(struct data_frame *df)
             bring->AVERAGE_OF_FREQUENCY = 50;
             bring->COUNT = 500;
             bring->idcode = to_intconvertor(df->idcode);
+            bring->next = NULL;
             previous->next = bring;
             return TRUE;
         }
@@ -185,6 +186,7 @@ gboolean attack_detect_vol(struct data_frame *df)
             bring->COUNT = 500;
             previous->next = bring;
             bring->idcode = to_intconvertor(df->idcode);
+            bring->next = NULL;
             return TRUE;
         }
     }
