@@ -13,6 +13,7 @@
 #include "connections.h"
 #include "livechart.h"
 #include "utility_tools.h"
+#include "Kmeans2.h"
 
 
 //  debug
@@ -44,17 +45,17 @@ gboolean update_images(gpointer* pars){
         float lat;
         float lon;
         loops++;
-        printf("loops: %d\n", loops);
+        // printf("loops: %d\n", loops);
         
         id = to_intconvertor(df->idcode);
-        printf("id = %d\n",id);
+        // printf("id = %d\n",id);
         pthread_mutex_lock(&mutex_cfg);
         temp_cfg = cfgfirst;
         // Check for the IDCODE in Configuration Frame
         while(temp_cfg != NULL){
             if(id == to_intconvertor(temp_cfg->idcode)){
                 cfg_match = 1;
-                printf("Matched - id : %d\n",id);
+                // printf("Matched - id : %d\n",id);
                 freq_fmt = temp_cfg->pmu[0]->fmt->freq;
                 anal_fmt = temp_cfg->pmu[0]->fmt->analog;
                 phas_fmt = temp_cfg->pmu[0]->fmt->phasor;
@@ -69,7 +70,7 @@ gboolean update_images(gpointer* pars){
         // get data from df.
         if(freq_fmt == '1'){
             freq = decode_ieee_single(df->dpmu[i]->freq);
-            printf("freq = %f\n",freq);
+            // printf("freq = %f\n",freq);
         }else{
             freq = to_intconvertor(df->dpmu[i]->freq)*1e-6+50;
         }
@@ -80,15 +81,15 @@ gboolean update_images(gpointer* pars){
         strncpy(last2bytes, df->dpmu[i]->phasors[0]+2, 2);
         vol_magnitude = to_intconvertor(first2bytes);
         float imaginary = to_intconvertor(last2bytes);
-        printf("vol = %f imag = %f\n",vol_magnitude, imaginary);
+        // printf("vol = %f imag = %f\n",vol_magnitude, imaginary);
 
         vis_ptr = vis_data_head;
         match = 0;
         while(vis_ptr != NULL){
-            printf("vis_ptr->id = %d\n",vis_ptr->id);
+            // printf("vis_ptr->id = %d\n",vis_ptr->id);
             if(vis_ptr->id == id){
                 match = 1;
-                printf("Matched - id : %d\n",id);
+                // printf("Matched - id : %d\n",id);
                 break;
             }
             vis_ptr = vis_ptr->next;
@@ -102,7 +103,7 @@ gboolean update_images(gpointer* pars){
         live_chart_serie_add(vis_ptr->serie_dfreq, dfreq);
 
         if(match == 1 && cfg_match == 1){
-            printf("lat = %f, lon = %f, freq = %f\n",lat,lon,freq);
+            // printf("lat = %f, lon = %f, freq = %f\n",lat,lon,freq);
             if(vis_ptr->last_image != 0){
                 osm_gps_map_image_remove(parameters->util_map, vis_ptr->last_image);
             }
@@ -153,7 +154,7 @@ gboolean update_images(gpointer* pars){
                 }else if (algorithm==1 && dimmension == 1){
 
                 }else if (algorithm==1 && dimmension == 2){
-
+                    Kmeans2(df);
                 }else if (algorithm==2 && dimmension == 0){
                     if(!DTWvolDistance(df)){
                         vis_ptr->last_image = osm_gps_map_image_add(parameters->util_map,lat, lon, parameters->g_red_image);
