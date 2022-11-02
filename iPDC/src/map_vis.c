@@ -129,13 +129,13 @@ gboolean update_images(gpointer* pars){
                 }
             }else if(curr_measurement == 3){
                 if(algorithm==0 && dimmension == 0){
-                    if (!attack_detect_vol(df)){
+                    if (!attack_detect_freq(df)){
                         vis_ptr->last_image = osm_gps_map_image_add(parameters->util_map,lat, lon, parameters->g_red_image);
                     }else{
                         vis_ptr->last_image = osm_gps_map_image_add(parameters->util_map,lat, lon, parameters->g_green_image);
                     }
                 }else if (algorithm==0 && dimmension == 1){
-                    if (!attack_detect_freq(df)){
+                    if (!attack_detect_vol(df)){
                         vis_ptr->last_image = osm_gps_map_image_add(parameters->util_map,lat, lon, parameters->g_red_image);
                     }else{
                         vis_ptr->last_image = osm_gps_map_image_add(parameters->util_map,lat, lon, parameters->g_green_image);
@@ -161,19 +161,23 @@ gboolean update_images(gpointer* pars){
                         vis_ptr->last_image = osm_gps_map_image_add(parameters->util_map,lat, lon, parameters->g_green_image);
                     }
                 }else if (algorithm==2 && dimmension == 0){
-                    if(!DTWvolDistance(df)){
-                        vis_ptr->last_image = osm_gps_map_image_add(parameters->util_map,lat, lon, parameters->g_red_image);
-                    }else{
-                        vis_ptr->last_image = osm_gps_map_image_add(parameters->util_map,lat, lon, parameters->g_green_image);
-                    }
-                }else if (algorithm==2 && dimmension == 1){
                     if(!DTWfreqDistance(df)){
                         vis_ptr->last_image = osm_gps_map_image_add(parameters->util_map,lat, lon, parameters->g_red_image);
                     }else{
                         vis_ptr->last_image = osm_gps_map_image_add(parameters->util_map,lat, lon, parameters->g_green_image);
                     }
+                }else if (algorithm==2 && dimmension == 1){
+                    if(!DTWvolDistance(df)){
+                        vis_ptr->last_image = osm_gps_map_image_add(parameters->util_map,lat, lon, parameters->g_red_image);
+                    }else{
+                        vis_ptr->last_image = osm_gps_map_image_add(parameters->util_map,lat, lon, parameters->g_green_image);
+                    }
                 }else if (algorithm==2 && dimmension == 2){
-
+                    if(!DTWfreqvolDistance(df)){
+                        vis_ptr->last_image = osm_gps_map_image_add(parameters->util_map,lat, lon, parameters->g_red_image);
+                    }else{
+                        vis_ptr->last_image = osm_gps_map_image_add(parameters->util_map,lat, lon, parameters->g_green_image);
+                    }
                 }
             }
         }

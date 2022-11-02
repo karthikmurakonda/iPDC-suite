@@ -76,6 +76,7 @@ gboolean attack_detect_freq(struct data_frame *df)
                     printf("avg freq: %Lf\n", temp->AVERAGE_OF_FREQUENCY);
                     return TRUE;
                 }
+                break;
             }
             previous = temp;
             temp = temp->next;
@@ -174,6 +175,7 @@ gboolean attack_detect_vol(struct data_frame *df)
                     printf("avg vol: %Lf\n", temp->AVERAGE_OF_VOLTAGE);
                     return TRUE;
                 }
+                break;
             }
             previous = temp;
             temp = temp->next;
