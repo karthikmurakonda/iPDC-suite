@@ -137,6 +137,7 @@ int DTWfreqDistance(struct data_frame *df)
                     free(DTW);
                     temp->count_track1 = 1;
                 }
+                return temp->result;
                 break;
             }
             previous = temp;
@@ -154,7 +155,6 @@ int DTWfreqDistance(struct data_frame *df)
             previous->next = bring;
             return 1;
         }
-        return temp->result;
     }
 }
 
@@ -293,6 +293,7 @@ int DTWvolDistance(struct data_frame *df)
                     free(DTW);
                     temp->count_track1 = 1;
                 }
+                return temp->result;
                 break;
             }
             previous = temp;
@@ -310,7 +311,6 @@ int DTWvolDistance(struct data_frame *df)
             previous->next = bring;
             return 1;
         }
-        return temp->result;
     }
 }
 
