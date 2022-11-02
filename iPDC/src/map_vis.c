@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <stdbool.h>
 #include <gtk/gtk.h>
 #include <pthread.h>
 #include "global.h"
@@ -154,7 +155,11 @@ gboolean update_images(gpointer* pars){
                 }else if (algorithm==1 && dimmension == 1){
 
                 }else if (algorithm==1 && dimmension == 2){
-                    Kmeans2(df);
+                    if(!Kmeans2(df)){
+                        vis_ptr->last_image = osm_gps_map_image_add(parameters->util_map,lat, lon, parameters->g_red_image);
+                    }else{
+                        vis_ptr->last_image = osm_gps_map_image_add(parameters->util_map,lat, lon, parameters->g_green_image);
+                    }
                 }else if (algorithm==2 && dimmension == 0){
                     if(!DTWvolDistance(df)){
                         vis_ptr->last_image = osm_gps_map_image_add(parameters->util_map,lat, lon, parameters->g_red_image);
