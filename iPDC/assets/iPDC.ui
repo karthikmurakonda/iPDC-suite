@@ -380,10 +380,10 @@ sends data frames.</property>
             <property name="receives-default">True</property>
             <property name="has-tooltip">True</property>
             <property name="tooltip-text" translatable="yes">For more information visit the iPDC official web 
-'ipdc.codeplex.com/'.</property>
+'https://github.com/karthikmurakonda/iPDC-suite/discussions'.</property>
             <property name="image">image1</property>
             <property name="relief">none</property>
-            <property name="uri">http://ipdc.codeplex.com/</property>
+            <property name="uri">https://github.com/karthikmurakonda/iPDC-suite/discussions</property>
           </object>
           <packing>
             <property name="x">500</property>

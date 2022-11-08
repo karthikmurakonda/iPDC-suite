@@ -385,7 +385,7 @@ void utility_tools(GtkButton *but, gpointer udata)
     LiveChartChart *chart_vol = live_chart_chart_new(config_vol);
     
     LiveChartConfig *config_freq = live_chart_config_new();
-    live_chart_yaxis_set_unit(config_freq->y_axis, "mHz");
+    live_chart_yaxis_set_unit(config_freq->y_axis, "Hz");
     live_chart_xaxis_set_tick_interval(config_freq->x_axis, 20);
     live_chart_xaxis_set_tick_length(config_freq->x_axis, 100);
     live_chart_yaxis_update_bounds(config_freq->y_axis, 1);
