@@ -311,7 +311,7 @@ void about_ipdc (GtkButton *widget, gpointer udata)
 	gtk_about_dialog_set_license ((GtkAboutDialog *)about_dialog, "iPDC - A Free Phasor Data Concentrator & PMU Simulator\n\nGeneral Public License (GPL)\n\nAuthors:\n\t\tNitesh Pandit <panditnitesh@gmail.com>\n\t\tKedar V. Khandeparkar <kedar.khandeparkar@gmail.com>\n\n\nThis program is free software; you can redistribute it and/or\nmodify it under the terms of the GNU General Public License\nas published by the Free Software Foundation; either version 2\nof the License, or (at your option) any later version.\n\nThis program is distributed in the hope that it will be useful,\nbut WITHOUT ANY WARRANTY; without even the implied warranty of\nMERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\nGNU General Public License for more details.\n\nYou should have received a copy of the GNU General Public License\nalong with this program; if not, write to the Free Software\nFoundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.\n");
 
     	gtk_about_dialog_set_logo ((GtkAboutDialog *)about_dialog, create_pixbuf("/usr/local/share/iPDC/ipdcLogo1.png"));
-	gtk_about_dialog_set_website ((GtkAboutDialog *)about_dialog, "\nhttp://ipdc.codeplex.com/\n");
+	gtk_about_dialog_set_website ((GtkAboutDialog *)about_dialog, "\nhttps://github.com/karthikmurakonda/iPDC-suite/discussions\n");
 	gtk_about_dialog_set_copyright ((GtkAboutDialog *)about_dialog, "Copyright (C) 2011-2012 GPL3");
 	gtk_about_dialog_set_authors ((GtkAboutDialog *)about_dialog, auth);
 	gtk_about_dialog_set_logo ((GtkAboutDialog *)about_dialog, NULL);
