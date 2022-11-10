@@ -70,9 +70,10 @@ gboolean update_images(gpointer* pars){
         // get data from df.
         if(freq_fmt == '1'){
             freq = decode_ieee_single(df->dpmu[i]->freq);
-            // printf("freq = %f\n",freq);
+            printf("freq = %f\n",freq);
         }else{
             freq = to_intconvertor(df->dpmu[i]->freq)*1e-3+50;
+            printf("freq = %f\n",freq);
         }
         
         unsigned char first2bytes[2];
@@ -115,7 +116,7 @@ gboolean update_images(gpointer* pars){
                     vis_ptr->last_image = osm_gps_map_image_add(parameters->util_map, lat, lon, parameters->g_green_image);
                 }
             }else if(curr_measurement == 1){
-                if (freq > 300){
+                if (freq > 50.3){
                     vis_ptr->last_image = osm_gps_map_image_add(parameters->util_map,lat, lon, parameters->g_green_image);
                 }else{
                     vis_ptr->last_image = osm_gps_map_image_add(parameters->util_map,lat, lon, parameters->g_red_image);
