@@ -689,8 +689,12 @@ void write_cfg_to_file()
 				fprintf(fp1,"%d",temp_pmu->port);
 				fputc(',',fp1);
 				fprintf(fp1,"%s",temp_pmu->protocol);
+				fputc(',',fp1);
+				fprintf(fp1,"%f",temp_pmu->latitude);
+				fputc(',',fp1);
+				fprintf(fp1,"%f",temp_pmu->longitude);
 				fputc('\n',fp1);
-
+				
 				temp_pmu = temp_pmu->next;
 			}
 		}

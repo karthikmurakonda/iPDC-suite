@@ -163,7 +163,6 @@ int add_PMU(char pmuid[], char ip[], char port[], char protocol[], char latitude
 		temp_pmu->request_cfg_frame = 0;
 		temp_pmu->latitude = atof(latitude);
 		temp_pmu->longitude = atof(longitude);
-		printf(" lat = %f long = %f\n",temp_pmu->latitude,temp_pmu->longitude);
 		temp_pmu->next = NULL;
 		temp_pmu->prev = NULL;
 

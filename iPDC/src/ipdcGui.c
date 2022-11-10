@@ -1315,12 +1315,12 @@ void add_pmu (GtkButton *but, gpointer udata)
 	gtk_table_attach_defaults (GTK_TABLE (table), label, 0, 1, 4, 5);
 	gtk_widget_show (label);
 
-	label = gtk_label_new ("x-co-ordinate");
+	label = gtk_label_new ("lattitude");
 		gtk_misc_set_alignment (GTK_MISC(label),0,0);
 	gtk_table_attach_defaults (GTK_TABLE (table), label, 0, 1, 5, 6);
 	gtk_widget_show (label);
 
-	label = gtk_label_new ("y-co-ordinate");
+	label = gtk_label_new ("longitude");
 		gtk_misc_set_alignment (GTK_MISC(label),0,0);
 	gtk_table_attach_defaults (GTK_TABLE (table), label, 0, 1, 6, 7);
 	gtk_widget_show (label);
@@ -2339,7 +2339,7 @@ void view_setup_file (char *filename)
 
 		/* Create a table of ? by 2 squares */
 		rowCount = dDevices + sDevices + 15;
-		table = gtk_table_new (rowCount, 5, FALSE);
+		table = gtk_table_new (rowCount, 7, FALSE);
 
 		/* set the spacing to 10 on x and 10 on y */
 		gtk_table_set_row_spacings (GTK_TABLE (table), 8);
@@ -2441,7 +2441,7 @@ void view_setup_file (char *filename)
 
 		sprintf(buff, "Measurement Received From Total : %d Devices", sDevices);
 		label = gtk_label_new (buff);
-		gtk_table_attach_defaults (GTK_TABLE (table), label, 0, 5, 8, 9 );
+		gtk_table_attach_defaults (GTK_TABLE (table), label, 0, 7, 8, 9 );
 		gtk_widget_show (label);
 
         	rowi = 9;
@@ -2463,11 +2463,20 @@ void view_setup_file (char *filename)
             		gtk_table_attach_defaults (GTK_TABLE (table), label, 3, 4, rowi, rowi+1);
             		gtk_widget_show (label);
 
+					label = gtk_label_new ("Lattitude");
+					gtk_table_attach_defaults (GTK_TABLE (table), label, 4, 5, rowi, rowi+1);
+					gtk_widget_show (label);
+
+					label = gtk_label_new ("Longitude");
+					gtk_table_attach_defaults (GTK_TABLE (table), label, 5, 6, rowi, rowi+1);
+					gtk_widget_show (label);
+
+
             		rowi = rowi+1;
         	}
 
 		label = gtk_hseparator_new();
-		gtk_table_attach_defaults (GTK_TABLE (table), label, 0, 5, rowi, rowi+1);
+		gtk_table_attach_defaults (GTK_TABLE (table), label, 0, 7, rowi, rowi+1);
 		gtk_widget_show (label);
 
 		rowi = rowi+1;
@@ -2493,16 +2502,26 @@ void view_setup_file (char *filename)
             		gtk_table_attach_defaults (GTK_TABLE (table), label, 2, 3, rowi, rowi+1);
             		gtk_widget_show (label);
 
-            		d1 = strtok (NULL,"\n");
+            		d1 = strtok (NULL,",");
             		label = gtk_label_new (d1);
             		gtk_table_attach_defaults (GTK_TABLE (table), label, 3, 4, rowi, rowi+1);
             		gtk_widget_show (label);
+
+					d1 = strtok (NULL,",");
+					label = gtk_label_new (d1);
+					gtk_table_attach_defaults (GTK_TABLE (table), label, 4, 5, rowi, rowi+1);
+					gtk_widget_show (label);
+
+					d1 = strtok (NULL,"\n");
+					label = gtk_label_new (d1);
+					gtk_table_attach_defaults (GTK_TABLE (table), label, 5, 6, rowi, rowi+1);
+					gtk_widget_show (label);
 
             		rowi = rowi + 1;
         	}
 
 		label = gtk_hseparator_new();
-		gtk_table_attach_defaults (GTK_TABLE (table), label, 0, 5, rowi, rowi+1);
+		gtk_table_attach_defaults (GTK_TABLE (table), label, 0, 7, rowi, rowi+1);
 		gtk_widget_show (label);
 
 		rowi = rowi+1;
@@ -2511,7 +2530,7 @@ void view_setup_file (char *filename)
 		label = gtk_label_new (" ");
 		markup = g_markup_printf_escaped ("<span foreground=\"#0000FF\" font='11'>Destination Devices</span>");
 		gtk_label_set_markup (GTK_LABEL (label), markup);
-		gtk_table_attach_defaults (GTK_TABLE (table), label, 0, 5, rowi, rowi+1);
+		gtk_table_attach_defaults (GTK_TABLE (table), label, 0, 7, rowi, rowi+1);
 		gtk_widget_show (label);
 		g_free (markup);
 

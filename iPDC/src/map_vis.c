@@ -17,7 +17,6 @@
 #include "Kmeans2.h"
 
 
-//  debug
 int loops = 0;
 
 gboolean update_images(gpointer* pars){
@@ -73,7 +72,7 @@ gboolean update_images(gpointer* pars){
             freq = decode_ieee_single(df->dpmu[i]->freq);
             // printf("freq = %f\n",freq);
         }else{
-            freq = to_intconvertor(df->dpmu[i]->freq)*1e-6+50;
+            freq = to_intconvertor(df->dpmu[i]->freq)*1e-3+50;
         }
         
         unsigned char first2bytes[2];

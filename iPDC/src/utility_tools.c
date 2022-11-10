@@ -16,14 +16,6 @@
 #define GREY_IMAGE "./assets/grey.png"
 #define PINK_IMAGE "./assets/pink.png"
 
-// void change_image(OsmGpsMap *map, float lat, float lon, OsmGpsMapImage *image)
-// {
-//     if (g_last_image)
-//         osm_gps_map_image_remove(map, g_last_image);
-//     osm_gps_map_image_add(map, lat, lon, image);
-// }
-
-// on closing the window kill the g_timeout_add
 
 GdkRGBA getIndexColor(int index){
     GdkRGBA color;
@@ -306,7 +298,6 @@ void utility_tools(GtkButton *but, gpointer udata)
     utdata->attack_detection = GTK_WIDGET(gtk_builder_get_object(builder, "attack_detection"));
     utdata->algorithm = GTK_WIDGET(gtk_builder_get_object(builder, "algorithm"));
     utdata->dimmension = GTK_WIDGET(gtk_builder_get_object(builder, "dimmension"));
-    // utdata->util_map = GTK_WIDGET(gtk_builder_get_object(builder, "util_map"));
     utdata->map_layout = GTK_CONTAINER(gtk_builder_get_object(builder, "map_layout"));
     utdata->graph_layoutvol = GTK_CONTAINER(gtk_builder_get_object(builder, "graph_layoutvol"));
     utdata->graph_layoutfreq = GTK_CONTAINER(gtk_builder_get_object(builder, "graph_layoutfreq"));
@@ -350,9 +341,6 @@ void utility_tools(GtkButton *but, gpointer udata)
     // TODO: centering the map
     osm_gps_map_set_center_and_zoom(utdata->util_map, 15.4589, 75.0078, 10);
 
-    // TODO: add the points to window.
-    // g_last_image = osm_gps_map_image_add(utdata->util_map, 15.4589, 75.0078, g_red_image);
-    // g_last_image = osm_gps_map_image_add(utdata->util_map, 15.518597, 74.925584, g_green_image);
 
     
     curr_measurement = 0;
@@ -365,15 +353,6 @@ void utility_tools(GtkButton *but, gpointer udata)
 
     gtk_container_add(utdata->map_layout, GTK_WIDGET(utdata->util_map));
 
-    // add live chart
-    // serie = live_chart_serie_new("IIT", (LiveChartSerieRenderer*)live_chart_line_new(live_chart_values_new(10000)));
-    // // live_chart set color to the serie
-    // GdkRGBA color = getIndexColor(0);
-    // live_chart_path_set_color(live_chart_serie_get_line(serie), &color);
-
-    // iterate over llptr and load the map_vis_head structure
-
-    // vis_data_head = (struct map_vis_head *)malloc(sizeof(struct vis_data));
     
     LiveChartConfig *config_vol = live_chart_config_new();
     live_chart_yaxis_set_unit(config_vol->y_axis, "V");
@@ -402,11 +381,6 @@ void utility_tools(GtkButton *but, gpointer udata)
     live_chart_path_set_visible(config_dfreq->x_axis->lines, FALSE);
 
     LiveChartChart *chart_dfreq = live_chart_chart_new(config_dfreq);
-
-
-
-
-    // live_chart_chart_add_serie(chart, serie);
 
     struct Lower_Layer_Details *llptr = LLfirst;
     vis_data_head = (struct vis_data *)malloc(sizeof(struct vis_data));
@@ -445,6 +419,7 @@ void utility_tools(GtkButton *but, gpointer udata)
 
     // gtk_widget_set_hexpand(GTK_WIDGET(chart), TRUE);
     // gtk_widget_set_vexpand(GTK_WIDGET(chart), TRUE);
+
     gtk_widget_set_size_request(GTK_WIDGET(chart_freq), 600, 150);
     gtk_widget_set_size_request(GTK_WIDGET(chart_vol), 600, 150);
     gtk_widget_set_size_request(GTK_WIDGET(chart_dfreq), 600, 150);
@@ -453,20 +428,8 @@ void utility_tools(GtkButton *but, gpointer udata)
     gtk_container_add(utdata->graph_layoutfreq, GTK_WIDGET(chart_freq));
     gtk_container_add(utdata->graph_layoutdfreq, GTK_WIDGET(chart_dfreq));
 
-    
-
-
-    
-
     g_signal_connect(utdata->util_window, "destroy", G_CALLBACK(on_window_destroy), GUINT_TO_POINTER(pid));
 
-    // //g_last_image =  osm_gps_map_image_add(util_map,15.4589, 75.0078, g_red_image);
-    // g_last_image =  osm_gps_map_image_add(utdata->util_map,15.518597, 74.925584, g_green_image);
-    // myParameters parameters = {utdata->util_map, g_red_image, g_green_image, g_last_image};
-    // gpointer data = (gpointer) &parameters;
-    // guint pid = g_timeout_add(20, (GSourceFunc) update_images, data);
-    // gtk_widget_set_vexpand(GTK_WIDGET(utdata->util_map), TRUE);
-    // gtk_widget_set_hexpand(GTK_WIDGET(utdata->util_map), TRUE);
     gtk_widget_show_all(utdata->util_window);
 
     gtk_widget_hide(utdata->algorithm);

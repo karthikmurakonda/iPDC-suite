@@ -632,7 +632,7 @@ void init_cfgparser(unsigned char st[]){
 
 void recreate_Connection_Table() {
 
-	char line[40],*ip,*port,*protocol,*id;	
+	char line[40],*ip,*port,*protocol,*id, *latitude, *longitude;
 	char *rline = NULL, *d1;
 	int err, tempi;
 	FILE *f;
@@ -689,7 +689,9 @@ void recreate_Connection_Table() {
 				id = strtok (rline,",");
 				ip = strtok (NULL,",");
 				port = strtok (NULL,",");
-				protocol = strtok (NULL,"\n");
+				protocol = strtok (NULL,",");
+				latitude = strtok (NULL,",");
+				longitude = strtok (NULL,"\n");
 				protocol[3] = '\0';
 				printf("|\t%d\t|%s\t|\t%d\t|\t%s\t|\n",atoi(id),ip,atoi(port),protocol);
 
@@ -706,6 +708,8 @@ void recreate_Connection_Table() {
 				strcpy(temp_pmu->ip,ip);
 				temp_pmu->port = atoi(port);
 				strcpy(temp_pmu->protocol,protocol);
+				temp_pmu->latitude = atof(latitude);
+				temp_pmu->longitude = atof(longitude);
 				temp_pmu->data_transmission_off = 0;
 				temp_pmu->pmu_remove = 0;
 				temp_pmu->request_cfg_frame = 0;
