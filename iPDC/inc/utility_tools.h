@@ -41,6 +41,9 @@ struct _UtData
 	GtkWidget *swad;
 	GtkWidget *maplabel;
 	GtkWidget *graphlabel;
+	GtkWidget *gl1;
+	GtkWidget *gl2;
+	GtkWidget *gl3;
 };
 
 UtData *utdata;

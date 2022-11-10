@@ -313,6 +313,9 @@ void utility_tools(GtkButton *but, gpointer udata)
     utdata->swdfreq = GTK_WIDGET(gtk_builder_get_object(builder, "swdfreq"));
     utdata->maplabel = GTK_WIDGET(gtk_builder_get_object(builder, "maplabel"));
     utdata->graphlabel = GTK_WIDGET(gtk_builder_get_object(builder, "graphlabel"));
+    utdata->gl1 = GTK_WIDGET(gtk_builder_get_object(builder, "gl1"));
+    utdata->gl2 = GTK_WIDGET(gtk_builder_get_object(builder, "gl2"));
+    utdata->gl3 = GTK_WIDGET(gtk_builder_get_object(builder, "gl3"));
 
     gtk_widget_set_sensitive(utdata->voltage, FALSE);
     gtk_widget_set_visible(utdata->algorithm, FALSE);
@@ -406,6 +409,25 @@ void utility_tools(GtkButton *but, gpointer udata)
         temp_visptr->serie_dfreq = live_chart_serie_new(llptr->ip, (LiveChartSerieRenderer*)live_chart_line_new(live_chart_values_new(10000)));
         live_chart_path_set_color(live_chart_serie_get_line(temp_visptr->serie_dfreq), &color);
         live_chart_chart_add_serie(chart_dfreq, temp_visptr->serie_dfreq);
+
+        // create a grid with gtkcolorbutton and gtklabel
+        GtkWidget *grid = gtk_grid_new();
+        GtkWidget *color_button = gtk_color_button_new_with_rgba(&color);
+        gtk_grid_attach(GTK_GRID(grid), color_button, 0, 0, 1, 1);
+        gchar *label_text = g_strdup_printf("%d", llptr->pmuid);
+        gtk_grid_attach(GTK_GRID(grid), gtk_label_new(label_text), 1, 0, 1, 1);
+        // TODO: customise the line color
+        gtk_box_pack_start(GTK_BOX(utdata->gl1), grid, FALSE, FALSE, 0);
+        GtkWidget *grid2 = gtk_grid_new();
+        GtkWidget *color_button2 = gtk_color_button_new_with_rgba(&color);
+        gtk_grid_attach(GTK_GRID(grid2), color_button2, 0, 0, 1, 1);
+        gtk_grid_attach(GTK_GRID(grid2), gtk_label_new(label_text), 1, 0, 1, 1);
+        gtk_box_pack_start(GTK_BOX(utdata->gl2), grid2, FALSE, FALSE, 0);
+        GtkWidget *grid3 = gtk_grid_new();
+        GtkWidget *color_button3 = gtk_color_button_new_with_rgba(&color);
+        gtk_grid_attach(GTK_GRID(grid3), color_button3, 0, 0, 1, 1);
+        gtk_grid_attach(GTK_GRID(grid3), gtk_label_new(label_text), 1, 0, 1, 1);
+        gtk_box_pack_start(GTK_BOX(utdata->gl3), grid3, FALSE, FALSE, 0);
 
         temp_visptr->next = (struct vis_data *)malloc(sizeof(struct vis_data));
         temp_visptr = temp_visptr->next;
