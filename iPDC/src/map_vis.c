@@ -33,10 +33,6 @@ gboolean update_images(gpointer* pars){
         pthread_mutex_unlock(&mutex_on_TSB);
         return TRUE;
     }
-    //int freq = to_intconvertor(df->dpmu[0]->freq);
-	//gboolean green =attack_detect(df);
-    //printf("map_vis A: %Lf, B: %Lf,C: %Lf\n",A,B,C);
-    //gboolean green = kmeans(df);
    
     int i = 0, k = 0;
     float freq,vol_magnitude,angle, dfreq;
@@ -45,17 +41,12 @@ gboolean update_images(gpointer* pars){
         float lat;
         float lon;
         loops++;
-        // printf("loops: %d\n", loops);
-        
         id = to_intconvertor(df->idcode);
-        // printf("id = %d\n",id);
         pthread_mutex_lock(&mutex_cfg);
         temp_cfg = cfgfirst;
-        // Check for the IDCODE in Configuration Frame
         while(temp_cfg != NULL){
             if(id == to_intconvertor(temp_cfg->idcode)){
                 cfg_match = 1;
-                // printf("Matched - id : %d\n",id);
                 freq_fmt = temp_cfg->pmu[0]->fmt->freq;
                 anal_fmt = temp_cfg->pmu[0]->fmt->analog;
                 phas_fmt = temp_cfg->pmu[0]->fmt->phasor;

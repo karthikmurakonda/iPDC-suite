@@ -351,6 +351,7 @@ void utility_tools(GtkButton *but, gpointer udata)
     dimmension = 0;
     myParameters parameters = {utdata->util_map, g_red_image, g_green_image, g_grey_image, g_last_image};
     gpointer data = (gpointer)&parameters;
+    struct cfg_frame* temp_cfg = cfgfirst;
 
     gtk_widget_set_size_request(GTK_WIDGET(utdata->util_map), 600, 500);
 
@@ -391,11 +392,26 @@ void utility_tools(GtkButton *but, gpointer udata)
     int index = 0;
     while (llptr != NULL)
     {
-        printf("\ncat\n");
         temp_visptr->id = llptr->pmuid;
         temp_visptr->lat = llptr->latitude;
         temp_visptr->lon = llptr->longitude;
-        temp_visptr->last_image = osm_gps_map_image_add(utdata->util_map, llptr->latitude, llptr->longitude, g_grey_image); // TODO: change the image
+        temp_visptr->last_image = osm_gps_map_image_add(utdata->util_map, llptr->latitude, llptr->longitude, g_grey_image);
+        // declare tooltip
+        gchar *tooltiptext;
+    
+
+        // iterate through the cfg frame and find the corresponding cfg frame
+        while (temp_cfg != NULL)
+        {
+            tooltiptext = g_strdup_printf("unknown");
+            if ( to_intconvertor(temp_cfg->idcode) == llptr->pmuid)
+            {
+                // set the tooltip text
+                tooltiptext = cfgfirst->pmu[0]->stn;
+                break;
+            }
+            temp_cfg = temp_cfg->cfgnext;
+        }
 
         temp_visptr->serie_freq = live_chart_serie_new(llptr->ip, (LiveChartSerieRenderer*)live_chart_line_new(live_chart_values_new(10000)));
         GdkRGBA color = getIndexColor(index);
@@ -415,6 +431,7 @@ void utility_tools(GtkButton *but, gpointer udata)
         GtkWidget *color_button = gtk_color_button_new_with_rgba(&color);
         gtk_grid_attach(GTK_GRID(grid), color_button, 0, 0, 1, 1);
         gchar *label_text = g_strdup_printf("%d", llptr->pmuid);
+        gtk_widget_set_tooltip_text(grid, tooltiptext);
         gtk_grid_attach(GTK_GRID(grid), gtk_label_new(label_text), 1, 0, 1, 1);
         // TODO: customise the line color
         gtk_box_pack_start(GTK_BOX(utdata->gl1), grid, FALSE, FALSE, 0);
@@ -422,11 +439,13 @@ void utility_tools(GtkButton *but, gpointer udata)
         GtkWidget *color_button2 = gtk_color_button_new_with_rgba(&color);
         gtk_grid_attach(GTK_GRID(grid2), color_button2, 0, 0, 1, 1);
         gtk_grid_attach(GTK_GRID(grid2), gtk_label_new(label_text), 1, 0, 1, 1);
+        gtk_widget_set_tooltip_text(color_button2, tooltiptext);
         gtk_box_pack_start(GTK_BOX(utdata->gl2), grid2, FALSE, FALSE, 0);
         GtkWidget *grid3 = gtk_grid_new();
         GtkWidget *color_button3 = gtk_color_button_new_with_rgba(&color);
         gtk_grid_attach(GTK_GRID(grid3), color_button3, 0, 0, 1, 1);
         gtk_grid_attach(GTK_GRID(grid3), gtk_label_new(label_text), 1, 0, 1, 1);
+        gtk_widget_set_tooltip_text(grid3, tooltiptext);
         gtk_box_pack_start(GTK_BOX(utdata->gl3), grid3, FALSE, FALSE, 0);
 
         temp_visptr->next = (struct vis_data *)malloc(sizeof(struct vis_data));
