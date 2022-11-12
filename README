@@ -23,36 +23,13 @@
  *
  * Authors: 
  *	     Nitesh Pandit <panditnitesh@gmail.com>				
- * 	     Kedar V. Khandeparkar <kedar.khandeparkar@gmail.com>			
- *
+ * 	     Kedar V. Khandeparkar <kedar.khandeparkar@gmail.com>
+ *		 Pavan Kumar V Patil <200030041@iitdh.ac.in>
+ *       M V Karthik <karthik.murakonda14@gmail.com>
  * --------------------------------------------------------------- */
 
-
-Be up to date with about iPDC new 
-
-By visiting
-	http://ipdc.codeplex.com/
-	http://sourceforge.net/projects/iitbpdc/
-	http://freecode.com/projects/ipdc
-                
-	You can also JOIN us on FaceBook at   "http://www.facebook.com/pages/PhasorDataConcentrator".
-                
-	Visit Our another project regarding Wide Area Frequency Measurement System" developed at IIT BOmbay: "http://www.ee.iitb.ac.in/~anil/"
-
- 
-iPDC.x.y.z
------------
-     
-     4-files and 4-folders are present in iPDC.x.y.z.tar.gz, they are
-
-          1. iPDC-1.3.1
-          2. PMUSimulator-1.3.1
-          3. DBServer-1.1
-          4. DataDir
-          5. Release Notes 1.3.1
-          6. change.log
-          7. README
-          8. COPYING
+# iPDC
+This project is an extension to [iPDC](https://sourceforge.net/projects/iitbpdc/)
 
 
 General Information
@@ -75,13 +52,13 @@ Dependencies
 	mysql-client-5.0.
 	mysql-common
 	libmysqlclient16*
-	GTK+2.5
+	GTK+3
 	glade 3.6.7 (optional for development)
 	NTP-client  (For synchronization of system clock)
 
 
-INSTALLATION:
-------------
+# INSTALLATION:
+
 
      Dependencies installation: Installation of glade internally installed the GTK+ libraries and there is no need to explicit installation of GTK+. NTP is recommended for better results by iPDC and PMU Simulator.
 
@@ -93,6 +70,9 @@ INSTALLATION:
           su/sudo apt-get install libmysqlclient16-dev (or latest available version)
           su/sudo apt-get install glade
           su/sudo apt-get install ntp (http://howto.eyeoncomputers.com/ubuntu/install-ntp/)
+		  su/sudo apt-get install libosmgpsmap-1.0-1 gir1.2-osmgpsmap-1.0
+		  su/sudo apt-get install libosmgpsmap-1.0-dev
+		  sudo apt-get install libgee-0.8-dev
 
      For detailed explanation of iPDC, DBServer, and PMUSimulator working refer the User Manual. Available on website. Make sure you have done with the dependency installation before go for installation of iPDC software.
 
@@ -101,10 +81,9 @@ INSTALLATION:
   		Multiple instance can be run on same machine by ONLY one time installation.
           First go to the source folder on terminal then,
 
-	          1. Extract iPDC.x.y.tar.gz.
-	          2. cd iPDC.x.y/iPDC.x
-	          3. su/sudo make install (It will be needing root permision to create folder & copying file on them)
-			4. Run iPDC via terminal or you could found its shortcut on menu named iPDC.
+	        1. cd iPDC.x.y/iPDC.x
+			2. su/sudo make install (It will be needing root permision to create folder & copying file on them)
+			3. Run iPDC via terminal or you could found its shortcut on menu named iPDC.
 
 
      B) Install DBServer ->
@@ -236,19 +215,7 @@ PROBLEMS & FAQ
 
 How to Reach Us:-
 ------------------
-
-    	Nitesh Pandit : panditnitesh@gmail.com
-
-    	Gopal Gajjar: gopal@ee.iitb.ac.in
-
-    	Kedar Khandeparkar: kedark@ee.iitb.ac.in
-
-    	Rathin Dholakia: rathindholakia@gmail.com
-
-    	Or you can visit our sites:
-			"http://ipdc.codeplex.com/",
-			"http://sourceforge.net/projects/iitbpdc/", 
-			"http://wafms.co.cc"
+    	Use discussion forum here in github.
     
 
 Credits

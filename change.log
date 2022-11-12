@@ -205,5 +205,15 @@ What we are (and you should) EXPECT in our Future Release:-
  2. Port the Programme to Windows Environment
  3. Import/Exort data in COMTRADE format.
  4. Check and implement Real Time Application Interface
-	
------------------------------------------------Enf of File----------------------------------------
+
+
+12.07.2022: Updated Gtk api from 2 to 3.24
+	+ Using standarded api for file selection.
+
+12.11.2022: Basic data visualization and event detection
+	+ Using library osm-gps-map for geographical map visualization
+	+ Using library live-chart for realtime time series graph.
+	+ Added some basic algorithms like kmeans, dynamic time warping for Event detection.
+	[more details in report]
+
+-----------------------------------------------End of File----------------------------------------
