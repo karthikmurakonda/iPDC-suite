@@ -7,7 +7,6 @@
 #include "livechart.h"
 #include "connections.h"
 
-// TODO: change this when in production
 #define UI_fILE "/usr/local/share/iPDC/utility_tools.ui"
 #define RED_IMAGE "/usr/local/share/iPDC/red.png"
 #define GREEN_IMAGE "/usr/local/share/iPDC/green.png"
@@ -339,11 +338,6 @@ void utility_tools(GtkButton *but, gpointer udata)
                                     "map-source", OSM_GPS_MAP_SOURCE_OSMC_TRAILS,
                                     "tile-cache", "/tmp/",
                                     NULL);
-
-    // TODO: centering the map
-    osm_gps_map_set_center_and_zoom(utdata->util_map, 15.4589, 75.0078, 10);
-
-
     
     curr_measurement = 0;
     algorithm = 0;
@@ -389,11 +383,15 @@ void utility_tools(GtkButton *but, gpointer udata)
     vis_data_head = (struct vis_data *)malloc(sizeof(struct vis_data));
     struct vis_data * temp_visptr = vis_data_head;
     int index = 0;
+    float centroid_latitude = 0;
+    float centroid_longitude = 0;
     while (llptr != NULL)
     {
         temp_visptr->id = llptr->pmuid;
         temp_visptr->lat = llptr->latitude;
         temp_visptr->lon = llptr->longitude;
+        centroid_latitude += temp_visptr->lat;
+        centroid_longitude += temp_visptr->lon;
         temp_visptr->last_image = osm_gps_map_image_add(utdata->util_map, llptr->latitude, llptr->longitude, g_grey_image);
         // declare tooltip
         gchar *tooltiptext;
@@ -455,8 +453,14 @@ void utility_tools(GtkButton *but, gpointer udata)
     temp_visptr->next = NULL;
 
     guint pid = g_timeout_add(20, (GSourceFunc)update_vis, data);
-
-
+    if(index>0){
+        centroid_latitude /= (index);
+        centroid_longitude /= (index);
+    }else{
+        centroid_latitude = 15;
+        centroid_longitude = 74;
+    }
+    osm_gps_map_set_center_and_zoom(utdata->util_map, centroid_latitude, centroid_longitude, 10); 
     // gtk_widget_set_hexpand(GTK_WIDGET(chart), TRUE);
     // gtk_widget_set_vexpand(GTK_WIDGET(chart), TRUE);
 
