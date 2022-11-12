@@ -25,4 +25,4 @@ struct vis_data{
 
 struct vis_data *vis_data_head;
 
-gboolean update_images(gpointer* pars);
+gboolean update_vis(gpointer* pars);

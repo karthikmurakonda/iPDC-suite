@@ -71,8 +71,7 @@ bin/%.o: src/%.c
 
 
 install: $(PROGRAM)
-	gtk-builder-convert assets/iPDC.glade assets/iPDC.xml
-	mkdir -p $(CREATE_DIR)iPDC/$
+	mkdir -p $(CREATE_DIR)iPDC/
 	cp -f assets/$(FILE1) $(CREATE_DIR)iPDC/$(FILE1)
 	cp -f assets/$(FILE2) $(CREATE_DIR)iPDC/$(FILE2)
 	cp -f assets/$(FILE3) $(CREATE_DIR)iPDC/$(FILE3)

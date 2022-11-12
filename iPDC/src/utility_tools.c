@@ -454,7 +454,7 @@ void utility_tools(GtkButton *but, gpointer udata)
     }
     temp_visptr->next = NULL;
 
-    guint pid = g_timeout_add(20, (GSourceFunc)update_images, data);
+    guint pid = g_timeout_add(20, (GSourceFunc)update_vis, data);
 
 
     // gtk_widget_set_hexpand(GTK_WIDGET(chart), TRUE);

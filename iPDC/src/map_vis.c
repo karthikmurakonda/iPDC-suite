@@ -19,7 +19,7 @@
 
 int loops = 0;
 
-gboolean update_images(gpointer* pars){
+gboolean update_vis(gpointer* pars){
     int match=0,id, cfg_match=0;
     myParameters* parameters = (myParameters*) pars;
     struct cfg_frame* temp_cfg;

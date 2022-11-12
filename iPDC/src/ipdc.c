@@ -124,7 +124,6 @@ int main(int argc, char **argv)
 		GW(menuitem3);
 		GW(attack_detection);
 		GW(data_vis);
-		GW(utility_tools);
 	#undef GW
 
 	/* Connect signals */
@@ -292,8 +291,7 @@ int main(int argc, char **argv)
 	g_signal_connect (data->about_menuitem, "activate", G_CALLBACK(about_ipdc), NULL);
 	g_signal_connect (data->ipdc, "destroy", G_CALLBACK(destroy), NULL);
 
-    g_signal_connect(data->attack_detection,"activate",G_CALLBACK(attack_detection_window),NULL);
-	g_signal_connect(data->data_vis, "activate", G_CALLBACK(data_vis_window), NULL);
+	g_signal_connect(data->data_vis, "activate", G_CALLBACK(utility_tools), NULL);
 	
 
 	/* Destroy builder, since we don't need it anymore */

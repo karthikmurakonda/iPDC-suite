@@ -323,6 +323,14 @@ sends data frames.</property>
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
                     <child>
+                      <object class="GtkMenuItem" id="attack_detection">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label" translatable="yes">Attack Detection</property>
+                        <property name="use-underline">True</property>
+                      </object>
+                    </child>
+                    <child>
                       <object class="GtkMenuItem" id="data_vis">
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
