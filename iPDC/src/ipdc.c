@@ -121,6 +121,7 @@ int main(int argc, char **argv)
 		GW(time_lable);
 		GW(menuitem3);
 		GW(data_vis);
+		GW(utility_tools);
 	#undef GW
 
 	/* Connect signals */

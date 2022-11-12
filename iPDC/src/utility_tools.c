@@ -2,7 +2,7 @@
 #include "align_sort.h"
 #include "parser.h"
 #include "osm-gps-map.h"
-#include "map_vis.h"
+#include "data_vis.h"
 #include "utility_tools.h"
 #include "livechart.h"
 #include "connections.h"
@@ -267,7 +267,7 @@ void set_dimm(GtkComboBox *combo, gpointer udata)
 
 
 
-
+// Initializes utility tools window.
 void utility_tools(GtkButton *but, gpointer udata)
 {
     GdkPixbuf *g_red_image;
