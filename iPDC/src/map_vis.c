@@ -73,15 +73,12 @@ gboolean update_images(gpointer* pars){
         strncpy(last2bytes, df->dpmu[i]->phasors[0]+2, 2);
         vol_magnitude = to_intconvertor(first2bytes);
         float imaginary = to_intconvertor(last2bytes);
-        // printf("vol = %f imag = %f\n",vol_magnitude, imaginary);
 
         vis_ptr = vis_data_head;
         match = 0;
         while(vis_ptr != NULL){
-            // printf("vis_ptr->id = %d\n",vis_ptr->id);
             if(vis_ptr->id == id){
                 match = 1;
-                // printf("Matched - id : %d\n",id);
                 break;
             }
             vis_ptr = vis_ptr->next;
@@ -95,7 +92,6 @@ gboolean update_images(gpointer* pars){
         live_chart_serie_add(vis_ptr->serie_dfreq, dfreq);
 
         if(match == 1 && cfg_match == 1){
-            // printf("lat = %f, lon = %f, freq = %f\n",lat,lon,freq);
             if(vis_ptr->last_image != 0){
                 osm_gps_map_image_remove(parameters->util_map, vis_ptr->last_image);
             }
@@ -173,7 +169,6 @@ gboolean update_images(gpointer* pars){
             }
         }
         df = df->dnext;
-        // i++;
         k++;
     }
     pthread_mutex_unlock(&mutex_on_TSB);

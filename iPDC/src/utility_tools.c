@@ -8,13 +8,12 @@
 #include "connections.h"
 
 // TODO: change this when in production
-#define UI_fILE "./assets/utility_tools.ui"
-#define RED_IMAGE "./assets/red.png"
-#define GREEN_IMAGE "./assets/green.png"
-#define YELLOW_IMAGE "./assets/yellow.png"
-#define BLUE_IMAGE "./assets/blue.png"
-#define GREY_IMAGE "./assets/grey.png"
-#define PINK_IMAGE "./assets/pink.png"
+#define UI_fILE "/usr/local/share/iPDC/utility_tools.ui"
+#define RED_IMAGE "/usr/local/share/iPDC/red.png"
+#define GREEN_IMAGE "/usr/local/share/iPDC/green.png"
+#define BLUE_IMAGE "/usr/local/share/iPDC/blue.png"
+#define GREY_IMAGE "/usr/local/share/iPDC/grey.png"
+#define PINK_IMAGE "/usr/local/share/iPDC/pink.png"
 
 
 GdkRGBA getIndexColor(int index){

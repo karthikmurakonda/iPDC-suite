@@ -36,17 +36,24 @@ INSTALL_PREFIX = /usr/local/
 CREATE_DIR = /usr/local/share/
 DESKTOP_DIR = /usr/share/applications
 
-FILE1 = iPDC.xml
+FILE1 = iPDC.ui
 FILE2 = ipdcLogo.png
 FILE3 = PSLab.PNG
 FILE4 = ipdcLogo1.png
 FILE5 = logo.png
 FILE6 = iPDC.desktop
+FILE7 = utility_tools.ui
+FILE8 = red.png
+FILE9 = green.png
+FILE11 = blue.png
+FILE13 = grey.png
+
+SOLIB = lib
 
 
 CC = gcc
 LIBS = -lpthread
-LDLIBS=`pkg-config --cflags --libs gtk+-3.0 osmgpsmap-1.0 gee-0.8` lib/liblivechart.so lib/liblivechart_static.a -Wl,--rpath=./lib
+LDLIBS=`pkg-config --cflags --libs gtk+-3.0 osmgpsmap-1.0 gee-0.8` lib/liblivechart.so lib/liblivechart_static.a -Wl,--rpath=$(CREATE_DIR)iPDC/$(SOLIB)
 CFLAGS=-g -I./inc -I./lib -fcommon `pkg-config --cflags --libs gtk+-3.0 osmgpsmap-1.0 gee-0.8`
 
 PROGRAM = iPDC
@@ -71,7 +78,13 @@ install: $(PROGRAM)
 	cp -f assets/$(FILE3) $(CREATE_DIR)iPDC/$(FILE3)
 	cp -f assets/$(FILE4) $(CREATE_DIR)iPDC/$(FILE4)
 	cp -f assets/$(FILE5) $(CREATE_DIR)iPDC/$(FILE5)
+	cp -f assets/$(FILE7) $(CREATE_DIR)iPDC/$(FILE7)
+	cp -f assets/$(FILE8) $(CREATE_DIR)iPDC/$(FILE8)
+	cp -f assets/$(FILE9) $(CREATE_DIR)iPDC/$(FILE9)
+	cp -f assets/$(FILE11) $(CREATE_DIR)iPDC/$(FILE11)
+	cp -f assets/$(FILE13) $(CREATE_DIR)iPDC/$(FILE13)
 	cp -f assets/$(FILE6) $(DESKTOP_DIR)/$(FILE6)
+	cp -r -f lib/ $(CREATE_DIR)iPDC/$(SOLIB)
 	cp $(PROGRAM) $(INSTALL_PREFIX)bin/$(PROGRAM)
 
 uninstall:
