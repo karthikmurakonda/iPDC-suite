@@ -45,8 +45,6 @@
 #include "parser.h"
 #include "global.h"
 #include "ipdcGui.h"
-#include "attack_detection.h"
-#include "data_vis.h"
 #include "utility_tools.h"
 
 /* Common fixed path for storage of few common files */
@@ -122,7 +120,6 @@ int main(int argc, char **argv)
 		GW(admin_label);
 		GW(time_lable);
 		GW(menuitem3);
-		GW(attack_detection);
 		GW(data_vis);
 	#undef GW
 

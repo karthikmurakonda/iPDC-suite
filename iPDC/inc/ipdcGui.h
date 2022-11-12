@@ -90,9 +90,7 @@ struct _ChData
 	
 	/*Tools menu*/
 	GtkWidget *menuitem3;
-	GtkWidget *attack_detection;
 	GtkWidget *data_vis;
-	
 };
 
 /* ---------------------------------------------------------------- */
