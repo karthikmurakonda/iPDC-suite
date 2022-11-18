@@ -21,7 +21,7 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  *
  * Authors:
- *		M V Karthik <mvkarthik@gmail.com>
+ *		M V Karthik <karthik.murakonda14@gmail.com>
  *		Pavan Kumar V Patil <pavanvpatil01@gmail.com>
  *
  * ----------------------------------------------------------------------------- */
