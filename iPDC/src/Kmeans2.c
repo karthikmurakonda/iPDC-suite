@@ -36,6 +36,7 @@
 #include <string.h>
 #include <stdbool.h>
 
+/*Used for storing points*/
 struct Point
 {
     long double x, y;    // coordinates
@@ -43,6 +44,7 @@ struct Point
     long double minDist; // default infinite dist to nearest cluster
 };
 
+/*used for storing centroid of clusters formed*/
 struct centroid
 {
     long double x, y;
@@ -50,6 +52,7 @@ struct centroid
     unsigned long long int count;
 };
 
+/*used to maintain nodes for all PMUs*/
 struct Kmeans2
 {
     int idcode;
@@ -64,11 +67,23 @@ struct Kmeans2
 
 struct Kmeans2 *head_of_kmeans2 = NULL;
 
+/**
+ * @brief It finds data between point A and B
+ *
+ * @param  A,B
+ * @return long double
+ */
 long double distance(struct Point *A, struct Point *B)
 {
     return (((A->x - B->x) * (A->x - B->x)) + ((A->y - B->y) * (A->y - B->y)));
 }
 
+/**
+ * @brief It finds data between centroid A and point B
+ *
+ * @param  A,B
+ * @return long double
+ */
 long double distance2(struct centroid *A, struct Point *B)
 {
     return (((A->x - B->x) * (A->x - B->x)) + ((A->y - B->y) * (A->y - B->y)));
@@ -109,6 +124,13 @@ int *getRandoms(int lower, int upper, int count)
     }
 }
 
+/**
+ * @brief It is used to check event detection using Kmeans clustering using voltage and frequency
+ *        called in data_vis.c
+ *
+ * @param df data frame
+ * @return bool
+ */
 bool Kmeans2(struct data_frame *df)
 {
     if (head_of_kmeans2 == NULL)

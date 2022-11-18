@@ -60,6 +60,13 @@ struct DTWvollist
 struct DTWfreqlist *dtwhead = NULL;
 struct DTWvollist *dtwheadvol = NULL;
 
+/**
+ * @brief It is used to check event detection using Dynamic Time Warping using frequency
+ *        called in data_vis.c
+ *
+ * @param df data frame
+ * @return int
+ */
 int DTWfreqDistance(struct data_frame *df)
 {
     if (dtwhead == NULL)
@@ -186,6 +193,13 @@ int DTWfreqDistance(struct data_frame *df)
     }
 }
 
+/**
+ * @brief It is used to check event detection using Dynamic Time Warping using voltage
+ *        called in data_vis.c
+ *
+ * @param df data frame
+ * @return int
+ */
 int DTWvolDistance(struct data_frame *df)
 {
     if (dtwheadvol == NULL)
@@ -342,6 +356,13 @@ int DTWvolDistance(struct data_frame *df)
     }
 }
 
+/**
+ * @brief It is used to check event detection using Dynamic Time Warping using frequency and voltage
+ *        called in data_vis.c
+ *
+ * @param df data frame
+ * @return int
+ */
 int DTWfreqvolDistance(struct data_frame *df)
 {
     return DTWfreqDistance(df) && DTWfreqvolDistance(df);

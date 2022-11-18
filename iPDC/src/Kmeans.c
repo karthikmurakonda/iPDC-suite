@@ -7,7 +7,7 @@
  * Copyright (C) 2022-2023 Kedar V. Khandeparkar
  * Copyright (C) 2022-2023 Pavan Kumar V Patil
  * Copyright (C) 2022-2023 Karthik Murakonda
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
@@ -50,6 +50,13 @@ struct kmeans1
 
 struct kmeans1 *headk = NULL;
 
+/**
+ * @brief It is used to check event detection using Kmeans clustering using frequency
+ *        called in data_vis.c
+ *
+ * @param df data frame
+ * @return gboolean
+ */
 gboolean kmeans(struct data_frame *df)
 {
     if (headk == NULL)

@@ -7,7 +7,7 @@
  * Copyright (C) 2022-2023 Kedar V. Khandeparkar
  * Copyright (C) 2022-2023 Pavan Kumar V Patil
  * Copyright (C) 2022-2023 Karthik Murakonda
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
@@ -36,6 +36,7 @@
 #include "parser.h"
 #include "Event_detect.h"
 
+/*Used in maintaining Nodes for all PMUS*/
 struct freqlist
 {
     int idcode;
@@ -44,6 +45,7 @@ struct freqlist
     struct freqlist *next;
 };
 
+/*Used in maintaining Nodes for all PMUS*/
 struct vollist
 {
     int idcode;
@@ -55,6 +57,13 @@ struct vollist
 struct freqlist *head = NULL;
 struct vollist *headvol = NULL;
 
+/**
+ * @brief It is used to check event detection using Basic appraoch using freq
+ *        called in data_vis.c
+ *
+ * @param df data frame
+ * @return gboolean
+ */
 gboolean attack_detect_freq(struct data_frame *df)
 {
     if (head == NULL)
@@ -124,6 +133,13 @@ gboolean attack_detect_freq(struct data_frame *df)
     }
 }
 
+/**
+ * @brief It is used to check event detection using Basic appraoch using voltage
+ *        called in data_vis.c
+ *
+ * @param df data frame
+ * @return gboolean
+ */
 gboolean attack_detect_vol(struct data_frame *df)
 {
     float CURR_vol;
@@ -223,9 +239,14 @@ gboolean attack_detect_vol(struct data_frame *df)
     }
 }
 
+/**
+ * @brief It is used to check event detection using Basic appraoch using voltage and frequency
+ *        called in data_vis.c
+ *
+ * @param df data frame
+ * @return gboolean
+ */
 gboolean attack_detect_freq_vol(struct data_frame *df)
 {
     return attack_detect_freq(df) && attack_detect_vol(df);
 }
-
-/* pavan changes */
