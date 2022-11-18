@@ -5,6 +5,8 @@
  *
  * Copyright (C) 2022-2023 Nitesh Pandit
  * Copyright (C) 2022-2023 Kedar V. Khandeparkar
+ * Copyright (C) 2022-2023 Pavan Kumar V Patil
+ * Copyright (C) 2022-2023 Karthik Murakonda
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -46,6 +48,13 @@
 
 int loops = 0;
 
+/**
+ * @brief It is used to update the data in the GUI.
+ *        called in utility_tools.c with the help of g_timeout_add()
+ * 
+ * @param pars 
+ * @return gboolean 
+ */
 gboolean update_vis(gpointer *pars)
 {
     int match = 0, id, cfg_match = 0;

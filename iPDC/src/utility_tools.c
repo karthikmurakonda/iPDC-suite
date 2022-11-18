@@ -5,7 +5,9 @@
  *
  * Copyright (C) 2022-2023 Nitesh Pandit
  * Copyright (C) 2022-2023 Kedar V. Khandeparkar
- *
+ * Copyright (C) 2022-2023 Pavan Kumar V Patil
+ * Copyright (C) 2022-2023 Karthik Murakonda
+ * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
@@ -42,10 +44,19 @@
 #define GREY_IMAGE "/usr/local/share/iPDC/grey.png"
 #define PINK_IMAGE "/usr/local/share/iPDC/pink.png"
 
+/**
+ * @brief Get the Index Color object
+ * 
+ * @param index 
+ * @return GdkRGBA 
+ * @note This function is used to get the color of the index mathematicallly 
+ * by using the index value.
+ * 
+ */
+
 GdkRGBA getIndexColor(int index)
 {
     GdkRGBA color;
-    // get the color from the index mathematically
     switch (index)
     {
     case 0:
@@ -148,7 +159,12 @@ void on_window_destroy(GtkWidget *widget, gpointer data)
     gtk_main_quit();
 }
 
-// on clicking the button voltage
+/**
+ * @brief handles the voltage magnitude button click event
+ * 
+ * @param but 
+ * @param udata 
+ */
 void on_voltage_clicked(GtkButton *but, gpointer udata)
 {
     curr_measurement = 0;
@@ -180,7 +196,12 @@ void on_voltage_clicked(GtkButton *but, gpointer udata)
     printf("Voltage\n");
 }
 
-// on clicking the button frequency
+/**
+ * @brief handles the frequency magnitude button click event
+ * 
+ * @param but : button
+ * @param udata : user data
+ */
 void on_frequency_clicked(GtkButton *but, gpointer udata)
 {
     curr_measurement = 1;
@@ -213,7 +234,12 @@ void on_frequency_clicked(GtkButton *but, gpointer udata)
     printf("Frequency\n");
 }
 
-// on clicking the button dfreq
+/**
+ * @brief handles the frequency derivative button click event
+ * 
+ * @param but : button
+ * @param udata : user data
+ */
 void on_dfreq_clicked(GtkButton *but, gpointer udata)
 {
     curr_measurement = 2;
@@ -246,7 +272,12 @@ void on_dfreq_clicked(GtkButton *but, gpointer udata)
     printf("dfreq\n");
 }
 
-// on clicking the button attack_detection
+/**
+ * @brief handles the attack detection button click event
+ * 
+ * @param but : button
+ * @param udata : user data
+ */
 void on_attack_detection_clicked(GtkButton *but, gpointer udata)
 {
     curr_measurement = 3;
@@ -277,12 +308,24 @@ void on_attack_detection_clicked(GtkButton *but, gpointer udata)
     printf("Attack Detection\n");
 }
 
+/**
+ * @brief Set the algo variable to the selected algorithm
+ * 
+ * @param combo : combo box
+ * @param udata : user data
+ */
 void set_algo(GtkComboBox *combo, gpointer udata)
 {
     algorithm = gtk_combo_box_get_active(combo);
     printf("Algorithm: %d\n", algorithm);
 }
 
+/**
+ * @brief Set the dimm variable to the selected dimmension
+ * 
+ * @param combo : combo box
+ * @param udata : user data
+ */
 void set_dimm(GtkComboBox *combo, gpointer udata)
 {
     dimmension = gtk_combo_box_get_active(combo);
@@ -290,7 +333,13 @@ void set_dimm(GtkComboBox *combo, gpointer udata)
     printf("dimmension = %d\n", dimmension);
 }
 
-// Initializes utility tools window.
+/**
+ * @brief Main function for the utility tools window sets up the window and all the widgets
+ *      and connects the signals to the callbacks.
+ * 
+ * @param but : button
+ * @param udata : user data
+ */
 void utility_tools(GtkButton *but, gpointer udata)
 {
     GdkPixbuf *g_red_image;
