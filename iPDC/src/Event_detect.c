@@ -1,5 +1,5 @@
 /* -----------------------------------------------------------------------------
- * Attack_detect.c
+ * Event_detect.c
  *
  * iPDC - Phasor Data Concentrator
  *
