@@ -32,7 +32,7 @@
 #include <gtk/gtk.h>
 #include <math.h>
 #include "parser.h"
-#include "Attack_detect.h"
+#include "Event_detect.h"
 
 struct freqlist
 {
