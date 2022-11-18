@@ -1,3 +1,31 @@
+/* -----------------------------------------------------------------------------
+ * utility_tools.c
+ *
+ * iPDC - Phasor Data Concentrator
+ *
+ * Copyright (C) 2022-2023 Nitesh Pandit
+ * Copyright (C) 2022-2023 Kedar V. Khandeparkar
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ *
+ * Authors:
+ *		M V Karthik <mvkarthik@gmail.com>
+ *		Pavan Kumar V Patil <pavanvpatil01@gmail.com>
+ *
+ * ----------------------------------------------------------------------------- */
+
 #include <gtk/gtk.h>
 #include "align_sort.h"
 #include "parser.h"
@@ -14,105 +42,105 @@
 #define GREY_IMAGE "/usr/local/share/iPDC/grey.png"
 #define PINK_IMAGE "/usr/local/share/iPDC/pink.png"
 
-
-GdkRGBA getIndexColor(int index){
+GdkRGBA getIndexColor(int index)
+{
     GdkRGBA color;
     // get the color from the index mathematically
-    switch(index){
-        case 0:
-            color.red = 1.0;
-            color.green = 0.0;
-            color.blue = 0.0;
-            color.alpha = 1.0;
-            break;
-        case 1:
-            color.red = 0.0;
-            color.green = 1.0;
-            color.blue = 0.0;
-            color.alpha = 1.0;
-            break;
-        case 2:
-            color.red = 0.0;
-            color.green = 0.0;
-            color.blue = 1.0;
-            color.alpha = 1.0;
-            break;
-        case 3:
-            color.red = 1.0;
-            color.green = 1.0;
-            color.blue = 0.0;
-            color.alpha = 1.0;
-            break;
-        case 4:
-            color.red = 1.0;
-            color.green = 0.0;
-            color.blue = 1.0;
-            color.alpha = 1.0;
-            break;
-        case 5:
-            color.red = 0.0;
-            color.green = 1.0;
-            color.blue = 1.0;
-            color.alpha = 1.0;
-            break;
-        case 6:
-            color.red = 1.0;
-            color.green = 0.5;
-            color.blue = 0.0;
-            color.alpha = 1.0;
-            break;
-        case 7:
-            color.red = 0.0;
-            color.green = 0.5;
-            color.blue = 1.0;
-            color.alpha = 1.0;
-            break;
-        case 8:
-            color.red = 0.5;
-            color.green = 1.0;
-            color.blue = 0.0;
-            color.alpha = 1.0;
-            break;
-        case 9:
-            color.red = 0.5;
-            color.green = 0.0;
-            color.blue = 1.0;
-            color.alpha = 1.0;
-            break;
-        case 10:
-            color.red = 1.0;
-            color.green = 0.0;
-            color.blue = 0.5;
-            color.alpha = 1.0;
-            break;
-        case 11:
-            color.red = 0.0;
-            color.green = 1.0;
-            color.blue = 0.5;
-            color.alpha = 1.0;
-            break;
-        case 12:
-            color.red = 0.5;
-            color.green = 0.0;
-            color.blue = 1.0;
-            color.alpha = 1.0;
-            break;
-        case 13:
-            color.red = 1.0;
-            color.green = 0.5;
-            color.blue = 0.0;
-            color.alpha = 1.0;
-            break;
-        default:
-            color.red = 0.0+0.1*index;
-            color.green = 0.0+0.9*index;
-            color.blue = 0.0+0.5*index;
-            color.alpha = 1.0;
-            break;
+    switch (index)
+    {
+    case 0:
+        color.red = 1.0;
+        color.green = 0.0;
+        color.blue = 0.0;
+        color.alpha = 1.0;
+        break;
+    case 1:
+        color.red = 0.0;
+        color.green = 1.0;
+        color.blue = 0.0;
+        color.alpha = 1.0;
+        break;
+    case 2:
+        color.red = 0.0;
+        color.green = 0.0;
+        color.blue = 1.0;
+        color.alpha = 1.0;
+        break;
+    case 3:
+        color.red = 1.0;
+        color.green = 1.0;
+        color.blue = 0.0;
+        color.alpha = 1.0;
+        break;
+    case 4:
+        color.red = 1.0;
+        color.green = 0.0;
+        color.blue = 1.0;
+        color.alpha = 1.0;
+        break;
+    case 5:
+        color.red = 0.0;
+        color.green = 1.0;
+        color.blue = 1.0;
+        color.alpha = 1.0;
+        break;
+    case 6:
+        color.red = 1.0;
+        color.green = 0.5;
+        color.blue = 0.0;
+        color.alpha = 1.0;
+        break;
+    case 7:
+        color.red = 0.0;
+        color.green = 0.5;
+        color.blue = 1.0;
+        color.alpha = 1.0;
+        break;
+    case 8:
+        color.red = 0.5;
+        color.green = 1.0;
+        color.blue = 0.0;
+        color.alpha = 1.0;
+        break;
+    case 9:
+        color.red = 0.5;
+        color.green = 0.0;
+        color.blue = 1.0;
+        color.alpha = 1.0;
+        break;
+    case 10:
+        color.red = 1.0;
+        color.green = 0.0;
+        color.blue = 0.5;
+        color.alpha = 1.0;
+        break;
+    case 11:
+        color.red = 0.0;
+        color.green = 1.0;
+        color.blue = 0.5;
+        color.alpha = 1.0;
+        break;
+    case 12:
+        color.red = 0.5;
+        color.green = 0.0;
+        color.blue = 1.0;
+        color.alpha = 1.0;
+        break;
+    case 13:
+        color.red = 1.0;
+        color.green = 0.5;
+        color.blue = 0.0;
+        color.alpha = 1.0;
+        break;
+    default:
+        color.red = 0.0 + 0.1 * index;
+        color.green = 0.0 + 0.9 * index;
+        color.blue = 0.0 + 0.5 * index;
+        color.alpha = 1.0;
+        break;
     }
     return color;
 }
-
 
 void on_window_destroy(GtkWidget *widget, gpointer data)
 {
@@ -173,7 +201,6 @@ void on_frequency_clicked(GtkButton *but, gpointer udata)
     gtk_widget_hide(utdata->graph_layoutdfreq);
     gtk_widget_hide(utdata->graph_layoutvol);
 
-
     gtk_widget_hide(utdata->algorithm);
     gtk_widget_hide(utdata->dimmension);
     gtk_widget_hide(utdata->algo_label);
@@ -206,7 +233,6 @@ void on_dfreq_clicked(GtkButton *but, gpointer udata)
     gtk_widget_hide(utdata->graph_layoutvol);
     gtk_widget_hide(utdata->swvol);
     gtk_widget_hide(utdata->swfreq);
-
 
     gtk_widget_hide(utdata->algorithm);
     gtk_widget_hide(utdata->dimmension);
@@ -264,8 +290,6 @@ void set_dimm(GtkComboBox *combo, gpointer udata)
     printf("dimmension = %d\n", dimmension);
 }
 
-
-
 // Initializes utility tools window.
 void utility_tools(GtkButton *but, gpointer udata)
 {
@@ -322,7 +346,6 @@ void utility_tools(GtkButton *but, gpointer udata)
     gtk_widget_set_visible(utdata->graph_layoutfreq, FALSE);
     gtk_widget_set_visible(utdata->graph_layoutdfreq, FALSE);
 
-
     g_signal_connect(utdata->voltage, "clicked", G_CALLBACK(on_voltage_clicked), NULL);
     g_signal_connect(utdata->frequency, "clicked", G_CALLBACK(on_frequency_clicked), NULL);
     g_signal_connect(utdata->dfreq, "clicked", G_CALLBACK(on_dfreq_clicked), NULL);
@@ -338,19 +361,18 @@ void utility_tools(GtkButton *but, gpointer udata)
                                     "map-source", OSM_GPS_MAP_SOURCE_OSMC_TRAILS,
                                     "tile-cache", "/tmp/",
                                     NULL);
-    
+
     curr_measurement = 0;
     algorithm = 0;
     dimmension = 0;
     myParameters parameters = {utdata->util_map, g_red_image, g_green_image, g_grey_image, g_last_image};
     gpointer data = (gpointer)&parameters;
-    struct cfg_frame* temp_cfg = cfgfirst;
+    struct cfg_frame *temp_cfg = cfgfirst;
 
     gtk_widget_set_size_request(GTK_WIDGET(utdata->util_map), 600, 500);
 
     gtk_container_add(utdata->map_layout, GTK_WIDGET(utdata->util_map));
 
-    
     LiveChartConfig *config_vol = live_chart_config_new();
     live_chart_yaxis_set_unit(config_vol->y_axis, "V");
     live_chart_xaxis_set_tick_interval(config_vol->x_axis, 20);
@@ -359,7 +381,7 @@ void utility_tools(GtkButton *but, gpointer udata)
     live_chart_path_set_visible(config_vol->x_axis->lines, FALSE);
 
     LiveChartChart *chart_vol = live_chart_chart_new(config_vol);
-    
+
     LiveChartConfig *config_freq = live_chart_config_new();
     live_chart_yaxis_set_unit(config_freq->y_axis, "Hz");
     live_chart_xaxis_set_tick_interval(config_freq->x_axis, 20);
@@ -368,7 +390,6 @@ void utility_tools(GtkButton *but, gpointer udata)
     live_chart_path_set_visible(config_freq->x_axis->lines, FALSE);
 
     LiveChartChart *chart_freq = live_chart_chart_new(config_freq);
-
 
     LiveChartConfig *config_dfreq = live_chart_config_new();
     live_chart_yaxis_set_unit(config_dfreq->y_axis, "mHz");
@@ -381,7 +402,7 @@ void utility_tools(GtkButton *but, gpointer udata)
 
     struct Lower_Layer_Details *llptr = LLfirst;
     vis_data_head = (struct vis_data *)malloc(sizeof(struct vis_data));
-    struct vis_data * temp_visptr = vis_data_head;
+    struct vis_data *temp_visptr = vis_data_head;
     int index = 0;
     float centroid_latitude = 0;
     float centroid_longitude = 0;
@@ -395,13 +416,12 @@ void utility_tools(GtkButton *but, gpointer udata)
         temp_visptr->last_image = osm_gps_map_image_add(utdata->util_map, llptr->latitude, llptr->longitude, g_grey_image);
         // declare tooltip
         gchar *tooltiptext;
-    
 
         // iterate through the cfg frame and find the corresponding cfg frame
         while (temp_cfg != NULL)
         {
             tooltiptext = g_strdup_printf("unknown");
-            if ( to_intconvertor(temp_cfg->idcode) == llptr->pmuid)
+            if (to_intconvertor(temp_cfg->idcode) == llptr->pmuid)
             {
                 // set the tooltip text
                 tooltiptext = cfgfirst->pmu[0]->stn;
@@ -410,16 +430,16 @@ void utility_tools(GtkButton *but, gpointer udata)
             temp_cfg = temp_cfg->cfgnext;
         }
 
-        temp_visptr->serie_freq = live_chart_serie_new(llptr->ip, (LiveChartSerieRenderer*)live_chart_line_new(live_chart_values_new(10000)));
+        temp_visptr->serie_freq = live_chart_serie_new(llptr->ip, (LiveChartSerieRenderer *)live_chart_line_new(live_chart_values_new(10000)));
         GdkRGBA color = getIndexColor(index);
         live_chart_path_set_color(live_chart_serie_get_line(temp_visptr->serie_freq), &color);
         live_chart_chart_add_serie(chart_freq, temp_visptr->serie_freq);
 
-        temp_visptr->serie_vol = live_chart_serie_new(llptr->ip, (LiveChartSerieRenderer*)live_chart_line_new(live_chart_values_new(10000)));
+        temp_visptr->serie_vol = live_chart_serie_new(llptr->ip, (LiveChartSerieRenderer *)live_chart_line_new(live_chart_values_new(10000)));
         live_chart_path_set_color(live_chart_serie_get_line(temp_visptr->serie_vol), &color);
         live_chart_chart_add_serie(chart_vol, temp_visptr->serie_vol);
 
-        temp_visptr->serie_dfreq = live_chart_serie_new(llptr->ip, (LiveChartSerieRenderer*)live_chart_line_new(live_chart_values_new(10000)));
+        temp_visptr->serie_dfreq = live_chart_serie_new(llptr->ip, (LiveChartSerieRenderer *)live_chart_line_new(live_chart_values_new(10000)));
         live_chart_path_set_color(live_chart_serie_get_line(temp_visptr->serie_dfreq), &color);
         live_chart_chart_add_serie(chart_dfreq, temp_visptr->serie_dfreq);
 
@@ -453,14 +473,17 @@ void utility_tools(GtkButton *but, gpointer udata)
     temp_visptr->next = NULL;
 
     guint pid = g_timeout_add(20, (GSourceFunc)update_vis, data);
-    if(index>0){
+    if (index > 0)
+    {
         centroid_latitude /= (index);
         centroid_longitude /= (index);
-    }else{
+    }
+    else
+    {
         centroid_latitude = 15;
         centroid_longitude = 74;
     }
-    osm_gps_map_set_center_and_zoom(utdata->util_map, centroid_latitude, centroid_longitude, 10); 
+    osm_gps_map_set_center_and_zoom(utdata->util_map, centroid_latitude, centroid_longitude, 10);
     // gtk_widget_set_hexpand(GTK_WIDGET(chart), TRUE);
     // gtk_widget_set_vexpand(GTK_WIDGET(chart), TRUE);
 
